@@ -1,0 +1,32 @@
+<div class="homeView" style="background-color: #fff;height: 100%;overflow: hidden">
+    <div class="weui_tab" style="height:44px;width: 100%;overflow: auto;display:-webkit-box;-webkit-overflow-scrolling:touch;z-index: 99;top:0;border-bottom: 1px solid #d9d9d9" id="tab1" >
+        <div class="weui_navbar" id="cTab">
+            <div class="weui_navbar" style="height: 44px;background-color: #FFFFFF;z-index: 9;">
+                <div class="weui_navbar_item" id="t{{$index}}" ng-repeat="cateory in viewCateory track by $index" ng-click="listItems(cateory.id)">
+                    {{cateory.name}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 商品列表  -->
+    <div style="overflow:auto;height: 100%;padding-bottom: 20%;display:-webkit-box;-webkit-overflow-scrolling:touch;">
+        <div class="weui-cells:after" style="margin-top: 0;">
+            <div class="weui_imgtxt_list"  ng-repeat="item in itemList">
+                <div class="weui_imgtxt_item" style="background-color: #eee;" ng-click="getItemDetail({goodsId:item.id})" ui-sref-active="active">
+                    <div class="weui_imgtxt_img">
+                        <img ng-src="{{item.thumbnail}}" />
+                    </div>
+                    <div class="weui_imgtxt_des">
+                        <div class="weui_imgtxt_text">
+                            <span ><label style="font-size: 22px; width: 75%;float: left;" >{{item.title}}</label>
+                            <label style="font-size: 22px; width: 20%;float: right;">¥{{item.minPrice}}</label></span>
+                            
+                            <br /> <br />
+                            <span class="weui_imgtxt_description" ng-bind="item.description"></span><br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,48 @@
+<div class="homeView">
+    <div class="slide" id="slide2" style="height:300px;">
+        <ul>
+            <li ng-repeat="img in itemDetail.slidePic track by $index">
+                <img ng-src="{{img}}" id="img{{$index}}" ng-click="preview($index)">
+            </li>
+        </ul>
+        <div class="dot">
+            <span ng-repeat="img in itemDetail.slidePic"></span>
+        </div>
+    </div>
+    <div class="weui_panel weui_panel_access" style="margin-top: 0px; padding-bottom: 68px;">
+        <div class="weui_panel_bd">
+            <div class="weui_media_box weui_media_text">
+                <h4 class="weui_media_title" style="font-size: 24px;" ng-bind="itemDetail.title"></h4>
+                <p class="weui_media_desc" ng-bind="itemDetail.description"></p>
+                <p style="margin-top: 0.44rem;font-size: 20px;color: #ff0000;" id="mallPrice" ng-bind="itemDetail.viewPrice"></p>
+            </div>
+        </div>
+        <div class="weui_panel_hd" id="skuEle{{$index}}" ng-repeat="sku in itemDetail.skuPropertyList track by $index">
+            <p style="height: 20px;color: #000;" ng-bind="sku.name"></p>
+            <div ng-class="{weui_sku_spanFirst:$index==0,weui_sku_span:$index!=0}" id="{{sku.id}}{{$index}}" ng-repeat="ele in sku.eleList track by $index" ng-bind="ele.value" ng-click="chooseSku($event,ele,null)"></div>
+        </div>
+        <div class="weui_panel_hd">
+            <p style="font-size: 18px;color: #000;" ng-bind="itemDetail.attachment.viewCategoryName"></p>
+        </div>
+        <div class="weui_panel_hd" style="padding-top: 0;margin-bottom: 1.55rem;" id="attEle{{$index}}" ng-repeat="att in itemDetail.attachment.list track by $index">
+            <p style="color: #000;"><label ng-bind="att.title"></label>
+                <label style="color: #ffffff;margin-left: 0.55rem;" id="att{{att.goodsId}}"></label>
+                <label style="color: #ff0000;margin-left: 0.55rem;" ng-if="att.price >0" >￥{{att.price}}</label>
+            </p>
+
+            <div ng-repeat="attem in att.skuPropertyList ">
+                <p ng-bind="attem.name"></p>
+                <div ng-class="{weui_sku_spanFirst:$index==0,weui_sku_span:$index!=0}" ng-repeat="attEle in attem.eleList track by $index" ng-bind="attEle.value"  ng-click="chooseSku($event,attEle,'attachment')"></div>
+            </div>
+        </div>
+    </div>
+    <div class="weui_panel_hd weui_bottomBtn" style="padding:0;">
+        <div class="weui_btn_primary" style="border-right:1px solid #d9d9d9;">拼团</div>
+        <div class="weui_btn_primary" ng-click="toPayment(itemDetail.title,itemDetail.slidePic[0])">购买</div>
+    </div>
+    <div class="page__bd">
+        <div class="weui-gallery" id="gallery">
+            <span class="weui-gallery__img" id="galleryImg"></span>
+        </div>
+    </div>
+</div>

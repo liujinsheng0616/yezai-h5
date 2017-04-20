@@ -1,0 +1,53 @@
+<div class="homeView">
+    <div class="weui_cells" style="margin-top: 0px;">
+        <div class="weui_cell" style="height: 3.888rem;line-height: 2.444rem;">
+            <div class="weui_cell_bd weui_cell_primary" style="text-align: center;font-size: 1.444rem;font-weight: bold;">
+                <p>收货地址</p>
+            </div>
+        </div>
+        <div class="weui_cell" style="border-top: 1px solid #d9d9d9;height:3.33rem;">
+            <div class="weui_cell_hd" style="width: 4.833rem;"><label class="weui_label">收货人</label></div>
+            <div class="weui_cell_bd weui_cell_primary">
+                <input class="weui_input" type="text" placeholder="姓名"/>
+            </div>
+        </div>
+        <div class="weui_cell" style="border-top: 1px solid #d9d9d9;height:3.33rem;">
+            <div class="weui_cell_hd" style="width: 4.833rem;"><label class="weui_label">手机</label></div>
+            <div class="weui_cell_bd weui_cell_primary">
+                <input class="weui_input" type="number" pattern="[0-9]*" placeholder="收货人手机"/>
+            </div>
+        </div>
+        <div class="weui_cell" style="border-top: 1px solid #d9d9d9;height:3.33rem;">
+            <div class="weui_cell_hd" style="width: 4.833rem;"><label for="" class="weui_label">所在地区</label></div>
+            <div class="weui_cell_bd weui_cell_primary">
+                <input class="weui_input" type="text" value="" id='ssx' placeholder="选择省份 选择城市 选择区县"/>
+            </div>
+        </div>
+        <div class="weui_cell" style="border-top: 1px solid #d9d9d9;height:3.33rem;">
+            <div class="weui_cell_hd" style="width: 4.833rem;"><label class="weui_label">详细地址</label></div>
+            <div class="weui_cell_bd weui_cell_primary">
+                <input class="weui_input" type="text" placeholder="街道门牌信息"/>
+            </div>
+        </div>
+        <div class="page-bd-15" style="border-top: 1px solid #d9d9d9;height: 5.44rem;">
+            <a href="javascript:void(0);" class="weui_btn bg-green" style="margin-top: 0.99rem;height:3.11rem;line-height: 3.22rem;width: 8.22rem">保存</a>
+        </div>
+    </div>
+    <div class="weui_panel">
+        <div class="page-bd">
+            <div class="weui_cells_title" style="color: #0d0d0d;height: 2.22rem;line-height: 2.22rem;">历史</div>
+            <div class="weui_cells weui_cells_radio">
+                <label class="weui_cell weui_check_label" for="x{{$index+1}}" style="border-bottom: 1px solid #d9d9d9;" ng-repeat="address in addressList track by $index">
+                    <div class="weui_cell_bd weui_cell_primary" ng-click="changeDefaultAddress(address)">
+                        <p ng-bind="address.province + address.city + address.address"></p>
+                        <p><span ng-bind="address.receiver"></span><span style="margin-left: 0.33rem;" ng-bind="address.tel"></span></p>
+                    </div>
+                    <div class="weui_cell_ft">
+                        <input type="radio" class="weui_check" name="radio1" id="x{{$index+1}}" ng-checked="address.isDefault==1">
+                        <span class="weui_icon_checked"></span>
+                    </div>
+                </label>
+            </div>
+        </div>
+    </div>
+</div>

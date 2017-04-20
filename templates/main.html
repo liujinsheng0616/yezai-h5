@@ -1,0 +1,28 @@
+<section class="view">
+    <div class="weui-tab">
+        <div class="weui-tab__panel">
+            <ui-view></ui-view>
+        </div>
+        <!-- 底部菜单  -->
+            <div id="tabOrder" class="temp2 weui_tabbar ">
+                <a ui-sref="main.home" ng-click="toHomePage();" class="temp22 weui_tabbar_item weui_active" id="activeHomePage">
+                    <div class="weui_tabbar_icon">
+                        <i class="fa fa-home weui_style"></i>
+                    </div>
+                    <p class="weui_tabbar_label">也在</p>
+                </a>
+                <a ui-sref="main.mall" class="temp22 weui_tabbar_item" id="mall">
+                    <div class="weui_tabbar_icon">
+                        <i class="fa fa-shopping-bag weui_bag"></i>
+                    </div>
+                    <p class="weui_tabbar_label">购</p>
+                </a>
+                <a ui-sref="main.mine" ng-click="toMyInfo();" class="temp22 weui_tabbar_item" id="mine">
+                    <div class="weui_tabbar_icon">
+                        <i class="fa fa-user weui_home"></i>
+                    </div>
+                    <p class="weui_tabbar_label">我的</p>
+                </a>
+            </div>
+    </div>
+</section>

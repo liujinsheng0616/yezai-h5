@@ -1,0 +1,121 @@
+@charset "utf-8";
+
+* {
+	-webkit-box-sizing: border-box;
+			box-sizing: border-box;
+}
+html {
+	width: 100%;
+	height: 100%;
+}
+body {
+	background-color: #f8f8f8;
+	width: 100%;
+	height: 100%;
+}
+a {
+    color: #09BB07;
+    text-decoration: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+a {
+    text-decoration: none;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+ul {
+	list-style: none;
+}
+
+/*底部tab*/
+.tab-bottom {
+    bottom: 0;
+    width: 100%;
+    position: fixed;
+}
+.weui_tab_bd {
+    box-sizing: border-box;
+    height: 100%;
+    padding-bottom: 55px;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+}
+.weui_tabbar {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    position: absolute;
+    z-index: 500;
+    bottom: 0;
+    width: 100%;
+    background-color: #F7F7FA;
+}
+.weui_tab_bd_item {
+    display: none;
+}
+.weui_tabbar:before {
+    content: " ";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 1px;
+    border-top: 1px solid #C0BFC4;
+    color: #979797;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    -webkit-transform: scaleY(.5);
+    transform: scaleY(.5);
+}
+.weui_tabbar_item {
+    display: block;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
+    padding: 7px 0 0;
+    -webkit-tap-highlight-color: transparent;
+}
+.weui_tabbar_icon {
+    margin: 0 auto;
+    width: 24px;
+    height: 24px;
+}
+.weui_tabbar_icon img {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.weui_tabbar_icon+.weui_tabbar_label {
+    margin-top: 5px;
+}
+.weui_tabbar_label {
+    text-align: center;
+    color: #999;
+    font-size: 12px;
+}
+.weui_active .weui_tabbar_icon i,
+.weui_active .weui_tabbar_label {
+	color: #09BB07;
+}
+.weui_tabbar_icon i {
+	color: #999;
+}
+.weui_tabbar_icon i.weui_home {
+	font-size: 23px;
+	margin-left: 3px;
+}
+
+.weui_tabbar_icon i.weui_bag {
+    font-size: 23px;
+    margin-left: 1px;
+}
+
+.weui_tabbar_icon i.weui_mine {
+	font-size: 25px;
+    margin-left: 3px;
+}
+.weui_tabbar_icon i.weui_style,
+.weui_tabbar_icon i.weui_order {
+	font-size: 25px;
+    margin-left: 1px;
+}

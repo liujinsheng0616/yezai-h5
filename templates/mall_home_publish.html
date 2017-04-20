@@ -1,0 +1,35 @@
+<div class="homeView" style="background-color: #fff;height: 100%;">
+    <div class="weui_cells publishHead">
+        <div style="float: left;width: 25%;color: #04BE02;" ng-click="cancelPublish();">取消</div>
+        <div style="float: left;width: 50%;font-size: 18px;">&nbsp;</div>
+        <div style="float: left;width: 25%;color: #04BE02;" ng-click="publish();">发布</div>
+    </div>
+    <div class="weui_cells weui_cells_form" style="margin-top: 0;border-bottom: 0;">
+        <div class="weui_cell">
+            <div class="weui_cell_bd weui_cell_primary">
+                <textarea id="textarea" class="weui_textarea" ng-model="topic.text" placeholder="说点什么..." rows="3"></textarea>
+            </div>
+        </div>
+        <div class="weui-cell ">
+        <div class="weui-cell__bd">
+            <div class="weui-uploader">
+                <div class="weui-uploader__bd" style="width: 300px">
+                    <ul class="weui-uploader__files" id="imageFiles" ng-click="previewImage();">
+                    </ul>
+                    <div class="weui-uploader__input-box" ng-click="addImage();">
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="weui_panel">
+        <div class="weui_media_box weui_media_text" style="padding-top: 0;">
+            <h1 class="weui_media_title">选择TAG</h1>
+            <ul class="weui_media_info" style="text-align: center;font-size: 15px;margin-top: 0;line-height: 0;">
+                <li class="tagSelect" ng-repeat="tag in tagList" ng-bind="tag.value" ng-click="chooseTag($event,tag)"></li>
+            </ul>
+        </div>
+    </div>
+</div>

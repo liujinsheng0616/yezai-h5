@@ -1,0 +1,88 @@
+<div class="homeView">
+    <div class="weui_panel">
+        <div class="weui_panel_bd">
+            <div class="weui_media_box weui_media_small_appmsg">
+                <div class="weui_cells weui_cells_access" style="height: 4.88rem;">
+                    <a class="weui_cell" ui-sref="address({title:title,month:month,price:price})" ui-sref-active="active">
+                        <div class="weui_cell_hd" style="margin-left: 0.678rem;font-size: 25px;color: #888;"><i class="fa fa-map-marker"></i></div>
+                        <div style="width: 100%;margin-left: 0.777rem;font-size: 16px;">
+                            <div style="width: 100%;">
+                                <span ng-bind="defaultAddress.receiver"></span>
+                                <span ng-bind="defaultAddress.tel" style="margin-left: 0.666rem;"></span>
+                            </div>
+                            <div style="width: 100%;">
+                                <span ng-bind="defaultAddress.province"></span>
+                                <span ng-bind="defaultAddress.city"></span>
+                                <span ng-bind="defaultAddress.area"></span>
+                                <span ng-bind="defaultAddress.address"></span>
+                            </div>
+                        </div>
+                        <span class="weui_cell_ft"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="weui_panel" ng-hide="orderType!='FORWARD'">
+        <div class="weui_cell">
+            <div class="weui_cell_hd" style="font-size: 0.788rem;width: 100%;"><span>首次送达时间：</span><span style="color:#04BE02;">收货地址和送达时间都可以修改哦！</span></div>
+        </div>
+        <div class="weui_cell" style="height: 6.44rem;padding:0px;" >
+            <div class="weui_leftIcon"><i class="i_leftIcon" ng-hide="leftIndex==0" ng-click="toLeft(leftIndex)"></i></div>
+            <div class="weui_centerArea" ng-repeat="plan in planList track by $index">
+                <div ng-class="{forwordPlanFirst:$index==0,forwordPlan:$index==1}" id="plan{{$index}}" ng-click="changeFirstPlanTime($index)">
+                    <div class="forwordPlan_temp" ng-bind="'周'+plan.day+'送达'"></div>
+                    <div ng-class="{forwordPlan_tempc:$index==1,forwordPlan_tempd:$index==0}" id="temp{{$index}}" ng-bind="plan.firstDeliveryDay"></div>
+                </div>
+            </div>
+            <div class="weui_rightIcon"><i class="i_rightIcon" ng-hide="rightIndex >= forwardPlanList.length - 1" ng-click="toRight(rightIndex)"></i></div>
+        </div>
+    </div>
+    <div class="weui_panel">
+        <div class="weui_panel_bd">
+            <div class="weui_media_box weui_media_appmsg">
+                <div class="weui_cell_hd">
+                    <img style="width:80px;height:80px;margin-right:5px;display:block" ng-src="{{thumbnail}}" alt="">
+                </div>
+                <div class="weui_media_bd">
+                    <table border="0" style="width: 100%;margin-left: 8px;color:#888;font-size:0.855rem;">
+                        <tr style="height: 45px;font-size: 0.975rem;color: #000;">
+                            <td ng-bind="title"></td>
+                        </tr>
+                        <tr style="height: 25px;">
+                            <td >{{payDescription}}</td>
+                            <td style="font-size: 18px;font-weight: bold;color: #0d0d0d;">￥<span ng-bind="price"></span></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="weui_cells" style="margin-top: 0px;">
+            <div class="weui_cell" style="border-top: 1px solid #d9d9d9;height:3.33rem;">
+                <div class="weui_cell_hd" style="width: 4.833rem;color: #04BE02;"><label class="weui_label">加价：</label></div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <input class="weui_input" style="font-size: 16px;color: #04BE02;" type="number" pattern="[0-9]*" placeholder="(如果需要,加价可获得更好的服务和产品)" onchange="addPrice(this.value)"/>
+                </div>
+            </div>
+            <div class="weui_cell" style="border-top: 1px solid #d9d9d9;height:3.33rem;">
+                <div class="weui_cell_hd" style="width: 4.833rem;"><label class="weui_label">备注：</label></div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <input class="weui_input" style="font-size: 16px;" type="number" pattern="[0-9]*" placeholder=""/>
+                </div>
+            </div>
+            <div class="weui_cell" style="border-top: 1px solid #d9d9d9;height:3.33rem;">
+                <div class="weui_cell_hd weui_cell_primary" style="width: 4.833rem;"><label class="weui_label">支付金额</label></div>
+                <div class="weui_cell_ft" style="color: #000;">
+                    合计：<span style="font-size: 20px;color: #04BE02;" ng-bind="'￥' + totalPrice" id="totalPrice"></span>
+                </div>
+            </div>
+            <div class="weui_cell" style="border-top: 1px solid #d9d9d9;height:3.33rem;">
+                <div class="weui_cell_hd" style="width: 2.833rem;color: #04BE02;"><i class="i_one"></i></div>
+                <div class="weui_cell_bd">
+                    微信支付
+                </div>
+            </div>
+            <a href="javascript:;" class="weui_btn weui_btn_primary" style="border-radius:0px;height:3.33rem;line-height: 3.33rem;">立即付款</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,50 @@
+<div class="homeView" style="overflow: hidden;height: 100%;">
+    <div class="weui_tab " style="height:44px;" id="tab1"><!--tab-fixed添加顶部-->
+        <div class="weui_navbar" style="height:44px;">
+            <div class="weui_navbar_item" ng-click="getAllOrderList('ALL')">
+                全部订单
+            </div>
+            <div class="weui_navbar_item" ng-click="getNoPayOrderList('ORDER_CREATED');">
+                未付款
+            </div>
+            <div class="weui_navbar_item" ng-click="getInServiceOrderList('ORDER_PAID')">
+                服务中
+            </div>
+            <div class="weui_navbar_item" ng-click="getCompletedOrderList('ORDER_FINISHED')">
+                已完成
+            </div>
+        </div>
+    </div>
+
+    <div style="overflow:auto;height: 100%;padding-bottom: 18%;">
+        <div class="weui_cells" ng-repeat="order in orderList">
+            <div class="weui_cell" style="font-size: 14px;color:#000;">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p ng-bind="order.createTime"></p>
+                </div>
+                <div class="weui_cell_ft" style="font-size: 12px;color: #000;">
+                    <span ng-bind="order.status" ng-class="{redrText : order.status == '未付款'}"></span>
+                </div>
+            </div>
+
+            <div class="weui_cell" style="border-bottom: 1px solid #d9d9d9;border-top: 1px solid #d9d9d9;" ng-click="goToOrderDetail(order.status,order.type)">
+                <div class="weui_cell_hd"><img ng-src="{{order.mainPic}}" alt="" style="width:80px;height: 80px;margin-right:5px;"></div>
+                <table border="0" style="width: 70%;margin-left: 8px;color:#888;font-size: 13px;">
+                    <tr style="height: 35px;font-size: 15px;color: #000;">
+                        <td ng-bind="order.title"></td>
+                    </tr>
+                    <tr style="height: 25px;" ng-hide="order.notes == ''">
+                        <td ng-bind="order.notes"></td></span></td>
+                    </tr>
+                    <tr style="height: 25px;">
+                        <td>价格：¥<span ng-bind="order.price"></span></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="weui_cells_title" style="text-align: right;color:#000;height: 40px;line-height: 30px;border-bottom:  1px solid #d9d9d9;margin-bottom: 0;">合计：¥ <span ng-bind="order.price + '(免运费）'"></span></div>
+            <div class="weui_cells_title" style="text-align: right;color:#000;height: 40px;line-height: 30px;" ng-hide="order.status != '未付款'" >
+                <a ui-sref="orderDetail" ui-sref-active="active" class="weui_btn weui_btn_primary" style="height: 30px;line-height: 30px;font-size: 14px;width:80px;border-radius:0px;margin-right: 0;">支付</a>
+            </div>
+        </div>
+    </div>
+</div>
