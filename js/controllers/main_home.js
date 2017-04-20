@@ -1,25 +1,16 @@
 /**
  * Created by kingson·liu on 17/3/8.
  */
-goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, mainHomeService, localStorageService,wxUserInfoService) {
+goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, mainHomeService, localStorageService,wxUserInfoService,configService) {
 
     $rootScope.passport = store.passport;
+    var params = configService.parseQueryString(window.location.href);
     var passport = store.passport;
-        var str = window.location.href;
-        var arr = str.split("?");
-        if (arr.length>1){
-            var kv = arr[1].split("&");
-            for (i in kv){
-                var kvArr = kv[i].split("=");
-                var key = kvArr[0];
-                var value = kvArr[1];
-                passport[key] = value;
-            }
-        }
+    passport = params;
 
-        if (passport.passportId == 0 || passport.type == "" || passport.type == "BLANK") {
-            wxUserInfoService.getUserInfo();
-        }
+    if (passport.passportId == 0 || passport.type == "" || passport.type == "BLANK") {
+        wxUserInfoService.getUserInfo();
+    }
 
     var tabIndex = 0;
 
