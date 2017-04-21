@@ -83,21 +83,18 @@ goceanApp.controller('MainHomePublishCtrl', function ($scope, $rootScope, $state
 
     function createTopic(){
         if ($rootScope.passport == null || $rootScope.passport == "undefined"){// base , userInfo
-            $rootScope.passport = {//TEST
-                groupId: 1,
-                token:"xes3fds33"
-            }
+            // 登录 FIXME
         }
         //AJAX请求服务器
         var topic = {
-            type:$rootScope.topicType,// SHAI_SHAI | INTEREST
+            type:$rootScope.topicViewNav.id,// SHAI_SHAI | INTEREST
             tagList:$rootScope.tagChoosed,//[1,2]
             text:$scope.topic.text,//发帖内容 FIXME
             photoList:$rootScope.serverImgIds,//["xxx.jpg","zzz.jpg"]
             postAddress:"",//地址
             coordinate:"",
-            passportId:store.passport.passportId,//groupId
-            token:store.passport.token,//登录后的我们自己的token
+            passportId:$rootScope.passport.passportId,//groupId
+            token:$rootScope.passport.token,//登录后的我们自己的token
             device:"WX"// WX | ANDROID | IOS | PC
         };
 

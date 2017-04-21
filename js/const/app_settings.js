@@ -23,8 +23,12 @@ goceanApp.constant('appSettings', {
         setDefaultAddress:'/address/default/set',
 		createAddress:'/address/create',
 		refreshAddress:'/address/refresh',
+		createOrRefresh:'/address/createOrRefresh',
 		removeAddress:'/address/remove',
-		listAddress:'/address/list'
+		listAddress:'/address/list',
+
+		forwardPlanSelector:'/forward/plan/selector'
+
 
 	},
     appId:'wx0cae6e3b9632e632'

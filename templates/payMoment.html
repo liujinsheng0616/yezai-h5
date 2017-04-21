@@ -25,14 +25,14 @@
     </div>
     <div class="weui_panel" ng-hide="orderType!='FORWARD'">
         <div class="weui_cell">
-            <div class="weui_cell_hd" style="font-size: 0.788rem;width: 100%;"><span>首次送达时间：</span><span style="color:#04BE02;">收货地址和送达时间都可以修改哦！</span></div>
+            <div class="weui_cell_hd" style="font-size: 0.788rem;width: 100%;"><span>首次送达时间：</span><span style="color:#04BE02;">下单后,收货地址和送达时间可以修改哦！</span></div>
         </div>
         <div class="weui_cell" style="height: 6.44rem;padding:0px;" >
             <div class="weui_leftIcon"><i class="i_leftIcon" ng-hide="leftIndex==0" ng-click="toLeft(leftIndex)"></i></div>
             <div class="weui_centerArea" ng-repeat="plan in planList track by $index">
                 <div ng-class="{forwordPlanFirst:$index==0,forwordPlan:$index==1}" id="plan{{$index}}" ng-click="changeFirstPlanTime($index)">
                     <div class="forwordPlan_temp" ng-bind="'周'+plan.day+'送达'"></div>
-                    <div ng-class="{forwordPlan_tempc:$index==1,forwordPlan_tempd:$index==0}" id="temp{{$index}}" ng-bind="plan.firstDeliveryDay"></div>
+                    <div ng-class="{forwordPlan_tempc:$index==1,forwordPlan_tempd:$index==0}" id="temp{{$index}}">{{plan.time | date:'yyyy-MM-dd'}}</div>
                 </div>
             </div>
             <div class="weui_rightIcon"><i class="i_rightIcon" ng-hide="rightIndex >= forwardPlanList.length - 1" ng-click="toRight(rightIndex)"></i></div>
@@ -61,7 +61,7 @@
             <div class="weui_cell" style="border-top: 1px solid #d9d9d9;height:3.33rem;">
                 <div class="weui_cell_hd" style="width: 4.833rem;color: #04BE02;"><label class="weui_label">加价：</label></div>
                 <div class="weui_cell_bd weui_cell_primary">
-                    <input class="weui_input" style="font-size: 16px;color: #04BE02;" type="number" pattern="[0-9]*" placeholder="(如果需要,加价可获得更好的服务和产品)" onchange="addPrice(this.value)"/>
+                    <input class="weui_input" style="font-size: 16px;color: #04BE02;" type="number" pattern="[0-9]*" placeholder="(加价可获得更好的服务和产品)" onchange="addPrice(this.value)"/>
                 </div>
             </div>
             <div class="weui_cell" style="border-top: 1px solid #d9d9d9;height:3.33rem;">
@@ -82,7 +82,7 @@
                     微信支付
                 </div>
             </div>
-            <a href="javascript:;" class="weui_btn weui_btn_primary" style="border-radius:0px;height:3.33rem;line-height: 3.33rem;">立即付款</a>
+            <a href="javascript:;" class="weui_btn weui_btn_primary" style="border-radius:0px;height:3.33rem;line-height: 3.33rem;">立即下单</a>
         </div>
     </div>
 </div>

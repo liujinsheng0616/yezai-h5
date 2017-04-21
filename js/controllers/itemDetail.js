@@ -65,7 +65,8 @@ goceanApp.controller('ItemDetailCtrl', function($scope, $rootScope, $state,
 
 	var _payDescription = "";
 	var _payAttachment = [];
-	
+
+	var _skuId = 0;
 	var _totalPrice = 0;
 	var _price = 0;
 	var _attachedGoodsList = [];
@@ -196,12 +197,15 @@ goceanApp.controller('ItemDetailCtrl', function($scope, $rootScope, $state,
 						resultSkuList.push(tempSkuId);
 					}
 				}
+				if (resultSkuList.length == 1){
+					_skuId = resultSkuList[0];
+				}
 				// 最小价格，最大价格
 				var minPrice = 0, maxPrice = 0;
 				if (resultSkuList.length > 0) {
 					for (i in resultSkuList) {
 						var tempSkuId = resultSkuList[i];
-						for (j in skuList) {
+						for (j in skuList) {//和sku列表比较
 							var sku = skuList[j];
 							var skuId = sku.skuId;
 							var price = sku.price;
@@ -271,6 +275,8 @@ goceanApp.controller('ItemDetailCtrl', function($scope, $rootScope, $state,
 			return;
 		}
 		$state.go("payment", {
+			goodsId:itemDetail.goodsId,
+			skuId:_skuId,
 			title : itemDetail.title,
 			payDescription : _payDescription,
 			price : _totalPrice,

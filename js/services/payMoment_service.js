@@ -21,5 +21,20 @@ goceanApp.factory('payMomentService', ['$http', '$q','$rootScope', 'ajaxUtil','a
             return defer.promise;
         };
 
+        payMomentServiceObj.getForwardPlanSelector = function (params) {
+            var defer = $q.defer();
+            var obj = {
+                url:appSettings.host+appSettings.requestURL.forwardPlanSelector,
+                type:'POST',
+                params:params
+            };
+            ajaxUtil.ajax(obj).then(function(data){
+                defer.resolve(data);
+            },function(err){
+                defer.reject(err);
+            });
+            return defer.promise;
+        };
+
         return payMomentServiceObj;
     }]);

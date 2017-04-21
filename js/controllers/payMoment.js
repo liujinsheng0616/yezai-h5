@@ -50,12 +50,27 @@ goceanApp.controller('PayMomentCtrl', function ($scope, $rootScope, $state, $tim
 
  
     // 配送周期
-    $scope.getForwordPLanList = function () {
+    $scope.getForwordPLanSelector = function () {
     	
     	if ($rootScope.orderType != "FORWARD") 
    	 		return;
         // service 拿取送货计划
-        $scope.forwardPlanList = store.forwardPlanList;
+        $scope.forwardPlanList = [];
+
+        var obj = {
+            goodsId:$stateParams.goodsId
+        };
+        payMomentService.getForwardPlanSelector(obj).then(function(data){
+            if (data.status == "OK") {
+                $scope.forwardPlanList = data.result;
+
+                initPlanSelector();
+            }
+        });
+
+    };
+
+    function initPlanSelector() {
         for (var i = 0;i<$scope.forwardPlanList.length;i++){
             var plan = $scope.forwardPlanList[i];
             var dayOfWeek = plan.dayOfWeek;
@@ -74,14 +89,16 @@ goceanApp.controller('PayMomentCtrl', function ($scope, $rootScope, $state, $tim
             } else if (dayOfWeek == 7){
                 plan.day = '六';
             }
+
         }
         $scope.planList = [];
         $scope.planList.push($scope.forwardPlanList[0]);
         $scope.planList.push($scope.forwardPlanList[1]);
         $scope.leftIndex = 0;
         $scope.rightIndex = 1;
-    };
-    $scope.getForwordPLanList();
+    }
+
+    $scope.getForwordPLanSelector();
 
     
     // 改变首次送达时间

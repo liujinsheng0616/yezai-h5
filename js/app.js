@@ -82,7 +82,9 @@ var goceanApp = angular.module('starter', ['ui.router','angularFileUpload', 'Loc
             })
             .state('payment', {
                 cache:false,
-                params : {'title' : null, 
+                params : {
+                    'goodsId':0,'skuId':0,
+                    'title' : null,
                 	'payDescription' : null, 
                 	'price' : null,
                 	'thumbnail':null,'type':null,
