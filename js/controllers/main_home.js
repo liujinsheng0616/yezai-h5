@@ -209,6 +209,7 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
             var toUserId = '';
             var list = document.getElementById('list');
             var boxs = list.children;
+            var timer;
 
             //删除节点
             function removeNode(node) {
@@ -258,7 +259,7 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
                     var me = this;
                     var val = me.value;
                     if (val == '') {
-                        setTimeout(function () {
+                        timer = setTimeout(function () {
                             me.value = '评论…';
                             me.parentNode.className = 'text-box';
                         }, 200);
