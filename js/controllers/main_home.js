@@ -36,7 +36,6 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
     };
 
     mainHomeService.listTopic(obj).then(function(data){
-        console.log(data);
         if (data.status == "OK"){
             var result = data.result;
             $scope.topicList = result.topicList;
