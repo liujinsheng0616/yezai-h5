@@ -3,8 +3,8 @@
  */
 goceanApp.constant('appSettings', {
 	timeout : 30000,
-	// host:'http://localhost',
-	host : 'http://m.yezaigou.com',
+	 host:'http://localhost',
+//	host : 'http://m.yezaigou.com',
 	host2:'http://wxsdk.yezaigou.com',
 	requestURL : {
 		wxBase: '/wx/page/base',
@@ -27,8 +27,9 @@ goceanApp.constant('appSettings', {
 		removeAddress:'/address/remove',
 		listAddress:'/address/list',
 
-		forwardPlanSelector:'/forward/plan/selector'
+		forwardPlanSelector:'/forward/plan/selector',
 
+		placeOrder:'/order/place'
 
 	},
     appId:'wx0cae6e3b9632e632'

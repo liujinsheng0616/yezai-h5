@@ -36,5 +36,20 @@ goceanApp.factory('payMomentService', ['$http', '$q','$rootScope', 'ajaxUtil','a
             return defer.promise;
         };
 
+        payMomentServiceObj.placeOrder = function (params) {
+            var defer = $q.defer();
+            var obj = {
+                url:appSettings.host+appSettings.requestURL.placeOrder,
+                type:'POST',
+                params:params
+            };
+            ajaxUtil.ajax(obj).then(function(data){
+                defer.resolve(data);
+            },function(err){
+                defer.reject(err);
+            });
+            return defer.promise;
+        };
+
         return payMomentServiceObj;
     }]);

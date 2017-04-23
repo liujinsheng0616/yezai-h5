@@ -1,68 +1,42 @@
 /**
  * Created by 53983 on 2017/3/14.
  */
-var totalPrice=0;
-var price=0;
 goceanApp.controller('PayMomentCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, payMomentService) {
     console.log("about PayMomentCtrl");
 
-    // 参数里拿值
-    if ($stateParams.title){
-        $rootScope.title = $stateParams.title;
+    var _state = "mall";
+    if ($rootScope.passport == null){
+        window.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0cae6e3b9632e632&redirect_uri=http://wxsdk.yezaigou.com/wx/page/base&response_type=code&scope=snsapi_base&state="+_state;
+        return;
     }
-    if ($stateParams.payDescription){
-        $rootScope.payDescription = $stateParams.payDescription;
-    }
-    if ($stateParams.price){
-        $rootScope.price = $stateParams.price;
-    }
-    if ($stateParams.thumbnail){
-        $rootScope.thumbnail = $stateParams.thumbnail;
-    }
-    if ($stateParams.payAttachment){//FIXME 页面商品下面加一栏，参考花+
-        $rootScope.payAttachment = $stateParams.payAttachment;
-    }
-    if ($stateParams.type){
-    	$rootScope.orderType = $stateParams.type;
-    }
-    
-    // 加价
-    totalPrice = $rootScope.price;
-    price = $rootScope.price;
-    $rootScope.totalPrice = $rootScope.price;
 
-    /*
-     * 获取默认地址
-     */
-    var tokenedRo = {
-        passportId: $rootScope.passport.passportId,
-        token:$rootScope.passport.token
+    function getDefaultAddress() {
+        var tokenedRo = {
+            passportId: $rootScope.passport.passportId,
+            token: $rootScope.passport.token
+        };
+        payMomentService.getDefaultAddress(tokenedRo).then(function (data) {
+            if (data.status == "OK") {
+                $rootScope.defaultAddress = data.result;
+                $rootScope.orderRo.addressId = data.result.id;
+            }
+        });
     };
-    payMomentService.getDefaultAddress(tokenedRo).then(function(data){
-        if (data.status == "OK") {
-            $rootScope.defaultAddress = data.result;
-        }
-    });
 
-    if ($rootScope.defaultAddress == null) {
-        $rootScope.defaultAddress = store.defaultAddress;
-    }
-
- 
     // 配送周期
-    $scope.getForwordPLanSelector = function () {
-    	
-    	if ($rootScope.orderType != "FORWARD") 
-   	 		return;
+    function getForwordPLanSelector () {
+
+        if ($rootScope.orderRo.type != "FORWARD")
+            return;
         // service 拿取送货计划
-        $scope.forwardPlanList = [];
+        $rootScope.forwardPlanList = [];
 
         var obj = {
             goodsId:$stateParams.goodsId
         };
         payMomentService.getForwardPlanSelector(obj).then(function(data){
             if (data.status == "OK") {
-                $scope.forwardPlanList = data.result;
+                $rootScope.forwardPlanList = data.result;
 
                 initPlanSelector();
             }
@@ -70,9 +44,10 @@ goceanApp.controller('PayMomentCtrl', function ($scope, $rootScope, $state, $tim
 
     };
 
+
     function initPlanSelector() {
-        for (var i = 0;i<$scope.forwardPlanList.length;i++){
-            var plan = $scope.forwardPlanList[i];
+        for (var i = 0;i<$rootScope.forwardPlanList.length;i++){
+            var plan = $rootScope.forwardPlanList[i];
             var dayOfWeek = plan.dayOfWeek;
             if (dayOfWeek == 1){
                 plan.day = '日';
@@ -91,19 +66,94 @@ goceanApp.controller('PayMomentCtrl', function ($scope, $rootScope, $state, $tim
             }
 
         }
-        $scope.planList = [];
-        $scope.planList.push($scope.forwardPlanList[0]);
-        $scope.planList.push($scope.forwardPlanList[1]);
-        $scope.leftIndex = 0;
-        $scope.rightIndex = 1;
-    }
+        $rootScope.planList = [];
+        $rootScope.planList.push($rootScope.forwardPlanList[0]);
+        $rootScope.planList.push($rootScope.forwardPlanList[1]);
+        $rootScope.leftIndex = 0;
+        $rootScope.rightIndex = 1;
 
-    $scope.getForwordPLanSelector();
+        $rootScope.orderRo.plan = $rootScope.forwardPlanList[0];
+    };
 
-    
+
+    function init () {
+
+        if ($rootScope.orderRo == null) {
+
+            $rootScope.orderRo = {
+                passportId:$rootScope.passport.passportId,
+                token:$rootScope.passport.token,
+                skuId: $stateParams.skuId,
+                pricePlus: null,
+                qty:1,
+                addressId:0,
+                plan: null,
+                note: null,
+                type: null,
+                attachmentIdList:[],
+                orderUsers:{
+                    buyerId:$rootScope.passport.passportId,
+                    sharerId:0,
+                    invitorId:0
+                },
+                orderAddress:null
+            };
+
+            $rootScope.payView = {
+                title:null,
+                payDescription:null,
+                thumbnail:null,
+                attachment:null
+            };
+
+            // 参数里拿值
+            if ($stateParams.title) {
+                $rootScope.payView.title = $stateParams.title;
+            }
+            if ($stateParams.payDescription) {
+                $rootScope.payView.payDescription = $stateParams.payDescription;
+            }
+            if ($stateParams.price) {
+                $rootScope.orderRo.price = $stateParams.price;
+            }
+            if ($stateParams.thumbnail) {
+                $rootScope.payView.thumbnail = $stateParams.thumbnail;
+            }
+            if ($stateParams.payAttachment) {//FIXME 页面商品下面加一栏，参考花+
+                $rootScope.payView.attachment = $stateParams.payAttachment;
+            }
+            if ($stateParams.type) {
+                $rootScope.orderRo.type = $stateParams.type;
+            }
+
+            if ($rootScope.attachment != null){
+                for (i in $rootScope.attachment){
+                    $rootScope.orderRo.attachmentIdList[i] = $rootScope.attachment[i].skuId;
+                }
+            }
+
+            /*
+             * 获取默认地址
+             */
+            getDefaultAddress();
+
+            if ($rootScope.defaultAddress == null) {
+                $rootScope.defaultAddress = store.defaultAddress;
+            }
+
+            getForwordPLanSelector();
+        }else{
+            if($rootScope.orderRo.type == "FORWARD") {
+                $rootScope.orderRo.plan = $rootScope.forwardPlanList[0];
+            }
+        }
+
+    };
+
+
     // 改变首次送达时间
     $scope.changeFirstPlanTime = function (index) {
-   	 	if ($rootScope.orderType != "FORWARD") 
+   	 	if ($rootScope.orderRo.type != "FORWARD")
    	 		return;
         $("#plan"+index).removeClass().addClass("forwordPlanFirst");
         $("#temp"+index).removeClass().addClass("forwordPlan_tempd");
@@ -114,11 +164,12 @@ goceanApp.controller('PayMomentCtrl', function ($scope, $rootScope, $state, $tim
             $("#plan0").removeClass().addClass("forwordPlan");
             $("#temp0").removeClass().addClass("forwordPlan_tempc");
         }
+        $rootScope.orderRo.plan = $rootScope.forwardPlanList[index];
     };
 
     // 右点击滑动切换
     $scope.toRight = function (rightIndex) {
-    	if ($rootScope.orderType != "FORWARD") 
+    	if ($rootScope.orderRo.type != "FORWARD")
    	 		return;
         $scope.planList=[];
         $scope.planList.push($scope.forwardPlanList[rightIndex+1]);
@@ -133,7 +184,7 @@ goceanApp.controller('PayMomentCtrl', function ($scope, $rootScope, $state, $tim
 
     // 左点击滑动切换
     $scope.toLeft = function (leftIndex) {
-    	if ($rootScope.orderType != "FORWARD") 
+    	if ($rootScope.orderRo.type != "FORWARD")
    	 		return;
         $scope.planList=[];
         $scope.planList.push($scope.forwardPlanList[leftIndex-2]);
@@ -144,15 +195,26 @@ goceanApp.controller('PayMomentCtrl', function ($scope, $rootScope, $state, $tim
         $("#temp0").removeClass().addClass("forwordPlan_tempd");
         $("#plan1").removeClass().addClass("forwordPlan");
         $("#temp1").removeClass().addClass("forwordPlan_tempc");
-    }
+    };
 
+    $scope.placeOrder = function () {
+        if ($rootScope.orderRo.addressId == 0){
+            alert("收货地址不能为空");
+            return;
+        }
+        var obj = $rootScope.orderRo;
+        obj.orderAddress = $rootScope.defaultAddress;
+        payMomentService.placeOrder(obj).then(function(data){
+            if (data.status == "OK") {
+                var orderId = data.result;
 
+            }else{
+                alert("系统繁忙,请稍候再试");
+            }
+        }).error(function (data) {
+            alert("系统繁忙,请稍候再试!");
+        });
+    };
+
+    init();
 });
-// 加价合计
-function addPrice(obj) {
-    totalPrice = price;
-    if (obj != ''){
-        totalPrice +=parseFloat(obj);
-    }
-    $("#totalPrice").html(totalPrice.toFixed(2))
-}

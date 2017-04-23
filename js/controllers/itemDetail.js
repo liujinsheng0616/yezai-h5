@@ -3,7 +3,12 @@
  */
 goceanApp.controller('ItemDetailCtrl', function($scope, $rootScope, $state,
 		$timeout, $stateParams, mallDetailService) {
-	console.log("about ItemDetailCtrl");
+
+    var _state = "mall";
+    if ($rootScope.passport == null){
+        window.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0cae6e3b9632e632&redirect_uri=http://wxsdk.yezaigou.com/wx/page/base&response_type=code&scope=snsapi_base&state="+_state;
+    	return;
+    }
 
 	if ($stateParams.itemDetail != null && $stateParams.itemDetail != "undefined"){//后退到这一页
 		$rootScope.itemDetail = $stateParams.itemDetail;
@@ -197,8 +202,12 @@ goceanApp.controller('ItemDetailCtrl', function($scope, $rootScope, $state,
 						resultSkuList.push(tempSkuId);
 					}
 				}
-				if (resultSkuList.length == 1){
-					_skuId = resultSkuList[0];
+				if (resultSkuList.length == 1) {
+                    if (isAttached) {
+                        attachGoods.skuId = resultSkuList[0];
+                    } else {
+                    	_skuId = resultSkuList[0];
+               		 }
 				}
 				// 最小价格，最大价格
 				var minPrice = 0, maxPrice = 0;
@@ -255,11 +264,14 @@ goceanApp.controller('ItemDetailCtrl', function($scope, $rootScope, $state,
 							/*
 							 * _payAttachment
 							 */
-							var simpleAtt = {
-									payDescription: att.title + " " + att.payDescription,
-									price: att.price
-									}
-							_payAttachment.push(simpleAtt);
+							if (att.price == 0) {
+                                var simpleAtt = {
+                                    skuId: att.skuId,
+                                    payDescription: att.title + " " + att.payDescription,
+                                    price: att.price
+                                }
+                                _payAttachment.push(simpleAtt);
+                            }
 						}
 					}
 					itemDetail.viewPrice = "￥" + _totalPrice;
@@ -274,6 +286,8 @@ goceanApp.controller('ItemDetailCtrl', function($scope, $rootScope, $state,
 			$.alert("请选择主商品");
 			return;
 		}
+		$rootScope.payView = null;
+		$rootScope.orderRo = null;
 		$state.go("payment", {
 			goodsId:itemDetail.goodsId,
 			skuId:_skuId,

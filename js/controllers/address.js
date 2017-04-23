@@ -2,6 +2,13 @@
  * Created by kingson·liu on 2017/3/12.
  */
 goceanApp.controller('AddressCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, addressService) {
+
+    var _state = "mall";
+    if ($rootScope.passport == null){
+        window.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0cae6e3b9632e632&redirect_uri=http://wxsdk.yezaigou.com/wx/page/base&response_type=code&scope=snsapi_base&state="+_state;
+        return;
+    }
+
     $("#ssx").cityPicker({
         title: "选择省市县"
     });
@@ -62,7 +69,7 @@ goceanApp.controller('AddressCtrl', function ($scope, $rootScope, $state, $timeo
     // 改变全局默认地址内容
     $scope.changeDefaultAddress = function (address) {
         $scope.address = address;
-
+        $rootScope.defaultAddress = address;
         var obj = {
             passportId:$rootScope.passport.passportId,
             token:$rootScope.passport.token,
