@@ -3,8 +3,8 @@
  */
 goceanApp.constant('appSettings', {
 	timeout : 30000,
-	 host:'http://localhost',
-//	host : 'http://m.yezaigou.com',
+	 // host:'http://localhost',
+	host : 'http://m.yezaigou.com',
 	host2:'http://wxsdk.yezaigou.com',
 	requestURL : {
 		wxBase: '/wx/page/base',
