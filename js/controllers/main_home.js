@@ -4,12 +4,15 @@
 goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, mainHomeService, localStorageService,wxUserInfoService,configService) {
 
     var params = configService.parseQueryString(window.location.href);
-    params.nickName = Base64.decode(params.nickName);
-    var passport = params;
-    $rootScope.passport = params;
+    if (params.passportId){
+        params.nickName = Base64.decode(params.nickName);
+        $rootScope.passport = params;
+    }
 
-    if (passport.passportId == 0 || passport.type == "" || passport.type == "BLANK") {
-        wxUserInfoService.getUserInfo();
+    if ($rootScope.passport == null || $rootScope.passport.type == "BLANK"){
+        var _state = "home";
+        window.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0cae6e3b9632e632&redirect_uri=http://wxsdk.yezaigou.com/wx/page/base&response_type=code&scope=snsapi_base&state="+_state;
+        return;
     }
 
     var tabIndex = 0;
@@ -74,7 +77,7 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
             // 点赞数据
             for (j in topic.likesIdList) {
                 var userId = topic.likesIdList[j];
-                if (userId == passport.passportId) {
+                if (userId == $rootScope.passport.passportId) {
                     passportLiked = true;
                 }
                 for (k in $scope.userList) {
@@ -82,7 +85,7 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
                     var nikeName = $scope.userList[k].nickName;
                     if (userId == tempUserId) {
                         if (passportLiked) {
-                            likedStr = passport.nickName + ',' + likedStr;
+                            likedStr = $rootScope.passport.nickName + ',' + likedStr;
                         } else {
                             likedStr += nikeName + ",";
                         }
@@ -114,7 +117,7 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
                     }
                 }
                 var followerId = topic.followVoList[a].followerId;
-                if (followerId == passport.passportId) {
+                if (followerId == $rootScope.passport.passportId) {
                     commentPassport = true;
                 }
                 for (k in $scope.userList) {
@@ -293,7 +296,7 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
                 var topicId = el.getAttribute("topicId");
                 commentBox.className = 'comment-box clearfix';
                 commentBox.setAttribute('user', 'self');
-                var str = '<div class="comment-content">' + '<p class="comment-text"><span class="user">'+ passport.nickName;
+                var str = '<div class="comment-content">' + '<p class="comment-text"><span class="user">'+ $rootScope.passport.nickName;
                 if (toUserName != ''){
                     str+= '</span> 回复 <span class="user">' + toUserName + '</span>：'+ textarea.value +'</p>';
                 } else {
@@ -326,14 +329,14 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
                 if (el.className == 'fa fa-thumbs-o-up') {
                     el.className = 'fa fa-thumbs-up';
                     if (text ==''){
-                        text = passport.nickName;
+                        text = $rootScope.passport.nickName;
                     } else {
-                        text = passport.nickName + ',' + text;
+                        text = $rootScope.passport.nickName + ',' + text;
                     }
                     praisesTotal.innerHTML = text;
                 } else if (el.className == 'fa fa-thumbs-up') {
                     el.className = 'fa fa-thumbs-o-up';
-                    text = text.substring(passport.nickName.length + 1, text.length);
+                    text = text.substring($rootScope.passport.nickName.length + 1, text.length);
                     praisesTotal.innerHTML = text;
                 }
                 if (text.length > 0){

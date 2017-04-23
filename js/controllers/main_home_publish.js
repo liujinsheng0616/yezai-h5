@@ -151,8 +151,7 @@ goceanApp.controller('MainHomePublishCtrl', function ($scope, $rootScope, $state
     // 取消发布
     $scope.cancelPublish = function () {
         $.confirm("您确定要退出吗?", "取消编辑", function() {
-            var _state = "home";
-            window.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0cae6e3b9632e632&redirect_uri=http://wxsdk.yezaigou.com/wx/page/base&response_type=code&scope=snsapi_base&state="+_state;
+            $state.go('main.home');
         }, function() {
             //取消操作
         });
@@ -179,11 +178,13 @@ goceanApp.controller('MainHomePublishCtrl', function ($scope, $rootScope, $state
 
     // 发布微贴
     $scope.publish = function () {
+
         if ($rootScope.isToCreateTopic)
             return;
         $rootScope.isToCreateTopic = true;
+
         upload();
-        var _state = "home";
-        window.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0cae6e3b9632e632&redirect_uri=http://wxsdk.yezaigou.com/wx/page/base&response_type=code&scope=snsapi_base&state="+_state;
+
+        $state.go('main.home'); //直接跳到论坛页面，FIXME 把数据带过去显示
     }
 });
