@@ -3,10 +3,10 @@
  */
 goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, mainHomeService, localStorageService,wxUserInfoService,configService) {
 
-    $rootScope.passport = store.passport;
     var params = configService.parseQueryString(window.location.href);
-    var passport = store.passport;
-    passport = params;
+    params.nickName = Base64.decode(params.nickName);
+    var passport = params;
+    $rootScope.passport = params;
 
     if (passport.passportId == 0 || passport.type == "" || passport.type == "BLANK") {
         wxUserInfoService.getUserInfo();
@@ -73,8 +73,8 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
             var tagStr = '';
             var passportLiked = false;
             // 点赞数据
-            for (j in topic.likeList) {
-                var userId = topic.likeList[j];
+            for (j in topic.likesIdList) {
+                var userId = topic.likesIdList[j];
                 if (userId == passport.passportId) {
                     passportLiked = true;
                 }
@@ -207,6 +207,7 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
             });
 
             var toUserName = '';
+            var toUserId = '';
             var list = document.getElementById('list');
             var boxs = list.children;
 
@@ -289,6 +290,7 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
                 var textarea = box.getElementsByClassName('comment')[0];
                 var commentBox = document.createElement('div');
                 var text_box = box.getElementsByClassName('text-box')[0];
+                var topicId = el.getAttribute("topicId");
                 commentBox.className = 'comment-box clearfix';
                 commentBox.setAttribute('user', 'self');
                 var str = '<div class="comment-content">' + '<p class="comment-text"><span class="user">'+ passport.nickName;
@@ -300,9 +302,13 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
                 str+='<p class="comment-time">' + '<a href="javascript:;" class="comment-operate">删除</a>' + '</p>' + '</div>';
                 commentBox.innerHTML = str;
                 commentList.appendChild(commentBox);
+                // 保存回复内容
+                operateLeave(topicId,toUserId,textarea.value);
                 textarea.value = '';
                 toUserName = '';
+                toUserId = '';
                 text_box.style.display = 'none';
+
             }
 
             /**
@@ -314,7 +320,9 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
                 var liketext = box.getElementsByClassName('liketext')[0];
                 var praisesTotal = box.getElementsByClassName('liketext')[0].childNodes[1];
                 var text = praisesTotal.innerHTML;
+                var index = el.getAttribute("index");
                 var passportLiked = el.getAttribute("passportLiked");
+                var topicId = el.getAttribute("topicId");
                 if (el.className == 'fa fa-thumbs-o-up') {
                     el.className = 'fa fa-thumbs-up';
                     if (text ==''){
@@ -328,7 +336,12 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
                     text = text.substring(passport.nickName.length + 1, text.length);
                     praisesTotal.innerHTML = text;
                 }
-                liketext.style.display = (text.length == 0) ? 'none' : 'block';
+                if (text.length > 0){
+                    $("#liketext"+index).removeClass("ng-hide");
+                } else {
+                    $("#liketext"+index).addClass("ng-hide");
+                }
+                operatePraise(topicId);
             }
 
             /**
@@ -343,13 +356,17 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
                 var textBox = box.getElementsByClassName('text-box')[0];
                 var textarea = box.getElementsByClassName('comment')[0];
                 if (txt == '回复') {
+                    toUserId = el.getAttribute("toUserId");
                     textBox.style.display = 'block';
                     textarea.value = '回复'+ user + '：';
                     toUserName = user;
                     textarea.onkeyup();
                 } else {
+                    var followId = el.getAttribute("followId");
                     $.confirm("您确定要删除吗?", "删除留言", function() {
                         removeNode(commentBox);
+                        // 删除回复
+                        deleteFollow(followId);
                     }, function() {
                         //取消操作
                     });
@@ -391,6 +408,53 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
                 current: photoList[0], // 当前显示图片的http链接
                 urls: photoList // 需要预览的图片http链接列表
             });
+        });
+    };
+
+    // 保存点赞数据
+    function operatePraise(topicId) {
+        var obj = {
+            passportId : $rootScope.passport.passportId,
+            token : $rootScope.passport.token,
+            topicId : topicId
+        };
+        mainHomeService.likes(obj).then(function(data){
+            console.log(data);
+        },function(err){
+
+        });
+    }
+
+    // 保存回复数据
+    function operateLeave(topicId,toUserId,text) {
+        if (toUserId == ''){
+            toUserId = 0;
+        }
+        var obj = {
+            passportId : $rootScope.passport.passportId,
+            token : $rootScope.passport.token,
+            topicId : topicId,
+            toId : toUserId,
+            text : text
+        };
+        mainHomeService.createFollow(obj).then(function(data){
+            console.log(data);
+        },function(err){
+
+        });
+    }
+
+    // 删除回复内容
+    function deleteFollow(followId) {
+        var obj = {
+            passportId : $rootScope.passport.passportId,
+            token : $rootScope.passport.token,
+            followId : followId
+        };
+        mainHomeService.removeFollow(obj).then(function(data){
+            console.log(data);
+        },function(err){
+
         });
     }
 });
