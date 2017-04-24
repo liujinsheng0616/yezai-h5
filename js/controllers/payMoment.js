@@ -90,6 +90,8 @@ goceanApp.controller('PayMomentCtrl', function ($scope, $rootScope, $state, $tim
                 plan: null,
                 note: null,
                 type: null,
+                payDescription:null,
+                thumbnail:null,
                 attachmentIdList:[],
                 orderUsers:{
                     buyerId:$rootScope.passport.passportId,
@@ -101,8 +103,6 @@ goceanApp.controller('PayMomentCtrl', function ($scope, $rootScope, $state, $tim
 
             $rootScope.payView = {
                 title:null,
-                payDescription:null,
-                thumbnail:null,
                 attachment:null
             };
 
@@ -111,13 +111,13 @@ goceanApp.controller('PayMomentCtrl', function ($scope, $rootScope, $state, $tim
                 $rootScope.payView.title = $stateParams.title;
             }
             if ($stateParams.payDescription) {
-                $rootScope.payView.payDescription = $stateParams.payDescription;
+                $rootScope.orderRo.payDescription = $stateParams.payDescription;
             }
             if ($stateParams.price) {
                 $rootScope.orderRo.price = $stateParams.price;
             }
             if ($stateParams.thumbnail) {
-                $rootScope.payView.thumbnail = $stateParams.thumbnail;
+                $rootScope.orderRo.thumbnail = $stateParams.thumbnail;
             }
             if ($stateParams.payAttachment) {//FIXME 页面商品下面加一栏，参考花+
                 $rootScope.payView.attachment = $stateParams.payAttachment;
@@ -206,8 +206,14 @@ goceanApp.controller('PayMomentCtrl', function ($scope, $rootScope, $state, $tim
         obj.orderAddress = $rootScope.defaultAddress;
         payMomentService.placeOrder(obj).then(function(data){
             if (data.status == "OK") {
-                var orderId = data.result;
-
+                var dto = data.result;
+                if (dto == null || dto == "undefined"){
+                    alert("系统繁忙,请稍候再试");
+                    return;
+                }
+                $state.go("orderDetail", {
+                    orderDetailsDto:dto
+                });
             }else{
                 alert("系统繁忙,请稍候再试");
             }

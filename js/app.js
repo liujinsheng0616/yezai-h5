@@ -57,6 +57,7 @@ var goceanApp = angular.module('starter', ['ui.router','angularFileUpload', 'Loc
             })
             .state('orderDetail', {
                 cache:false,
+                params:{orderDetailsDto: null},
                 url: '/orderDetail',
                 templateUrl: 'templates/orderDetail.html',
                 controller: 'OrderDetailCtrl'
