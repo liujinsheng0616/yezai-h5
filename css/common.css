@@ -238,3 +238,17 @@
     transform-origin: 0 0;
     border-top: 0;
 }
+.scrollArea{
+    transform: translateY(-50px);
+}
+
+.weui-pull-to-refresh {
+    position: fixed;
+    left: 0;
+    width: calc(100vw - 2px);
+    height: 100%;
+    padding-bottom: 14%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    background-color: #FFFFFF;
+}

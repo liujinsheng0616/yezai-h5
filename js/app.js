@@ -76,7 +76,6 @@ var goceanApp = angular.module('starter', ['ui.router','angularFileUpload', 'Loc
             })
             .state('address', {
                 cache:false,
-                params : {'title' : null,'price' : null,'month' : null,'mainPic':null},
                 url: '/address',
                 templateUrl: 'templates/address.html',
                 controller: 'AddressCtrl'

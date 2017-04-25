@@ -1,0 +1,6 @@
+<script type="text/javascript">
+var str = window.location.href;
+var arr = str.split("#");
+var state = arr[1];
+window.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0cae6e3b9632e632&redirect_uri=http://wxsdk.yezaigou.com/wx/page/base&response_type=code&scope=snsapi_base&state="+state;
+</script>

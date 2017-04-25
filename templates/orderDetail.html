@@ -1,39 +1,38 @@
 <div class="homeView">
     <div class="weui_panel weui_panel_access">
         <div class="weui_panel_hd" style="font-size: 0.875rem;color: #000;border-bottom: 1px solid #d9d9d9;">订单信息</div>
-        <div class="weui_panel_bd" style="border-bottom: 1px solid #d9d9d9;">
+        <div class="weui_panel_bd" style="border-bottom: 1px solid #d9d9d9;" ng-repeat="item in orderDetailsView.itemList">
             <div class="weui_media_box weui_media_appmsg">
                 <div class="weui_cell_hd">
-                    <img style="width:80px;height:80px;margin-right:5px;display:block" ng-src="{{orderDetailsView.mainPic}}" alt="">
+                    <img style="width:80px;height:80px;margin-right:5px;display:block" ng-src="{{item.thumbnail}}" alt="">
                 </div>
                 <div class="weui_media_bd">
                     <table border="0" style="width: 100%;margin-left: 8px;color:#888;font-size:0.755rem;">
                         <tr style="height: 35px;font-size: 0.875rem;color: #000;">
-                            <td ng-bind="orderDetailsView.title"></td>
-                            <td style="text-align: right;font-weight: bold;font-size: 0.975rem;" ng-bind="'￥'+orderDetailsView.price+'.00'"></td>
+                            <td ng-bind="item.title"></td>
                         </tr>
                         <tr style="height: 25px;">
-                            <td>订购期限：<span ng-bind="orderDetailsView.forwardPlan.month"></span>个月</td>
-                            <td>加价：￥<span ng-bind="orderDetailsView.price"></span></td>
+                            <td><span ng-bind="item.payDescription"></span></td>
                         </tr>
                         <tr style="height: 25px;">
-                            <td>送达日期：周<span ng-bind="orderDetailsView.forwardPlan.dayOfWeek"></span></td>
+                            <td>价格：￥<span ng-bind="item.price"></span></td>
+                            <td>加价：￥<span ng-bind="item.pricePlus"></span></td>
                         </tr>
                     </table>
                 </div>
             </div>
         </div>
-        <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;">配送方式：<span style="float: right;color: #0d0d0d;">顺丰快递</span></div>
-        <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;">收货人/手机：<span style="float: right;color: #0d0d0d;" ng-bind="orderDetailsView.orderAddress.receiver + '/' + orderDetailsView.orderAddress.tel"></span></div>
-        <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;">收货人地址：<span style="float: right;color: #0d0d0d;" ng-bind="orderDetailsView.orderAddress.province + ' '+ orderDetailsView.orderAddress.city + ' '+ orderDetailsView.orderAddress.address"></span></div>
-        <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;">订单号：<span style="float: right;color: #0d0d0d;" ng-bind="orderDetailsView.viewId"></span></div>
+        <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;">配送方式：<span style="float: right;color: #0d0d0d;">快递</span></div>
+        <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;">收货人/手机：<span style="float: right;color: #0d0d0d;" ng-bind="orderDetailsView.address.receiver + '/' + orderDetailsView.address.tel"></span></div>
+        <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;">收货人地址：<span style="float: right;color: #0d0d0d;" ng-bind="orderDetailsView.address.province + ' '+ orderDetailsView.address.city + ' '+ orderDetailsView.address.address"></span></div>
+        <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;">订单号：<span style="float: right;color: #0d0d0d;" ng-bind="orderDetailsView.pr"></span></div>
     </div>
 
     <div class="weui_panel weui_panel_access">
         <div class="weui_panel_hd" style="font-size: 14px;color: #000;border-bottom: 1px solid #d9d9d9;">订单费用</div>
-        <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;">商品总额：<span style="float: right;color: #0d0d0d;" ng-bind="'￥' + orderDetailsView.price + '.00'"></span></div>
-        <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;">运费：<span style="float: right;color: #0d0d0d;">￥0.00</span></div>
-        <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;">付款金额：<span style="float: right;color: #09BB07;" ng-bind="'￥' + orderDetailsView.price + '.00'"></span></div>
+        <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;">商品总额：<span style="float: right;color: #0d0d0d;" ng-bind="'￥' + orderDetailsView.sales "></span></div>
+        <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;">运费：<span style="float: right;color: #0d0d0d;">￥0</span></div>
+        <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;">付款金额：<span style="float: right;color: #09BB07;" ng-bind="'￥' + orderDetailsView.sales "></span></div>
     </div>
 
     <div class="weui_btn_area weui_btn_area_inline">

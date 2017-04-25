@@ -29,33 +29,56 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
 
     $scope.page = 1;
     $scope.rows = 10;
+    // 下拉刷新
+    var loading = false;
+    // 初始化数据
+    initData(true);
+    function initData (firstFlag) {
+        var obj = {
+            type:$rootScope.topicViewNav.id,
+            page:$scope.page,
+            rows:$scope.rows,
+            orderBy:"id",
+            sc:"desc"
+        };
 
-    var obj = {
-        type:$rootScope.topicViewNav.id,
-        page:$scope.page,
-        rows:$scope.rows,
-        orderBy:"id",
-        sc:"desc"
+        mainHomeService.listTopic(obj).then(function(data){
+            if (data.status == "OK"){
+                var result = data.result;
+                if (result.topicList && result.topicList.length > 0){
+                    if (firstFlag){
+                        $scope.topicList = [];
+                        $scope.userList = [];
+                        $scope.tagList = [];
+                    }
+                    if ($scope.topicList && $scope.topicList.length > 0){
+                        $scope.topicList = $scope.topicList.concat(result.topicList);
+                    } else {
+                        $scope.topicList = result.topicList;
+                    }
+                    if ($scope.userList && $scope.userList.length > 0){
+                        $scope.userList = $scope.userList.concat(result.userList);
+                    } else {
+                        $scope.userList = result.userList;
+                    }
+                    $scope.tagList = result.tagList;
+                    if(!$scope.$$phase){
+                        $scope.$apply();
+                    }
+                    operateData();
+                } else {
+                    console.log(1313);
+                    $(".weui-infinite-scroll").html('<p class="bottomNoMore"><div class="infinite-preloader"></div>没有更多</p>')
+                    loading = true;
+                }
+            }
+        },function(err){
+
+        });
     };
 
-    mainHomeService.listTopic(obj).then(function(data){
-        if (data.status == "OK"){
-            var result = data.result;
-            $scope.topicList = result.topicList;
-            $scope.userList = result.userList;
-            $scope.tagList = result.tagList;
-
-            // if(!$scope.$$phase){
-            //     $scope.$apply();
-            // }
-            init();
-        }
-
-    },function(err){
-
-    });
-
-    function init() {
+    // 处理数据
+    function operateData() {
 
         // 处理数据
         for (i in $scope.topicList) {
@@ -460,5 +483,26 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
 
         });
     }
+
+    // 上拉刷新
+    $("div.weui-pull-to-refresh").pullToRefresh().on("pull-to-refresh", function () {
+        $scope.page = 1;
+        setTimeout(function () {
+            initData(true);
+            $("div.weui-pull-to-refresh").pullToRefreshDone(); // 重置下拉刷新
+        }, 1000);   //模拟延迟
+    });
+
+    // 下拉刷新
+    $("div.weui-pull-to-refresh").infinite().on("infinite", function () {
+        if (loading) return;
+        $scope.page++;
+        loading = true;
+        setTimeout(function () {
+            initData(false);
+            loading = false;
+        }, 1000);   //模拟延迟
+    });
+    $(".infinite-preloader").on("show", function () { alert("it show!"); });
 });
 

@@ -3,7 +3,7 @@
  */
 goceanApp.constant('appSettings', {
 	timeout : 30000,
-	 // host:'http://localhost',
+	// host:'http://localhost',
 	host : 'http://m.yezaigou.com',
 	host2:'http://wxsdk.yezaigou.com',
 	requestURL : {
@@ -20,7 +20,7 @@ goceanApp.constant('appSettings', {
 		urlJssdk : '/wx/common/sign/js',
 
 		getDefaultAddress:'/address/default/get',
-        setDefaultAddress:'/address/default/set',
+        	setDefaultAddress:'/address/default/set',
 		createAddress:'/address/create',
 		refreshAddress:'/address/refresh',
 		createOrRefresh:'/address/createOrRefresh',

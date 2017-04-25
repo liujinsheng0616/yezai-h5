@@ -10,69 +10,83 @@
         </div>
         <div class="weui_cell_ft weui_publish"  ui-sref="publish({tagList:tagList})" ui-sref-active="active">＋</div>
     </div>
-    <div style="overflow:auto;height: 100%;padding-bottom: 18%;" id="list">
-        <!-- 开始 朋友圈 -->
-        <div class="weui_cells moments" style="margin-top: 0;border-top: 0;padding-bottom: 10px;padding-top: 18px;" ng-repeat="topic in topicList track by $index">
-            <!-- 普通的post -->
-            <div class="weui_cell moments__post">
-                <div class="weui_cell_hd">
-                    <img ng-src="{{topic.posterIcon}}" style="height: 45px !important;"/>
-                </div>
-                <div class="weui_cell_bd" style="width: 100%;">
-                    <!-- 人名链接 -->
-                    <a class="title" href="javascript:void(0);">
-                        <span ng-bind="topic.nickName" style="color: #369;"></span>
-                    </a>
-                    <!-- 标签tag -->
-                    <p style="font-size: 13px;color: #369;" ng-bind="topic.tagStr"></p>
-                    <!-- post内容 -->
-                    <p id="paragraph{{$index}}" class="paragraph" ng-bind="topic.text"></p>
-                    <!-- 伸张链接 -->
-                    <a id="paragraphExtender{{$index}}" class="paragraphExtender" ng-click="toggleFullParagraph($index,topic)">显示全文</a>
-                    <!-- 相册 -->
-                    <div class="thumbnails" style="width: 240px;">
-                        <div class="thumbnail" style="width: 75px;height: 75px;" ng-repeat="photo in topic.photoList">
-                            <img ng-src="{{photo}}" ng-click="previewImage(topic.photoList)"/>
+    <div class="weui-pull-to-refresh" data-infinite="[object Object]">
+        <div class="scrollArea" style="padding-bottom: 5%;">
+            <div class="weui-pull-to-refresh-layer">
+                <div class="pull-to-refresh-arrow"></div>
+                <div class="pull-to-refresh-preloader"></div>
+                <div class="down">下拉刷新</div>
+                <div class="up">释放刷新</div>
+                <div class="refresh">正在刷新...</div>
+            </div>
+            <!-- 开始 朋友圈 -->
+            <div  id="list">
+                <div class="weui_cells" style="margin-top: 0;border-top: 0;border-bottom: 0;" ng-repeat="topic in topicList track by $index">
+                    <!-- 普通的post -->
+                    <div class="weui_cell moments__post">
+                        <div class="weui_cell_hd">
+                            <img ng-src="{{topic.posterIcon}}" style="height: 45px !important;"/>
                         </div>
-                    </div>
-                    <!-- 资料条 -->
-                    <div class="toolbar" style="padding-bottom: 6px;">
-                        <p class="timestamp" ng-bind="topic.viewTime"></p>
-                        <span class="toggleAction">
-                            <i class="fa fa-commenting-o" style="width: 20px;" ng-click="showTextBox(topic.id)"></i>
-                            <i ng-hide="topic.passportLiked == true" passportLiked="{{topic.passportLiked}}" index="{{$index}}" topicId = "{{topic.id}}" class="fa fa-thumbs-o-up" style="margin-left: 10px;width: 20px;"></i>
-                            <i ng-hide="topic.passportLiked == false" passportLiked="{{topic.passportLiked}}" index="{{$index}}" topicId = "{{topic.id}}" class="fa fa-thumbs-up" style="margin-left: 30px;width: 20px;"></i>
-                        </span>
-                    </div>
-                    <!-- 赞／评论区 -->
-                    <p class="liketext" id="liketext{{$index}}" ng-hide="topic.likedStr == ''"><i class="fa fa-thumbs-up up"></i><span class="nickname" ng-bind="topic.likedStr"></span></p>
-                    <div class="comment-list">
-                        <div class="comment-box clearFix" ng-repeat="comment in topic.followVoList" ng-click="hideTextBox(topic.id)">
-                            <div class="comment-content">
-                                <p class="comment-text" style="width: 87%;">
-                                    <span class="user" ng-bind="comment.followerName"></span>
-                                    <span ng-hide="comment.toId == 0">回复</span>
-                                    <span class="user" ng-hide="comment.toId == 0" ng-bind="comment.toName"></span>
-                                    <span ng-bind="': ' + comment.text">:</span>
-                                </p>
-                                <p class="comment-time" ng-hide="comment.commentPassport == false">
-                                    <a href="javascript:void(0);" followId="{{comment.id}}" class="comment-operate">删除</a>
-                                </p>
-                                <p class="comment-time" ng-hide="comment.commentPassport == true">
-                                    <a href="javascript:void(0);" toUserId="{{comment.followerId}}" class="comment-operate">回复</a>
-                                </p>
+                        <div class="weui_cell_bd" style="width: 100%;">
+                            <!-- 人名链接 -->
+                            <a class="title" href="javascript:void(0);">
+                                <span ng-bind="topic.nickName" style="color: #369;"></span>
+                            </a>
+                            <!-- 标签tag -->
+                            <p style="font-size: 13px;color: #369;" ng-bind="topic.tagStr"></p>
+                            <!-- post内容 -->
+                            <p id="paragraph{{$index}}" class="paragraph" ng-bind="topic.text"></p>
+                            <!-- 伸张链接 -->
+                            <a id="paragraphExtender{{$index}}" class="paragraphExtender" ng-click="toggleFullParagraph($index,topic)">显示全文</a>
+                            <!-- 相册 -->
+                            <div class="thumbnails" style="width: 240px;">
+                                <div class="thumbnail" style="width: 75px;height: 75px;" ng-repeat="photo in topic.photoList">
+                                    <img ng-src="{{photo}}" ng-click="previewImage(topic.photoList)"/>
+                                </div>
+                            </div>
+                            <!-- 资料条 -->
+                            <div class="toolbar" style="padding-bottom: 6px;">
+                                <p class="timestamp" ng-bind="topic.viewTime"></p>
+                                <span class="toggleAction">
+                                <i class="fa fa-commenting-o" style="width: 20px;" ng-click="showTextBox(topic.id)"></i>
+                                <i ng-hide="topic.passportLiked == true" passportLiked="{{topic.passportLiked}}" index="{{$index}}" topicId = "{{topic.id}}" class="fa fa-thumbs-o-up" style="margin-left: 20px;width: 20px;"></i>
+                                <i ng-hide="topic.passportLiked == false" passportLiked="{{topic.passportLiked}}" index="{{$index}}" topicId = "{{topic.id}}" class="fa fa-thumbs-up" style="margin-left: 20px;width: 20px;"></i>
+                            </span>
+                            </div>
+                            <!-- 赞／评论区 -->
+                            <p class="liketext" id="liketext{{$index}}" ng-hide="topic.likedStr == ''"><i class="fa fa-thumbs-up up"></i><span class="nickname" ng-bind="topic.likedStr"></span></p>
+                            <div class="comment-list">
+                                <div class="comment-box clearFix" ng-repeat="comment in topic.followVoList" ng-click="hideTextBox(topic.id)">
+                                    <div class="comment-content">
+                                        <p class="comment-text" style="width: 87%;">
+                                            <span class="user" ng-bind="comment.followerName"></span>
+                                            <span ng-hide="comment.toId == 0">回复</span>
+                                            <span class="user" ng-hide="comment.toId == 0" ng-bind="comment.toName"></span>
+                                            <span ng-bind="': ' + comment.text">:</span>
+                                        </p>
+                                        <p class="comment-time" ng  -hide="comment.commentPassport == false">
+                                            <a href="javascript:void(0);" followId="{{comment.id}}" class="comment-operate">删除</a>
+                                        </p>
+                                        <p class="comment-time" ng-hide="comment.commentPassport == true">
+                                            <a href="javascript:void(0);" toUserId="{{comment.followerId}}" class="comment-operate">回复</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-box" id="textBox{{topic.id}}">
+                                <textarea class="comment" autocomplete="off">评论…</textarea>
+                                <div class="btn" topicId="{{topic.id}}">回 复</div>
+                                <span class="word"><span class="length">0</span>/140</span>
                             </div>
                         </div>
-                    </div>
-                    <div class="text-box" id="textBox{{topic.id}}">
-                        <textarea class="comment" autocomplete="off">评论…</textarea>
-                        <div class="btn" topicId="{{topic.id}}">回 复</div>
-                        <span class="word"><span class="length">0</span>/140</span>
+                        <!-- 结束 post -->
                     </div>
                 </div>
-                <!-- 结束 post -->
+            </div>
+            <!-- 结束 朋友圈 -->
+            <div class="weui-infinite-scroll">
+                <p class="loading"><div class="infinite-preloader"></div>正在加载...</p>
             </div>
         </div>
-        <!-- 结束 朋友圈 -->
     </div>
 </div>
