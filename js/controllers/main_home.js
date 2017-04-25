@@ -289,6 +289,7 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
                             me.parentNode.className = 'text-box';
                         }, 200);
                     }
+                    this.parentNode.style.display = "none";
                 };
                 //评论按键事件
                 textArea.onkeyup = function () {
