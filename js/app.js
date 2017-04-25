@@ -131,7 +131,7 @@ var goceanApp = angular.module('starter', ['ui.router','angularFileUpload', 'Loc
             })
 	    .state('publish', {
                 cache:false,
-		params : {'tagList':null},
+		        params : {'tagList':null},
                 url: '/publish',
                 templateUrl: 'templates/mall_home_publish.html',
                 controller: 'MainHomePublishCtrl'
