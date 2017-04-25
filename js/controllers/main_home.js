@@ -67,7 +67,6 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
                     }
                     operateData();
                 } else {
-                    console.log(1313);
                     $(".weui-infinite-scroll").html('<p class="bottomNoMore"><div class="infinite-preloader"></div>没有更多</p>')
                     loading = true;
                 }
