@@ -64,7 +64,7 @@
                                             <span class="user" ng-hide="comment.toId == 0" ng-bind="comment.toName"></span>
                                             <span ng-bind="': ' + comment.text">:</span>
                                         </p>
-                                        <p class="comment-time" ng  -hide="comment.commentPassport == false">
+                                        <p class="comment-time" ng-hide="comment.commentPassport == false">
                                             <a href="javascript:void(0);" followId="{{comment.id}}" class="comment-operate">删除</a>
                                         </p>
                                         <p class="comment-time" ng-hide="comment.commentPassport == true">
