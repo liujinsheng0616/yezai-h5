@@ -15,7 +15,7 @@ goceanApp.controller('MainMineCtrl', function ($scope,$rootScope, $state, $timeo
     }else{
         var _state = "mine";
         if ($rootScope.passport == null || $rootScope.passport.type == "BLANK"){
-            window.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0cae6e3b9632e632&redirect_uri=http://wxsdk.yezaigou.com/wx/page/userinfo&response_type=code&scope=snsapi_userinfo&state="+_state;
+            window.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0cae6e3b9632e632&redirect_uri=http://wxsdk.yezaigou.com/wx/page/userInfo&response_type=code&scope=snsapi_userinfo&state="+_state;
             return;
         }
     }
