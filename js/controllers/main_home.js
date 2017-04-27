@@ -289,7 +289,9 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
                             me.parentNode.className = 'text-box';
                         }, 200);
                     }
-                    this.parentNode.style.display = "none";
+                    setTimeout(function () {
+                        me.parentNode.style.display = 'none';
+                    }, 2000);
                 };
                 //评论按键事件
                 textArea.onkeyup = function () {
@@ -321,9 +323,9 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
                 commentBox.setAttribute('user', 'self');
                 var str = '<div class="comment-content">' + '<p class="comment-text"><span class="user">'+ $rootScope.passport.nickName;
                 if (toUserName != ''){
-                    str+= '</span> 回复 <span class="user">' + toUserName + '</span>：'+ textarea.value +'</p>';
+                    str+= '</span> 回复 <span class="user">' + toUserName + '</span> ：'+ textarea.value +'</p>';
                 } else {
-                    str+= '：</span>' + textarea.value + '</p>';
+                    str+= '</span> ：' + textarea.value + '</p>';
                 }
                 str+='<p class="comment-time">' + '<a href="javascript:;" class="comment-operate">删除</a>' + '</p>' + '</div>';
                 commentBox.innerHTML = str;
@@ -488,6 +490,9 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
     $("div.weui-pull-to-refresh").pullToRefresh().on("pull-to-refresh", function () {
         $scope.page = 1;
         setTimeout(function () {
+            $(".comment-content").each(function(){
+                $(this).remove();
+            });
             initData(true);
             $("div.weui-pull-to-refresh").pullToRefreshDone(); // 重置下拉刷新
         }, 1000);   //模拟延迟
