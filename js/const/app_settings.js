@@ -20,7 +20,7 @@ goceanApp.constant('appSettings', {
 		urlJssdk : '/wx/common/sign/js',
 
 		getDefaultAddress:'/address/default/get',
-        	setDefaultAddress:'/address/default/set',
+		setDefaultAddress:'/address/default/set',
 		createAddress:'/address/create',
 		refreshAddress:'/address/refresh',
 		createOrRefresh:'/address/createOrRefresh',
@@ -29,7 +29,9 @@ goceanApp.constant('appSettings', {
 
 		forwardPlanSelector:'/forward/plan/selector',
 
-		placeOrder:'/order/place'
+		placeOrder:'/order/place',
+		orderList:'/order/listMy',
+		orderDetails:'/order/details'
 
 	},
     appId:'wx0cae6e3b9632e632'

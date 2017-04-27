@@ -3,118 +3,92 @@
  */
 goceanApp.controller('OrderListCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams,orderListService) {
 
+    if ($rootScope.passport == null ){
+        var _state = "orderList";
+        window.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0cae6e3b9632e632&redirect_uri=http://wxsdk.yezaigou.com/wx/page/base&response_type=code&scope=snsapi_base&state="+_state;
+        return;
+    }
     // 底部tab选中
     $("#order").addClass("weui_active").siblings().removeClass('weui_active');
     $('#tab1').tab({defaultIndex:0,activeClass:"tab-green"});
 
-    var allType = 'ALL';
+    $scope.page = 1;
+    $scope.rows = 10;
+    var status = 'ALL';
     //请求参数
     // 全部数据
-    $scope.getAllOrderList = function(status){
-        var obj = {status:status};
-        if ($rootScope.orderListView){
-            $scope.orderList = $rootScope.orderListView.list;
-            for (var i = 0; i < $scope.orderList.length; i++){
-                var order = $scope.orderList[i];
-                order.createTime = order.createTime.substring(0, 10);
-                if (order.status == 'ORDER_CREATED'){
-                    order.status = '未付款';
-                } else if (order.status == 'ORDER_PAID'){
-                    order.status = '服务中';
-                } else if (order.status == 'ORDER_FINISHED'){
-                    order.status = '已完成';
-                }
-            }
-            if(!$scope.$$phase){
-                $scope.$apply();
-            }
-        } else {
-            orderListService.getOrderListByType(obj).then(function(data){
+    $scope.listOrder = function(status){
+        var obj = {
+            page:$scope.page,
+            rows:$scope.rows,
+            passportId:$rootScope.passport.passportId,
+            token:$rootScope.passport.token,
+            status:status};
+        if ($scope.orderList == null){
+            orderListService.listOrder(obj).then(function(data){
                 console.log(data);
+                if ("OK" == data.status){
+                    var orderList = data.result;
+                    initView(orderList);
+                    $scope.orderList = orderList;
+                }
             },function(err){
 
             });
         }
     };
     // 页面刷新加载
-    $scope.getAllOrderList(allType);
+    $scope.listOrder(status);
 
-    // 未付款
-    $scope.getNoPayOrderList = function(status){
-        var obj = {status:status};
-        if ($rootScope.orderListNoPayView){
-            $scope.orderList = $rootScope.orderListNoPayView.list;
-            for (var i = 0; i < $scope.orderList.length; i++){
-                var order = $scope.orderList[i];
-                order.createTime = order.createTime.substring(0, 10);
-                order.status = '未付款';
+    function initView(orderList){
+        for (i in orderList){
+            var brief = orderList[i];
+            if (brief.status == "ORDER_CREATED"){
+                brief.statusView = "未付款";
+            }else if (brief.status == "ORDER_PAID"){
+                brief.statusView = "服务中";
+            }else if (brief.status == "ORDER_FINISHED"){
+                brief.statusView = "已完成";
             }
-            if(!$scope.$$phase){
-                $scope.$apply();
+            var itemList = brief.itemList;
+            for (j in itemList){
+                var item = itemList[0];
+                item.priceView = "¥" + item.price;
+                if (item.pricePlus > 0){
+                    item.priceView += " + "+item.pricePlus;
+                }
             }
-        } else {
-            orderListService.getOrderListByType(obj).then(function(data){
-                console.log(data);
-            },function(err){
-
-            });
-        }
-    };
-
-    // 服务中
-    $scope.getInServiceOrderList = function(status){
-        var obj = {status:status};
-        if ($rootScope.orderListInServiceView){
-            $scope.orderList = $rootScope.orderListInServiceView.list;
-            for (var i = 0; i < $scope.orderList.length; i++){
-                var order = $scope.orderList[i];
-                order.createTime = order.createTime.substring(0, 10);
-                order.status = '服务中';
-            }
-            if(!$scope.$$phase){
-                $scope.$apply();
-            }
-        } else {
-            orderListService.getOrderListByType(obj).then(function(data){
-                console.log(data);
-            },function(err){
-
-            });
-        }
-    };
-
-    // 已完成
-    $scope.getCompletedOrderList = function(status){
-        var obj = {status:status};
-        if ($rootScope.orderListCompletedView){
-            $scope.orderList = $rootScope.orderListCompletedView.list;
-            for (var i = 0; i < $scope.orderList.length; i++){
-                var order = $scope.orderList[i];
-                order.createTime = order.createTime.substring(0, 10);
-                order.status = '已完成';
-            }
-            if(!$scope.$$phase){
-                $scope.$apply();
-            }
-        } else {
-            orderListService.getOrderListByType(obj).then(function(data){
-                console.log(data);
-            },function(err){
-
-            });
         }
     }
 
     // 跳转详情页
-    $scope.goToOrderDetail = function (status,type) {
+    $scope.goToOrderDetail = function (id) {
+        var obj = {
+            passportId:$rootScope.passport.passportId,
+            token:$rootScope.passport.token,
+            orderId:id};
+        orderListService.getDetails(obj).then(function(data){
+            console.log(data);
+            if ("OK" == data.status){
+                var orderDetails = data.result;
+                adapteDetails(orderDetails);
+            }
+        },function(err){
+
+        });
+
+    }
+
+    function adapteDetails(orderDetails){
+        var status = orderDetails.status;
         if (status == '服务中' || status == '已完成'){
             if (type == 'FORWARD'){
-                $state.go('inServiceDetail', {status : status});
+                $state.go('inServiceDetail', {orderDetailsDto : orderDetails});
             } else if (type == 'NORMAL')
-                $state.go('normalDetail');
+                $state.go('normalDetail', {orderDetailsDto : orderDetails});
             $rootScope.status = status;
         } else if (status == "未付款"){
-            $state.go('orderDetail');
+            $state.go('orderDetail', {orderDetailsDto : orderDetails});
         }
     }
 });
