@@ -202,9 +202,9 @@
 .nickname{font-size: 14px;}
 .text-box{display: none;}
 .text-box .comment { border: 1px solid #eee; display: block; height: 32px; padding: 5px; resize: none; color: #ccc;width:100%;}
-.text-box .btn { font-size: 12px; display: none; float: right; width: 65px; height: 25px; color: #fff; background: #04BE02; text-align: center;line-height: 25px;}
+.text-box .btn { font-size: 13px; display: none; float: right; width: 75px; height: 35px; color: #fff; background: #04BE02; text-align: center;line-height: 35px;}
 .text-box .btn-off { border: 1px solid #ccc; color: #ccc; background: #F7F7F7;}
-.text-box .word{ display: none; float: right; margin: 5px 7px 0 0; color: #666; font-size: 12px;}
+.text-box .word{ display: none; float: right; margin: 7px 9px 0 0; color: #666; font-size: 13px;}
 .text-box-on .comment{ height: 50px; color: #333;}
 .text-box-on .btn{ display: inline;}
 .text-box-on .word{ display: inline;}
