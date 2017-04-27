@@ -3,11 +3,11 @@
         <div class="weui_panel_bd">
             <div class="weui_media_box weui_media_appmsg" style="margin-top: 1.11rem;margin-left: 0.888rem;">
                 <div class="weui_media_hd">
-                    <img class="weui_media_appmsg_thumb" ng-src="{{my.icon}}" alt="">
+                    <img class="weui_media_appmsg_thumb" ng-src="{{passport.icon}}" alt="">
                 </div>
                 <div class="weui_media_bd">
-                    <h4 class="weui_media_title" style="color: #7495b8;" ng-bind="my.name"></h4>
-                    <span style="font-size: 0.8rem;">也豆</span><span style="margin-left: 2rem;font-size: 0.8rem;" ng-bind="my.yiiBean"></span>
+                    <h4 class="weui_media_title" style="color: #7495b8;" ng-bind="passport.nickName"></h4>
+                    <span style="font-size: 0.8rem;">也豆</span><span style="margin-left: 2rem;font-size: 0.8rem;" ng-bind="passport.yeBean"></span>
                 </div>
             </div>
         </div>
@@ -17,15 +17,16 @@
             <div class="weui_media_box weui_media_small_appmsg">
                 <div class="weui_cells weui_cells_access" style="height: 3.44rem;line-height: 2.22rem;">
                     <a class="weui_cell" ui-sref="order.orderList" ui-sref-active="active">
-                        <div class="weui_cell_hd" style="margin-left: 0.63rem;"><i class="fa fa-file-text-o"></i></div>
+                        <div class="weui_cell_hd" style="margin-left: 0.63rem;color: #888;"><i class="fa fa-file-text weui_home"></i></div>
                         <div class="weui_cell_bd weui_cell_primary" style="margin-left: 0.668rem;font-size: 14px;">
-                            <p>全部订单</p>
+                            <p>我的订单</p>
                         </div>
                         <span class="weui_cell_ft"></span>
                     </a>
                 </div>
             </div>
         </div>
+        <!--
         <div class="weui_grids grids-small"  >
             <a href="javascript:;" class="grid">
                 <div class="weui_grid_icon" style="text-align: center;">
@@ -60,13 +61,14 @@
                 </p>
             </a>
         </div>
+        -->
     </div>
     <div class="weui_panel">
         <div class="weui_panel_bd">
             <div class="weui_media_box weui_media_small_appmsg">
                 <div class="weui_cells weui_cells_access" style="height: 3.44rem;line-height: 2.22rem;">
                     <a class="weui_cell" ui-sref="order.tuan" ui-sref-active="active">
-                        <div class="weui_cell_hd" style="margin-left: 0.63rem;"><i class="fa fa-database"></i></div>
+                        <div class="weui_cell_hd" style="margin-left: 0.63rem;color: #888;"><i class="fa fa-group weui_home"></i></div>
                         <div class="weui_cell_bd weui_cell_primary" style="margin-left: 0.668rem;font-size: 14px;">
                             <p>我的拼团</p>
                         </div>
@@ -75,6 +77,7 @@
                 </div>
             </div>
         </div>
+        <!--
         <div class="weui_grids grids-small"  >
             <a href="javascript:;" class="grid">
                 <div class="weui_grid_icon" style="text-align: center;">
@@ -101,24 +104,31 @@
                 </p>
             </a>
         </div>
+        -->
+    </div>
+    <div class="weui_panel">
+        <div class="weui_panel_bd">
+            <div class="weui_media_box weui_media_small_appmsg">
+                <div class="weui_cells weui_cells_access" style="height: 3.44rem;line-height: 2.22rem;">
+                    <a class="weui_cell" ui-sref="address" ui-sref-active="active">
+                        <div class="weui_cell_hd" style="margin-left: 0.678rem;font-size: 25px;color: #888;"><i class="fa fa-map-marker"></i></div>
+                        <div class="weui_cell_bd weui_cell_primary" style="margin-left: 0.668rem;font-size: 14px;">
+                            <p>收货地址</p>
+                        </div>
+                        <span class="weui_cell_ft"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="weui_panel">
         <div class="weui_panel_bd">
             <div class="weui_media_box weui_media_small_appmsg">
                 <div class="weui_cells weui_cells_access" style="height: 3.44rem;line-height: 2.22rem;">
                     <a class="weui_cell" href="javascript:;">
-                        <div class="weui_cell_hd" style="margin-left: 0.63rem;"><i class="fa fa-commenting-o"></i></div>
+                        <div class="weui_cell_hd" style="margin-left: 0.63rem;color: #888;"><i class="fa fa-commenting-o"></i></div>
                         <div class="weui_cell_bd weui_cell_primary" style="margin-left: 0.668rem;font-size: 14px;">
                             <p>联系客服</p>
-                        </div>
-                        <span class="weui_cell_ft"></span>
-                    </a>
-                </div>
-                <div class="weui_cells weui_cells_access" style="height: 3.44rem;line-height: 2.22rem;">
-                    <a class="weui_cell" ui-sref="address" ui-sref-active="active">
-                        <div class="weui_cell_hd" style="margin-left: 0.63rem;"><i class="fa fa-commenting-o"></i></div>
-                        <div class="weui_cell_bd weui_cell_primary" style="margin-left: 0.668rem;font-size: 14px;">
-                            <p>收货地址</p>
                         </div>
                         <span class="weui_cell_ft"></span>
                     </a>

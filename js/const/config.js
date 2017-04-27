@@ -26,6 +26,9 @@ goceanApp.factory('configService',['$http','$q','$timeout','appSettings',functio
 
                 }
             }
+            if (params.icon != null){
+                params.icon = params.icon.replace(/%2F/g, "/");
+            }
             return params;
         }
     };

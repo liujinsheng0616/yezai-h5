@@ -1,7 +1,13 @@
 /**
  * Created by Kingson·liu on 17/3/8.
  */
-goceanApp.controller('OrderListCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams,orderListService) {
+goceanApp.controller('OrderListCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams,orderListService,configService) {
+
+    var params = configService.parseQueryString(window.location.href);
+    if (params.passportId){
+        params.nickName = Base64.decode(params.nickName);
+        $rootScope.passport = params;
+    }
 
     if ($rootScope.passport == null ){
         var _state = "orderList";
@@ -24,7 +30,7 @@ goceanApp.controller('OrderListCtrl', function ($scope, $rootScope, $state, $tim
             passportId:$rootScope.passport.passportId,
             token:$rootScope.passport.token,
             status:status};
-        if ($scope.orderList == null){
+
             orderListService.listOrder(obj).then(function(data){
                 console.log(data);
                 if ("OK" == data.status){
@@ -35,7 +41,6 @@ goceanApp.controller('OrderListCtrl', function ($scope, $rootScope, $state, $tim
             },function(err){
 
             });
-        }
     };
     // 页面刷新加载
     $scope.listOrder(status);
@@ -81,13 +86,13 @@ goceanApp.controller('OrderListCtrl', function ($scope, $rootScope, $state, $tim
 
     function adapteDetails(orderDetails){
         var status = orderDetails.status;
-        if (status == '服务中' || status == '已完成'){
+        if (status == 'ORDER_PAID' || status == 'ORDER_FINISHED'){
             if (type == 'FORWARD'){
                 $state.go('inServiceDetail', {orderDetailsDto : orderDetails});
             } else if (type == 'NORMAL')
                 $state.go('normalDetail', {orderDetailsDto : orderDetails});
             $rootScope.status = status;
-        } else if (status == "未付款"){
+        } else if (status == "ORDER_CREATED"){
             $state.go('orderDetail', {orderDetailsDto : orderDetails});
         }
     }

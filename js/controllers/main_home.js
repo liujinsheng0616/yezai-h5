@@ -17,11 +17,10 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
 
     var tabIndex = 0;
 
-    $rootScope.topicView = store.topicView;
-    if ($rootScope.topicViewNav == null) {
-        $rootScope.topicViewNav = store.topicView.nav[0];
+    if ($rootScope.topicViewNavId == null) {
+        $rootScope.topicViewNavId = 1;
     }
-    tabIndex = $rootScope.topicViewNav.id - 1;
+    tabIndex = $rootScope.topicViewNavId - 1;
     // 底部tab选中
     $("#activeHomePage").addClass('weui_active').siblings().removeClass('weui_active');
     $('#tab1').tab({defaultIndex:tabIndex,activeClass:"tab-green"});
@@ -31,13 +30,18 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
     $scope.rows = 10;
     // 下拉刷新
     var loading = false;
-    // 初始化数据
-    initData(true);
-    function initData (firstFlag) {
+
+    $scope.initData = function (viewTypeId,firstFlag) {
+        if ($rootScope.topicViewNavId != viewTypeId){
+            $scope.page = 1;
+            $scope.rows = 10;
+            $rootScope.topicViewNavId = viewTypeId;
+            firstFlag = true;
+        }
         var obj = {
-            type:$rootScope.topicViewNav.id,
+            type:viewTypeId,
             page:$scope.page,
-            rows:$scope.rows,
+            rows: $scope.rows,
             orderBy:"id",
             sc:"desc"
         };
@@ -45,12 +49,13 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
         mainHomeService.listTopic(obj).then(function(data){
             if (data.status == "OK"){
                 var result = data.result;
+                if (firstFlag){
+                    $scope.topicList = [];
+                    $scope.userList = [];
+                    $scope.tagList = [];
+                }
                 if (result.topicList && result.topicList.length > 0){
-                    if (firstFlag){
-                        $scope.topicList = [];
-                        $scope.userList = [];
-                        $scope.tagList = [];
-                    }
+
                     if ($scope.topicList && $scope.topicList.length > 0){
                         $scope.topicList = $scope.topicList.concat(result.topicList);
                     } else {
@@ -75,6 +80,9 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
 
         });
     };
+
+    // 初始化数据
+    $scope.initData($rootScope.topicViewNavId, true);
 
     // 处理数据
     function operateData() {
@@ -495,7 +503,7 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
             $(".comment-content").each(function(){
                 $(this).remove();
             });
-            initData(true);
+            $scope.initData($rootScope.topicViewNavId,true);
             $("div.weui-pull-to-refresh").pullToRefreshDone(); // 重置下拉刷新
         }, 1000);   //模拟延迟
     });
@@ -506,7 +514,7 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
         $scope.page++;
         loading = true;
         setTimeout(function () {
-            initData(false);
+            $scope.initData($rootScope.topicViewNavId,false);
             loading = false;
         }, 1000);   //模拟延迟
     });

@@ -87,7 +87,7 @@ goceanApp.controller('MainHomePublishCtrl', function ($scope, $rootScope, $state
         }
         //AJAX请求服务器
         var topic = {
-            type:$rootScope.topicViewNav.id,// SHAI_SHAI | INTEREST
+            type:$rootScope.topicViewNavId,// SHAI_SHAI | INTEREST
             tagList:$rootScope.tagChoosed,//[1,2]
             text:$scope.topic.text,//发帖内容 FIXME
             photoList:$rootScope.serverImgIds,//["xxx.jpg","zzz.jpg"]
