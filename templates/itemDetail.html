@@ -17,7 +17,7 @@
                 <p style="margin-top: 0.44rem;font-size: 20px;color: #ff0000;" id="mallPrice" ng-bind="itemDetail.viewPrice"></p>
             </div>
         </div>
-        <div class="weui_panel_hd" id="skuEle{{$index}}" ng-repeat="sku in itemDetail.skuPropertyList track by $index">
+        <div class="weui_panel_hd" style="margin-top: 5px;" id="skuEle{{$index}}" ng-repeat="sku in itemDetail.skuPropertyList track by $index">
             <p style="height: 20px;color: #000;" ng-bind="sku.name"></p>
             <div ng-class="{weui_sku_spanFirst:$index==0,weui_sku_span:$index!=0}" id="{{sku.id}}{{$index}}" ng-repeat="ele in sku.eleList track by $index" ng-bind="ele.value" ng-click="chooseSku($event,ele,null)"></div>
         </div>

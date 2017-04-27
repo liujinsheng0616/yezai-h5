@@ -291,6 +291,8 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
                     }
                     setTimeout(function () {
                         me.parentNode.style.display = 'none';
+                        toUserName = '';
+                        toUserId = '';
                     }, 2000);
                 };
                 //评论按键事件
@@ -323,7 +325,7 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
                 commentBox.setAttribute('user', 'self');
                 var str = '<div class="comment-content">' + '<p class="comment-text"><span class="user">'+ $rootScope.passport.nickName;
                 if (toUserName != ''){
-                    str+= '</span> 回复 <span class="user">' + toUserName + '</span> ：'+ textarea.value +'</p>';
+                    str+= '</span> : 回复 <span class="user">' + toUserName + '</span> ：'+ textarea.value +'</p>';
                 } else {
                     str+= '</span> ：' + textarea.value + '</p>';
                 }
