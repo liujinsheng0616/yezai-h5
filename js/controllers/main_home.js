@@ -293,7 +293,7 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
                         me.parentNode.style.display = 'none';
                         toUserName = '';
                         toUserId = '';
-                    }, 2000);
+                    }, 4000);
                 };
                 //评论按键事件
                 textArea.onkeyup = function () {
@@ -302,11 +302,7 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
                     var els = this.parentNode.children;
                     var btn = els[1];
                     var word = els[2];
-                    if (len <=0 || len > 140) {
-                        btn.className = 'btn btn-off';
-                    } else {
-                        btn.className = 'btn';
-                    }
+                    btn.className = 'btn';
                     word.innerHTML = len + '/140';
                 }
             }
@@ -320,23 +316,27 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
                 var textarea = box.getElementsByClassName('comment')[0];
                 var commentBox = document.createElement('div');
                 var text_box = box.getElementsByClassName('text-box')[0];
-                var topicId = el.getAttribute("topicId");
-                commentBox.className = 'comment-box clearfix';
-                commentBox.setAttribute('user', 'self');
-                var str = '<div class="comment-content">' + '<p class="comment-text"><span class="user">'+ $rootScope.passport.nickName;
-                if (toUserName != ''){
-                    str+= '</span> : 回复 <span class="user">' + toUserName + '</span> ：'+ textarea.value +'</p>';
+                if (textarea.value != ''){
+                    var topicId = el.getAttribute("topicId");
+                    commentBox.className = 'comment-box clearfix';
+                    commentBox.setAttribute('user', 'self');
+                    var str = '<div class="comment-content">' + '<p class="comment-text"><span class="user">'+ $rootScope.passport.nickName;
+                    if (toUserName != ''){
+                        str+= '</span> : 回复 <span class="user">' + toUserName + '</span> ：'+ textarea.value +'</p>';
+                    } else {
+                        str+= '</span> ：' + textarea.value + '</p>';
+                    }
+                    str+='<p class="comment-time">' + '<a href="javascript:;" class="comment-operate">删除</a>' + '</p>' + '</div>';
+                    commentBox.innerHTML = str;
+                    commentList.appendChild(commentBox);
+                    // 保存回复内容
+                    operateLeave(topicId,toUserId,textarea.value);
+                    textarea.value = '';
+                    toUserName = '';
+                    toUserId = '';
                 } else {
-                    str+= '</span> ：' + textarea.value + '</p>';
+                    return;
                 }
-                str+='<p class="comment-time">' + '<a href="javascript:;" class="comment-operate">删除</a>' + '</p>' + '</div>';
-                commentBox.innerHTML = str;
-                commentList.appendChild(commentBox);
-                // 保存回复内容
-                operateLeave(topicId,toUserId,textarea.value);
-                textarea.value = '';
-                toUserName = '';
-                toUserId = '';
                 text_box.style.display = 'none';
 
             }
