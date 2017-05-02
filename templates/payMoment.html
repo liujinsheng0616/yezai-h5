@@ -3,7 +3,7 @@
         <div class="weui_panel_bd">
             <div class="weui_media_box weui_media_small_appmsg">
                 <div class="weui_cells weui_cells_access" style="height: 4.88rem;">
-                    <a class="weui_cell" ui-sref="address({title:title,month:month,price:price})" ui-sref-active="active">
+                    <a class="weui_cell" ui-sref="address" ui-sref-active="active">
                         <div class="weui_cell_hd" style="margin-left: 0.678rem;font-size: 25px;color: #888;"><i class="fa fa-map-marker"></i></div>
                         <div style="width: 100%;margin-left: 0.777rem;font-size: 16px;">
                             <div style="width: 100%;">
@@ -31,7 +31,7 @@
             <div class="weui_leftIcon"><i class="i_leftIcon" ng-hide="leftIndex==0" ng-click="toLeft(leftIndex)"></i></div>
             <div class="weui_centerArea" ng-repeat="plan in planList track by $index">
                 <div ng-class="{forwordPlanFirst:$index==0,forwordPlan:$index==1}" id="plan{{$index}}" ng-click="changeFirstPlanTime($index)">
-                    <div class="forwordPlan_temp" ng-bind="'周'+plan.day+'送达'"></div>
+                    <div class="forwordPlan_temp" ng-bind="'周'+plan.dayView+'送达'"></div>
                     <div ng-class="{forwordPlan_tempc:$index==1,forwordPlan_tempd:$index==0}" id="temp{{$index}}">{{plan.time | date:'yyyy-MM-dd'}}</div>
                 </div>
             </div>
@@ -82,7 +82,7 @@
                     微信支付
                 </div>
             </div>
-            <a href="javascript:;" class="weui_btn weui_btn_primary" style="border-radius:0px;height:3.33rem;line-height: 3.33rem;" ng-click="placeOrder();">立即下单</a>
+            <a href="javascript:;" class="weui_btn weui_btn_primary" style="border-radius:0px;height:3.33rem;line-height: 3.33rem;" ng-click="placeOrder();">确认下单</a>
         </div>
     </div>
 </div>

@@ -26,7 +26,7 @@ goceanApp.factory('configService',['$http','$q','$timeout','appSettings',functio
 
                 }
             }
-            if (params.icon != null){
+            if (!(params.icon == "undefined" || params.icon == null || params == "")){
                 params.icon = params.icon.replace(/%2F/g, "/");
             }
             return params;

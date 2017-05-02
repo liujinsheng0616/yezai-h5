@@ -4,9 +4,9 @@
 goceanApp.controller('PayMomentCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, payMomentService) {
     console.log("about PayMomentCtrl");
 
-    var _state = "mall";
-    if ($rootScope.passport == null){
-        window.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0cae6e3b9632e632&redirect_uri=http://wxsdk.yezaigou.com/wx/page/base&response_type=code&scope=snsapi_base&state="+_state;
+    var _state = "mall";//FIXME 登录后返回当前页面，需要参数skuId
+    if ($rootScope.passport == null){//如果是基础用户，这里不要求授权用户信息; 若果没登录，就直接通过授权模式登录
+        window.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0cae6e3b9632e632&redirect_uri=http://wxsdk.yezaigou.com/wx/page/userInfo&response_type=code&scope=snsapi_userinfo&state="+_state;
         return;
     }
 
@@ -48,21 +48,21 @@ goceanApp.controller('PayMomentCtrl', function ($scope, $rootScope, $state, $tim
     function initPlanSelector() {
         for (var i = 0;i<$rootScope.forwardPlanList.length;i++){
             var plan = $rootScope.forwardPlanList[i];
-            var dayOfWeek = plan.dayOfWeek;
-            if (dayOfWeek == 1){
-                plan.day = '日';
-            } else if (dayOfWeek == 2){
+            var day = plan.day;
+            if (day == 1){
+                plan.dayView = '日';
+            } else if (day == 2){
                 plan.day = '一';
-            } else if (dayOfWeek == 3){
-                plan.day = '二';
-            } else if (dayOfWeek == 4){
-                plan.day = '三';
-            } else if (dayOfWeek == 5){
-                plan.day = '四';
-            } else if (dayOfWeek == 6){
-                plan.day = '五';
-            } else if (dayOfWeek == 7){
-                plan.day = '六';
+            } else if (day == 3){
+                plan.dayView = '二';
+            } else if (day == 4){
+                plan.dayView = '三';
+            } else if (day == 5){
+                plan.dayView = '四';
+            } else if (day == 6){
+                plan.dayView = '五';
+            } else if (day == 7){
+                plan.dayView = '六';
             }
 
         }
@@ -198,6 +198,9 @@ goceanApp.controller('PayMomentCtrl', function ($scope, $rootScope, $state, $tim
     };
 
     $scope.placeOrder = function () {
+        if ($rootScope.defaultAddress){
+            $rootScope.orderRo.addressId = $rootScope.defaultAddress.id;
+        }
         if ($rootScope.orderRo.addressId == 0){
             alert("收货地址不能为空");
             return;

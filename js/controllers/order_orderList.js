@@ -87,11 +87,11 @@ goceanApp.controller('OrderListCtrl', function ($scope, $rootScope, $state, $tim
     function adapteDetails(orderDetails){
         var status = orderDetails.status;
         if (status == 'ORDER_PAID' || status == 'ORDER_FINISHED'){
-            if (type == 'FORWARD'){
+            if (orderDetails.type == 'FORWARD_PLAN'){
                 $state.go('inServiceDetail', {orderDetailsDto : orderDetails});
-            } else if (type == 'NORMAL')
-                $state.go('normalDetail', {orderDetailsDto : orderDetails});
-            $rootScope.status = status;
+            } else if (orderDetails.type == 'NORMAL') {
+                $state.go('normalDetail', {orderDetailsDto: orderDetails});
+            }
         } else if (status == "ORDER_CREATED"){
             $state.go('orderDetail', {orderDetailsDto : orderDetails});
         }

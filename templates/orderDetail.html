@@ -1,6 +1,15 @@
 <div class="homeView">
+
+    <div class="weui_cells weui_cells_access" style="margin-top: 0px;">
+        <div class="weui_cell" style="font-size: 14px;">
+            <div class="weui_cell_bd weui_cell_primary">
+                <p style="color: #888;" ng-bind="orderDetailsView.statusView"></p>
+            </div>
+            <div style="color: #888;">下单时间：<span style="float:right" >{{orderDetailsView.createTime | date:"yyyy-MM-dd hh:mm:ss"}}</span></div>
+        </div>
+    </div>
     <div class="weui_panel weui_panel_access">
-        <div class="weui_panel_hd" style="font-size: 0.875rem;color: #000;border-bottom: 1px solid #d9d9d9;">订单信息</div>
+
         <div class="weui_panel_bd" style="border-bottom: 1px solid #d9d9d9;" ng-repeat="item in orderDetailsView.itemList">
             <div class="weui_media_box weui_media_appmsg">
                 <div class="weui_cell_hd">
@@ -29,14 +38,20 @@
     </div>
 
     <div class="weui_panel weui_panel_access">
-        <div class="weui_panel_hd" style="font-size: 14px;color: #000;border-bottom: 1px solid #d9d9d9;">订单费用</div>
+        <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;">订单费用</div>
         <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;">商品总额：<span style="float: right;color: #0d0d0d;" ng-bind="'￥' + orderDetailsView.sales "></span></div>
-        <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;">运费：<span style="float: right;color: #0d0d0d;">￥0</span></div>
-        <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;">付款金额：<span style="float: right;color: #09BB07;" ng-bind="'￥' + orderDetailsView.sales "></span></div>
+        <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;">运费：<span style="float: right;color: #0d0d0d;">￥{{orderDetailsView.freight}}</span></div>
+        <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;">付款金额：<span style="float: right;color: #09BB07;" ng-bind="'￥' + (orderDetailsView.sales + orderDetailsView.freight) "></span></div>
     </div>
 
-    <div class="weui_btn_area weui_btn_area_inline">
+    <div class="weui_btn_area ">
+        <!--
         <a ui-sref="order.orderList" ui-sref-active="active" class="weui_btn weui_btn_primary" style="background-color:#666666">取消</a>
         <a  href="javascript:;" class="weui_btn weui_btn_primary">支付</a>
+        -->
+    </div>
+
+    <a href="javascript:;" class="weui_btn weui_btn_primary" style="border-radius:0px;height:3.33rem;line-height: 3.33rem;" ng-click="pay();">立即支付</a>
+    <div class="weui_cells weui_cells_access" style="margin-top: 0px; height: 30px;color:#FFFFFF">
     </div>
 </div>

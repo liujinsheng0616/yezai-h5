@@ -97,13 +97,13 @@ var goceanApp = angular.module('starter', ['ui.router','angularFileUpload', 'Loc
             .state('inServiceDetail', {
                 cache:false,
                 url: '/inServiceDetail',
-                params : {'status' : null},
+                params : {orderDetailsDto: null},
                 templateUrl: 'templates/inServiceDetail.html',
                 controller: 'InServiceDetailCtrl'
             })
             .state('changeDeliverDay', {
                 cache:false,
-                params : {'orderId':null},
+                params : {'forward':null,'deliveryDayDtoList':null},
                 url: '/changeDeliverDay',
                 templateUrl: 'templates/changeDeliveryDay.html',
                 controller: 'ChangeDeliverDayCtrl'
@@ -126,6 +126,7 @@ var goceanApp = angular.module('starter', ['ui.router','angularFileUpload', 'Loc
             .state('normalDetail', {
                 cache:false,
                 url: '/normalDetail',
+                params : {orderDetailsDto: null},
                 templateUrl: 'templates/normalOrderDetail.html',
                 controller: 'NormalOrderDetailCtrl'
             })

@@ -30,7 +30,14 @@ goceanApp.controller('OrderDetailCtrl', function ($scope, $rootScope, $state, $t
      */
 
     if ($stateParams.orderDetailsDto != null) {
-        $scope.orderDetailsView = $stateParams.orderDetailsDto;
+        $scope.orderDetailsView = $stateParams.orderDetailsDto
+        if ($scope.orderDetailsView.status == "ORDER_CREATED" || $scope.orderDetailsView.status == "BLANK"){
+            $scope.orderDetailsView.statusView = "未付款";
+        }else if ($scope.orderDetailsView.status == "ORDER_PAID"){
+            $scope.orderDetailsView.statusView = "服务中";
+        }else if ($scope.orderDetailsView.status == "ORDER_FINISHED"){
+            $scope.orderDetailsView.statusView = "已完成";
+        }
     }else{
         /*
          * 重新请求/ url 带参数

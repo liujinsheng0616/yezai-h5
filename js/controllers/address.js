@@ -115,6 +115,9 @@ goceanApp.controller('AddressCtrl', function ($scope, $rootScope, $state, $timeo
                     $scope.addressList = result.addressList;
                     addressList = $scope.addressList;
                     var defaultId = result.defaultId;
+                    if (addressList.length == 1) {
+                        $rootScope.defaultAddress = addressList[0];
+                    }
                     initDefaultAddress(addressList, defaultId);
                 }
                 reset();
