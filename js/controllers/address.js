@@ -86,6 +86,9 @@ goceanApp.controller('AddressCtrl', function ($scope, $rootScope, $state, $timeo
                         addr.isDefault = 0;
                     }
                 }
+                if ($rootScope.isAddressChanged != null && $rootScope.isAddressChanged != "undefined" && $rootScope.isAddressChanged == 0){
+                    $rootScope.isAddressChanged = 1;
+                }
             }
         },function(err){
 

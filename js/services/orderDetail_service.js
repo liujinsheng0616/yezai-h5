@@ -6,19 +6,18 @@ goceanApp.factory('orderDetailService', ['$http', '$q','$rootScope', 'ajaxUtil',
         var orderDetailServiceObj = {};
         /*给服务对象注册方法*/
         //获得订单详情
-        orderDetailServiceObj.getOrderDetail = function (params) {
+        orderDetailServiceObj.getDetails = function (params) {
             var defer = $q.defer();
             var obj = {
-                url:appSettings.host+appSettings.requestURL.urlOne,
-                type:'GET',
+                url:appSettings.host+appSettings.requestURL.orderDetails,
+                type:'POST',
                 params:params
-            };
-            $rootScope.orderDetailsView = store.orderDetailsView;
+            }
             ajaxUtil.ajax(obj).then(function(data){
                 defer.resolve(data);
             },function(err){
                 defer.reject(err);
-            });
+            })
             return defer.promise;
         };
 

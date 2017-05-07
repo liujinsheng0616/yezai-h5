@@ -1,7 +1,7 @@
 /**
  * Created by 53983 on 2017/3/19.
  */
-goceanApp.controller('ChangeDeliverDayCtrl', function ($scope, $state, $timeout, $stateParams,changeDeliverDayService,payMomentService) {
+goceanApp.controller('ChangeDeliverDayCtrl', function ($rootScope,$scope, $state, $timeout, $stateParams,changeDeliverDayService,payMomentService) {
     console.log('about ChangeDeliverDayCtrl');
 
     // 数据绑定
@@ -91,6 +91,20 @@ goceanApp.controller('ChangeDeliverDayCtrl', function ($scope, $state, $timeout,
     };
 
     initPlanSelector();
+    
+    $scope.changeDeliverDay = function () {
+
+        var value = $("#d1").val();
+        for (i in $scope.nextPlanList){
+            var to = $scope.nextPlanList[i];
+            if (to.title == value){
+                $rootScope.deliveryDayChanged = to;
+                $rootScope.isDeliveryDayChanged = 1;
+                history.go(-1);
+                return;
+            }
+        }
+    };
 
     $("#d1").select({
         title: "选择你的收货日期",

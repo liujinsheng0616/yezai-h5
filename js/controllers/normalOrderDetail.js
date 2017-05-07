@@ -4,39 +4,75 @@
 goceanApp.controller('NormalOrderDetailCtrl', ['$scope','$rootScope','$state', '$stateParams', '$filter','$upload', 'normalDetailService',function ($scope, $rootScope, $state, $stateParams, $filter, $upload, normalDetailService) {
 
    console.log("about NormalOrderDetailCtrl");
-    var obj={id:1};
-    normalDetailService.getNormalDetail(obj).then(function(data){
-        console.log(data);
-    },function(err){
 
-    });
-
-    $scope.normalOrderDetailsView = store.normalOrderDetailsView;
-    if ($scope.normalOrderDetailsView.delivery) {
-        $scope.normalOrderDetailsView.delivery.sendDate = $filter('date')(new Date(new Date($scope.normalOrderDetailsView.delivery.deliveryTime).getTime()),'yyyy-MM-dd');
+    var orderId = 0;
+    if($stateParams.orderId){
+        orderId = $stateParams.orderId;
     }
 
-    if ($scope.normalOrderDetailsView.status == 'ORDER_CREATED'){
-        $scope.normalOrderDetailsView.status = '未付款';
-    } else if ($scope.normalOrderDetailsView.status == 'ORDER_PAID'){
-        $scope.normalOrderDetailsView.status = '服务中';
-    } else if ($scope.normalOrderDetailsView.status == 'ORDER_FINISHED'){
-        $scope.normalOrderDetailsView.status = '已完成';
+    function refresh(id) {
+        if (id <= 0)
+            return;
+        var obj = {
+            passportId:$rootScope.passport.passportId,
+            token:$rootScope.passport.token,
+            orderId:id};
+        normalDetailService.getDetails(obj).then(function(data){
+            console.log(data);
+            if ("OK" == data.status){
+                var orderDetailsDto = data.result;
+                $rootScope.orderDetailsView = orderDetailsDto;
+                initStatusView(orderDetailsDto);
+                initPic(orderDetailsDto.orderExt);
+            }
+        },function(err){
+
+        });
     }
+
+    function initStatusView(orderDetailsView){
+
+        if (orderDetailsView.status == 'ORDER_CREATED'){
+            orderDetailsView.statusView = '未付款';
+        }else if (orderDetailsView.status == 'ORDER_FINISHED'){
+            orderDetailsView.statusView = '已完成';
+        } else if (orderDetailsView.deliveryStatus == null){
+            orderDetailsView.statusView = '待发货';
+        } else if (orderDetailsView.deliveryStatus == 'DELIVERING'){
+            orderDetailsView.statusView = '送货中';
+        }
+    }
+
+    function initPic(orderExt) {
+        // 卖家图片
+
+        if (orderExt) {
+            var files = orderExt.sellerPic;
+            if (files != null && files != "undefined") {
+                for (var i = 0, len = files.length; i < len; ++i) {
+                    var file = files[i];
+                    $imageFiless.append($(tmpl.replace('#url#', file)));
+                }
+            }
+
+            // 买家图片
+            files = orderExt.buyerPic;
+            if (files != null && files != "undefined") {
+                for (var i = 0, len = files.length; i < len; ++i) {
+                    var file = files[i];
+                    $imageFiless.append($(tmpl.replace('#url#', file)));
+                }
+            }
+        }
+    }
+
     var tmpl = '<li class="weui-uploader__file" style="background-image:url(#url#)"></li>',
         $gallery = $("#gallery"), $galleryImg = $("#galleryImg"),
         $uploaderInput = $("#uploaderInput"),
         $imageFiless = $("#imageFiles"),
         buyerFilesNum = 1;
 
-    // 卖家图片
-    if ($scope.normalOrderDetailsView.sellerPhoto.length > 0){
-        var files = $scope.normalOrderDetailsView.sellerPhoto;
-        for (var i = 0, len = files.length; i < len; ++i) {
-            var file = files[i];
-            $imageFiless.append($(tmpl.replace('#url#', file)));
-        }
-    }
+
 
     $uploaderInput.on("change", function(e){
         var src, url = window.URL || window.webkitURL || window.mozURL, files = e.target.files;
@@ -75,6 +111,9 @@ goceanApp.controller('NormalOrderDetailCtrl', ['$scope','$rootScope','$state', '
                 buyerFilesNum++;
                 // 文件上传成功处理函数 http://topic-photo-test.b0.upaiyun.com/
                 $imageFiless.append($(tmpl.replace('#url#', 'http://topic-photo-test.b0.upaiyun.com/' + data.url)));
+
+
+
             }).error(function(data, status, headers, config) {
                 //失败处理函数
                 console.log('上传失败');
@@ -90,4 +129,14 @@ goceanApp.controller('NormalOrderDetailCtrl', ['$scope','$rootScope','$state', '
     $gallery.on("click", function(){
         $gallery.fadeOut(100);
     });
+
+    if (! $rootScope.orderDetailsView) {
+        refresh(orderId);
+        return;
+    }else if ($rootScope.orderDetailsView.isInited == false){
+        $rootScope.orderDetailsView.isInited == true;
+        initStatusView($rootScope.orderDetailsView);
+        initPic($rootScope.orderDetailsView.orderExt);
+        return;
+    }
 }]);

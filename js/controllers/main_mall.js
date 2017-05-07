@@ -108,10 +108,12 @@ goceanApp.controller('MainMallCtrl', function ($scope, $rootScope, $state, $time
     
     $scope.getItemDetail = function (params) {
         // var params = {goodsId:goodsId};
-        mallDetailService.getMallDetail(params).then(function(data){
+        $rootScope.itemDetail = null;
+            mallDetailService.getMallDetail(params).then(function(data){
             console.log(data);
             if (data.status == "OK"){
-                $state.go("itemDetail",{itemDetail: data.result});
+                $rootScope.itemDetail = data.result;
+                $state.go("itemDetail",params);
             }
 
         },function(err){

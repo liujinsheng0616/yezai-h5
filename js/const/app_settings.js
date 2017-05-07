@@ -31,7 +31,13 @@ goceanApp.constant('appSettings', {
 
 		placeOrder:'/order/place',
 		orderList:'/order/listMy',
-		orderDetails:'/order/details'
+		orderDetails:'/order/details',
+        changeOrderAddress:'/order/address/change',
+        onPicUploaded:'/order/ext/pic/upload',
+
+		changeDeliveryDay:'/forward/delivery/day/refresh',
+
+        getForwardDetails:'/forward/details/get'
 
 	},
     appId:'wx0cae6e3b9632e632'

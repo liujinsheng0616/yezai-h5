@@ -57,8 +57,8 @@ var goceanApp = angular.module('starter', ['ui.router','angularFileUpload', 'Loc
             })
             .state('orderDetail', {
                 cache:false,
-                params:{orderDetailsDto: null},
-                url: '/orderDetail',
+                params:{orderId: 0},
+                url: '/orderDetail/:orderId',
                 templateUrl: 'templates/orderDetail.html',
                 controller: 'OrderDetailCtrl'
             })
@@ -96,8 +96,8 @@ var goceanApp = angular.module('starter', ['ui.router','angularFileUpload', 'Loc
             })
             .state('inServiceDetail', {
                 cache:false,
-                url: '/inServiceDetail',
-                params : {orderDetailsDto: null},
+                url: '/inServiceDetail/:orderId',
+                params : {orderId: 0},
                 templateUrl: 'templates/inServiceDetail.html',
                 controller: 'InServiceDetailCtrl'
             })
@@ -110,23 +110,23 @@ var goceanApp = angular.module('starter', ['ui.router','angularFileUpload', 'Loc
             })
             .state('deliveryDetail',{
                 cache:false,
-                params : {'orderId':null,'forwardId':null,'status':null},
-                url: '/deliveryDetail',
+                params : {'orderId':0},
+                url: '/deliveryDetail/:orderId',
                 templateUrl: 'templates/deliveryDetail.html',
                 controller: 'DeliverDetailCtrl'
             })
             .state('itemDetail', {
                 cache:false,
-                url: '/itemDetail',
+                url: '/itemDetail/:goodsId',
                 // params : {'goodsId': null},
-                params:{'itemDetail':null},
+                params:{'goodsId':0},
                 templateUrl: 'templates/itemDetail.html',
                 controller: 'ItemDetailCtrl'
             })
             .state('normalDetail', {
                 cache:false,
-                url: '/normalDetail',
-                params : {orderDetailsDto: null},
+                url: '/normalDetail/:orderId',
+                params : {orderId: 0},
                 templateUrl: 'templates/normalOrderDetail.html',
                 controller: 'NormalOrderDetailCtrl'
             })

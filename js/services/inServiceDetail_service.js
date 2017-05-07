@@ -23,5 +23,51 @@ goceanApp.factory('inServiceDetailService', ['$http', '$q','$rootScope', 'ajaxUt
             });
             return defer.promise;
         };
+
+        inServiceDetailServiceObj.changeOrderAddress = function (params) {
+            var defer = $q.defer();
+            var obj = {
+                url:appSettings.host+appSettings.requestURL.changeOrderAddress,
+                type:'POST',
+                params:params
+            };
+            ajaxUtil.ajax(obj).then(function(data){
+                defer.resolve(data);
+            },function(err){
+                defer.reject(err);
+            });
+            return defer.promise;
+        };
+
+        inServiceDetailServiceObj.changeDeliveryDay = function (params) {
+            var defer = $q.defer();
+            var obj = {
+                url:appSettings.host+appSettings.requestURL.changeDeliveryDay,
+                type:'POST',
+                params:params
+            };
+            ajaxUtil.ajax(obj).then(function(data){
+                defer.resolve(data);
+            },function(err){
+                defer.reject(err);
+            });
+            return defer.promise;
+        };
+
+        inServiceDetailServiceObj.getDetails = function (params) {
+            var defer = $q.defer();
+            var obj = {
+                url:appSettings.host+appSettings.requestURL.orderDetails,
+                type:'POST',
+                params:params
+            }
+            ajaxUtil.ajax(obj).then(function(data){
+                defer.resolve(data);
+            },function(err){
+                defer.reject(err);
+            })
+            return defer.promise;
+        };
+
         return inServiceDetailServiceObj;
     }]);

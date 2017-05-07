@@ -2,62 +2,91 @@
  * Created by 53983 on 2017/3/22.
  */
 goceanApp.controller('ItemDetailCtrl', function($scope, $rootScope, $state,
-		$timeout, $stateParams, mallDetailService) {
+		$timeout, $stateParams, mallDetailService,configService) {
 
-    var _state = "mall";
+    var params = configService.parseQueryString(window.location.href);
+    if (params.passportId){
+        params.nickName = Base64.decode(params.nickName);
+        $rootScope.passport = params;
+    }
+
+    var goodsId = 0;
+    if ($stateParams.goodsId){
+        goodsId = $stateParams.goodsId;
+    }
+
+    var _state = "itemDetail/"+goodsId;
     if ($rootScope.passport == null){
         window.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0cae6e3b9632e632&redirect_uri=http://wxsdk.yezaigou.com/wx/page/base&response_type=code&scope=snsapi_base&state="+_state;
     	return;
     }
 
-	if ($stateParams.itemDetail != null && $stateParams.itemDetail != "undefined"){//后退到这一页
-		$rootScope.itemDetail = $stateParams.itemDetail;
-	}
-	var itemDetail = $rootScope.itemDetail;
-	itemDetail.viewPrice = "￥" + itemDetail.minPrice + "~"
-			+ itemDetail.maxPrice;
-
-	if (!$rootScope.type) {
-		$rootScope.type = $stateParams.type;
-	}
-
-	setTimeout(function() {
-		// 设置sku高度
-		if (!($scope.itemDetail == null || $scope.itemDetail == "undefined")) {
-			for (var i = 0; i < $scope.itemDetail.skuPropertyList.length; i++) {
-				var sku = $scope.itemDetail.skuPropertyList[i];
-				var count = Math.ceil(sku.eleList.length / 3);
-				$("#skuEle" + i).css({
-					"padding-top" : 0,
-					"height" : (count * 65) + "px"
-				})
-				for (var j = 0; j < sku.eleList.length; j++) {
-					var ele = sku.eleList[j];
-					if (j % 3 == 0) {
-						$("#" + sku.id + "" + j).removeClass().addClass(
-								"weui_sku_spanFirst");
-					}
-				}
-			}
+    var itemDetail = null;
+	if ($rootScope.itemDetail && $rootScope.itemDetail.goodsId == goodsId){
+    	init();
+	}else{
+    	var obj = {
+    		goodsId:goodsId
 		}
-		// 图片自动轮播
-		$('#slide2').swipeSlide(
-				{
-					autoSwipe : true,// 自动切换默认是
-					speed : 3000,// 速度默认4000
-					continuousScroll : true,// 默认否
-					transitionType : 'cubic-bezier(0.22, 0.69, 0.72, 0.88)',// 过渡动画linear/ease/ease-in/ease-out/ease-in-out/cubic-bezier
-					lazyLoad : true,// 懒加载默认否
-					firstCallback : function(i, sum, me) {
-						me.find('.dot').children().first().addClass('cur');
-					},
-					callback : function(i, sum, me) {
-						me.find('.dot').children().eq(i).addClass('cur')
-								.siblings().removeClass('cur');
-					}
-				});
-	}, 10);
+        mallDetailService.getMallDetail(obj).then(function(data){
+            console.log(data);
+            if (data.status == "OK"){
+                $rootScope.itemDetail = data.result;
+                init();
+            }
 
+        },function(err){
+
+        });
+	}
+
+	function init() {
+
+        itemDetail = $rootScope.itemDetail;
+        itemDetail.viewPrice = "￥" + itemDetail.minPrice + "~"
+            + itemDetail.maxPrice;
+
+        if (!$rootScope.type) {
+            $rootScope.type = $stateParams.type;
+        }
+
+        setTimeout(function () {
+            // 设置sku高度
+            if (!($scope.itemDetail == null || $scope.itemDetail == "undefined")) {
+                for (var i = 0; i < $scope.itemDetail.skuPropertyList.length; i++) {
+                    var sku = $scope.itemDetail.skuPropertyList[i];
+                    var count = Math.ceil(sku.eleList.length / 3);
+                    $("#skuEle" + i).css({
+                        "padding-top": 0,
+                        "height": (count * 65) + "px"
+                    })
+                    for (var j = 0; j < sku.eleList.length; j++) {
+                        var ele = sku.eleList[j];
+                        if (j % 3 == 0) {
+                            $("#" + sku.id + "" + j).removeClass().addClass(
+                                "weui_sku_spanFirst");
+                        }
+                    }
+                }
+            }
+            // 图片自动轮播
+            $('#slide2').swipeSlide(
+                {
+                    autoSwipe: true,// 自动切换默认是
+                    speed: 3000,// 速度默认4000
+                    continuousScroll: true,// 默认否
+                    transitionType: 'cubic-bezier(0.22, 0.69, 0.72, 0.88)',// 过渡动画linear/ease/ease-in/ease-out/ease-in-out/cubic-bezier
+                    lazyLoad: true,// 懒加载默认否
+                    firstCallback: function (i, sum, me) {
+                        me.find('.dot').children().first().addClass('cur');
+                    },
+                    callback: function (i, sum, me) {
+                        me.find('.dot').children().eq(i).addClass('cur')
+                            .siblings().removeClass('cur');
+                    }
+                });
+        }, 10);
+    }
 	var gallery = $("#gallery"), galleryImg = $("#galleryImg");
 	$scope.preview = function(index) {
 		galleryImg.attr("style", "background-image:url("

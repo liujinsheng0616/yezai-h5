@@ -205,6 +205,7 @@ goceanApp.controller('PayMomentCtrl', function ($scope, $rootScope, $state, $tim
             alert("收货地址不能为空");
             return;
         }
+        $rootScope.orderDetailsView = null;
         var obj = $rootScope.orderRo;
         obj.orderAddress = $rootScope.defaultAddress;
         payMomentService.placeOrder(obj).then(function(data){
@@ -214,8 +215,10 @@ goceanApp.controller('PayMomentCtrl', function ($scope, $rootScope, $state, $tim
                     alert("系统繁忙,请稍候再试");
                     return;
                 }
+                $rootScope.orderDetailsView = dto;
+                $rootScope.orderDetailsView.isInited = false;
                 $state.go("orderDetail", {
-                    orderDetailsDto:dto
+                    orderId: dto.id
                 });
             }else{
                 alert("系统繁忙,请稍候再试");

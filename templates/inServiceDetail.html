@@ -11,16 +11,16 @@
     <div class="weui_panel weui_panel_access" >
 
         <div class="weui_panel_bd" >
-            <a href="javascript:" class="weui_timeChange"><i class="fa fa-caret-left" ng-hide="index <= 0" ng-click="toLeftPlan()"></i></a>
+            <a href="javascript:" class="weui_timeChange"><i class="fa fa-caret-left" ng-hide="orderDetailsView.index <= 0" ng-click="toLeftPlan()"></i></a>
             <div class="weui_send_bd">
-                <div style="width: 25%;height: 100%;float: left;" ng-repeat="plan in currentForwardList track by $index">
-                    <div ng-class="{weui_sended:plan.status == 'ORDER_PAID',weui_notSend:plan.status == 'ORDER_CREATED' || plan.status == 'BLANK'}" ng-click="toServiceDetail(orderDetailsView.id,plan)">
+                <div style="width: 25%;height: 100%;float: left;" ng-repeat="plan in orderDetailsView.currentForwardList track by $index">
+                    <div ng-class="{weui_sended:plan.status == 'ORDER_PAID',weui_notSend:plan.status == 'ORDER_CREATED' || plan.status == 'BLANK'}" ng-click="toServiceDetail(plan)">
                         <span style="color: #FFF;">{{plan.id}}</span>
                     </div>
                     <span >{{plan.deliveryTime | date:"yy-MM-dd"}}</span>
                 </div>
             </div>
-            <a href="javascript:void(0)" class="weui_timeChange"><i class="fa fa-caret-right" ng-hide="index >= totalTimes/4 - 1" ng-click="toRightPlan()"></i></a>
+            <a href="javascript:void(0)" class="weui_timeChange"><i class="fa fa-caret-right" ng-hide="orderDetailsView.index >= orderDetailsView.totalTimes/4 - 1" ng-click="toRightPlan()"></i></a>
         </div>
         <div ng-hide="orderDetailsView.status == 'ORDER_FINISHED'">
             <a class="weui_cell " ui-sref="changeDeliverDay({forward:keyForward,deliveryDayDtoList:orderDetailsView.forwardPlanDto.deliveryDayDtoList})" ui-sref-active="active" style="border-top: 1px solid #d9d9d9; font-size: 14px;height: 3.22rem;">

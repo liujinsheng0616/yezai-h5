@@ -22,6 +22,7 @@ goceanApp.factory('orderListService', ['$http', '$q','$rootScope', 'ajaxUtil','a
             return defer.promise;
         };
 
+
         orderListServiceObj.getDetails = function (params) {
             var defer = $q.defer();
             var obj = {

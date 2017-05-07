@@ -29,19 +29,49 @@ goceanApp.controller('OrderDetailCtrl', function ($scope, $rootScope, $state, $t
 
      */
 
-    if ($stateParams.orderDetailsDto != null) {
-        $scope.orderDetailsView = $stateParams.orderDetailsDto
-        if ($scope.orderDetailsView.status == "ORDER_CREATED" || $scope.orderDetailsView.status == "BLANK"){
-            $scope.orderDetailsView.statusView = "未付款";
-        }else if ($scope.orderDetailsView.status == "ORDER_PAID"){
-            $scope.orderDetailsView.statusView = "服务中";
-        }else if ($scope.orderDetailsView.status == "ORDER_FINISHED"){
-            $scope.orderDetailsView.statusView = "已完成";
-        }
-    }else{
-        /*
-         * 重新请求/ url 带参数
-         */
+    var orderId = 0;
+    if($stateParams.orderId){
+        orderId = $stateParams.orderId;
     }
 
+
+    function refresh(id) {
+        if (id <= 0)
+            return;
+        var obj = {
+            passportId:$rootScope.passport.passportId,
+            token:$rootScope.passport.token,
+            orderId:id};
+        orderDetailService.getDetails(obj).then(function(data){
+            console.log(data);
+            if ("OK" == data.status){
+                var orderDetailsDto = data.result;
+                init(orderDetailsDto);
+            }
+        },function(err){
+
+        });
+    }
+
+
+    function init(orderDetailsDto) {
+
+        $scope.orderDetailsView = orderDetailsDto;
+        if ($scope.orderDetailsView.status == "ORDER_CREATED" || $scope.orderDetailsView.status == "BLANK") {
+            $scope.orderDetailsView.statusView = "未付款";
+        } else if ($scope.orderDetailsView.status == "ORDER_PAID") {
+            $scope.orderDetailsView.statusView = "服务中";
+        } else if ($scope.orderDetailsView.status == "ORDER_FINISHED") {
+            $scope.orderDetailsView.statusView = "已完成";
+        }
+    }
+
+    if (! $rootScope.orderDetailsView) {
+        refresh(orderId);
+        return;
+    }else if ($rootScope.orderDetailsView.isInited == false){
+        $rootScope.orderDetailsView.isInited == true;
+        init($rootScope.orderDetailsView);
+        return;
+    }
 });

@@ -50,10 +50,16 @@ goceanApp.controller('OrderListCtrl', function ($scope, $rootScope, $state, $tim
             var brief = orderList[i];
             if (brief.status == "ORDER_CREATED"){
                 brief.statusView = "未付款";
-            }else if (brief.status == "ORDER_PAID"){
-                brief.statusView = "服务中";
             }else if (brief.status == "ORDER_FINISHED"){
                 brief.statusView = "已完成";
+            }else if (brief.type == "FORWARD_PLAN" && brief.status == "ORDER_PAID"){
+                brief.statusView = "服务中";
+            }else if (brief.type == "NORMAL"){
+                if (brief.deliveryStatus == null){
+                    brief.statusView = "待发货";
+                }else if(brief.deliveryStatus == "DELIVERING"){
+                    brief.statusView = "送货中";
+                }
             }
             var itemList = brief.itemList;
             for (j in itemList){
@@ -67,16 +73,21 @@ goceanApp.controller('OrderListCtrl', function ($scope, $rootScope, $state, $tim
     }
 
     // 跳转详情页
-    $scope.goToOrderDetail = function (id) {
+    $scope.goToOrderDetail = function (order) {
+        $rootScope.orderDetailsView = null;
+
         var obj = {
             passportId:$rootScope.passport.passportId,
             token:$rootScope.passport.token,
-            orderId:id};
+            orderId:order.id};
         orderListService.getDetails(obj).then(function(data){
             console.log(data);
             if ("OK" == data.status){
-                var orderDetails = data.result;
-                adapteDetails(orderDetails);
+                var orderDetailsDto = data.result;
+                $rootScope.orderDetailsView = orderDetailsDto;
+                $rootScope.orderDetailsView.isInited = false;
+
+                adapteDetails(order);
             }
         },function(err){
 
@@ -84,16 +95,17 @@ goceanApp.controller('OrderListCtrl', function ($scope, $rootScope, $state, $tim
 
     }
 
-    function adapteDetails(orderDetails){
-        var status = orderDetails.status;
+    function adapteDetails(order){
+        var id = order.id;
+        var status = order.status;
         if (status == 'ORDER_PAID' || status == 'ORDER_FINISHED'){
-            if (orderDetails.type == 'FORWARD_PLAN'){
-                $state.go('inServiceDetail', {orderDetailsDto : orderDetails});
-            } else if (orderDetails.type == 'NORMAL') {
-                $state.go('normalDetail', {orderDetailsDto: orderDetails});
+            if (order.type == 'FORWARD_PLAN'){
+                $state.go('inServiceDetail', {orderId : id});
+            } else if (order.type == 'NORMAL') {
+                $state.go('normalDetail', {orderId: id});
             }
         } else if (status == "ORDER_CREATED"){
-            $state.go('orderDetail', {orderDetailsDto : orderDetails});
+            $state.go('orderDetail', {orderId : id});
         }
     }
 });
