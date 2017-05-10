@@ -1,39 +1,13 @@
 /**
  * Created by kingson·liu on 2017/3/11.
  */
-goceanApp.controller('OrderDetailCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, orderDetailService) {
+goceanApp.controller('OrderDetailCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, orderDetailService, mallHomePublishService) {
     console.log("about OrderDetailCtrl");
-
-    /*
-     private String pr;
-     private long createtTime;
-     private String status;
-     private String type;
-     private long sales;
-     private OrderAddress address;
-     private List<Item> itemList = new ArrayList<Item>();
-     */
-    /*
-     private int quantity;
-     private long price;
-     private long pricePlus;
-     private long bonus;
-     private long subsidy;
-     private long freight;
-
-     private long sellerId;
-     private String type;
-     private String title;
-     private String payDescription;
-     private String thumbnail;
-
-     */
 
     var orderId = 0;
     if($stateParams.orderId){
         orderId = $stateParams.orderId;
     }
-
 
     function refresh(id) {
         if (id <= 0)
@@ -53,7 +27,6 @@ goceanApp.controller('OrderDetailCtrl', function ($scope, $rootScope, $state, $t
         });
     }
 
-
     function init(orderDetailsDto) {
 
         $scope.orderDetailsView = orderDetailsDto;
@@ -66,12 +39,47 @@ goceanApp.controller('OrderDetailCtrl', function ($scope, $rootScope, $state, $t
         }
     }
 
-    if (! $rootScope.orderDetailsView) {
+    if (!$rootScope.orderDetailsView) {
         refresh(orderId);
-        return;
     }else if ($rootScope.orderDetailsView.isInited == false){
         $rootScope.orderDetailsView.isInited == true;
         init($rootScope.orderDetailsView);
-        return;
+    }
+
+    // H5调起微信支付
+    $scope.toWxPay = function (orderDetailsView) {
+        var obj = {
+            passportId : $rootScope.passport.passportId,
+            token : $rootScope.passport.token,
+            openid : $rootScope.passport.token3,
+            device : "WEB",
+            title : orderDetailsView.itemList[0].title,
+            pr : orderDetailsView.pr,
+            paid : 1,
+            skuId : orderDetailsView.itemList[0].id,
+            tradeType : "JSAPI"
+        };
+        orderDetailService.toWxPay(obj).then(function(data){
+            if (data.result){
+                WeixinJSBridge.invoke('getBrandWCPayRequest',{
+                    "appId" : data.result.appId,
+                    "timeStamp" : data.result.timeStamp+"",
+                    "nonceStr" : data.result.nonceStr,
+                    "package" : data.result.package,
+                    "signType" : "MD5",
+                    "paySign" : data.result.paySign
+                },function(res){
+                    if(res.err_msg == "get_brand_wcpay_request:ok"){
+                        console.log("微信支付成功!");
+                    }else if(res.err_msg == "get_brand_wcpay_request:cancel"){
+                        console.log("用户取消支付!");
+                    }else{
+                        console.log("支付失败!");
+                    }
+                });
+            }
+        },function(err){
+
+        });
     }
 });

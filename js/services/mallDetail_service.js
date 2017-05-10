@@ -12,12 +12,12 @@ goceanApp.factory('mallDetailService', ['$http', '$q','$rootScope', 'ajaxUtil','
                 url:appSettings.host+appSettings.requestURL.item_details,
                 type:'POST',
                 params:params
-            }
+            };
             ajaxUtil.ajax(obj).then(function(data){
                 defer.resolve(data);
             },function(err){
                 defer.reject(err);
-            })
+            });
             return defer.promise;
         };
 

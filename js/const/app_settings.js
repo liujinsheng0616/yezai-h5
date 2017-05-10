@@ -37,7 +37,9 @@ goceanApp.constant('appSettings', {
 
 		changeDeliveryDay:'/forward/delivery/day/refresh',
 
-        getForwardDetails:'/forward/details/get'
+        getForwardDetails:'/forward/details/get',
+
+		wxPay : "/payment/prepay"
 
 	},
     appId:'wx0cae6e3b9632e632'

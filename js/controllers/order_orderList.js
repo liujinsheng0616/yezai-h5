@@ -81,7 +81,6 @@ goceanApp.controller('OrderListCtrl', function ($scope, $rootScope, $state, $tim
             token:$rootScope.passport.token,
             orderId:order.id};
         orderListService.getDetails(obj).then(function(data){
-            console.log(data);
             if ("OK" == data.status){
                 var orderDetailsDto = data.result;
                 $rootScope.orderDetailsView = orderDetailsDto;

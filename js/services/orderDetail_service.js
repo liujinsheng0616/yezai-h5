@@ -12,12 +12,28 @@ goceanApp.factory('orderDetailService', ['$http', '$q','$rootScope', 'ajaxUtil',
                 url:appSettings.host+appSettings.requestURL.orderDetails,
                 type:'POST',
                 params:params
-            }
+            };
             ajaxUtil.ajax(obj).then(function(data){
                 defer.resolve(data);
             },function(err){
                 defer.reject(err);
-            })
+            });
+            return defer.promise;
+        };
+
+        // 微信支付请求
+        orderDetailServiceObj.toWxPay = function (params) {
+            var defer = $q.defer();
+            var obj = {
+                url:appSettings.host2+appSettings.requestURL.wxPay,
+                type:'POST',
+                params:params
+            };
+            ajaxUtil.ajax(obj).then(function(data){
+                defer.resolve(data);
+            },function(err){
+                defer.reject(err);
+            });
             return defer.promise;
         };
 
