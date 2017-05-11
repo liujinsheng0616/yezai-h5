@@ -181,10 +181,11 @@ goceanApp.controller('InServiceDetailCtrl', function ($scope, $rootScope, $state
     }
 
     if (! $rootScope.orderDetailsView) {
+        $rootScope.orderDetailsView.isInited = true;
         refresh(orderId);
         return;
     }else if ($rootScope.orderDetailsView.isInited == false){
-        $rootScope.orderDetailsView.isInited == true;
+        $rootScope.orderDetailsView.isInited = true;
         init($rootScope.orderDetailsView);
         onReady();
         return;

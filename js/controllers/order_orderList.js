@@ -82,21 +82,27 @@ goceanApp.controller('OrderListCtrl', function ($scope, $rootScope, $state, $tim
     $scope.goToOrderDetail = function (order) {
         $rootScope.orderDetailsView = null;
 
-        var obj = {
-            passportId:$rootScope.passport.passportId,
-            token:$rootScope.passport.token,
-            orderId:order.id};
-        orderListService.getDetails(obj).then(function(data){
-            if ("OK" == data.status){
-                var orderDetailsDto = data.result;
-                $rootScope.orderDetailsView = orderDetailsDto;
-                $rootScope.orderDetailsView.isInited = false;
+        if (order.status == "ORDER_CREATED"){
+            $state.go('orderDetail', {orderId : order.id});
+        }else {
 
-                adapteDetails(order);
-            }
-        },function(err){
+            var obj = {
+                passportId: $rootScope.passport.passportId,
+                token: $rootScope.passport.token,
+                orderId: order.id
+            };
+            orderListService.getDetails(obj).then(function (data) {
+                if ("OK" == data.status) {
+                    var orderDetailsDto = data.result;
+                    $rootScope.orderDetailsView = orderDetailsDto;
+                    $rootScope.orderDetailsView.isInited = false;
 
-        });
+                    adapteDetails(order);
+                }
+            }, function (err) {
+
+            });
+        }
 
     }
 

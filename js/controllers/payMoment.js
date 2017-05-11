@@ -85,6 +85,14 @@ goceanApp.controller('PayMomentCtrl', function ($scope, $rootScope, $state, $tim
 
         if ($rootScope.orderRo == null) {
 
+            var sharerId = 0;
+            if ($stateParams.payment){
+                if ($stateParams.payment.sharerId){
+                    sharerId = $stateParams.payment.sharerId;
+                }
+            }
+
+
             $rootScope.orderRo = {
                 passportId:$rootScope.passport.passportId,
                 token:$rootScope.passport.token,
@@ -100,8 +108,8 @@ goceanApp.controller('PayMomentCtrl', function ($scope, $rootScope, $state, $tim
                 attachmentIdList:[],
                 orderUsers:{
                     buyerId:$rootScope.passport.passportId,
-                    sharerId:0,
-                    invitorId:0
+                    sharerId:sharerId,
+                    invitorId:$rootScope.passport.invitorId
                 },
                 orderAddress:null
             };
@@ -210,7 +218,7 @@ goceanApp.controller('PayMomentCtrl', function ($scope, $rootScope, $state, $tim
             alert("收货地址不能为空");
             return;
         }
-        $rootScope.orderDetailsView = null;
+
         var obj = $rootScope.orderRo;
         obj.orderAddress = $rootScope.defaultAddress;
         payMomentService.placeOrder(obj).then(function(data){
@@ -220,8 +228,7 @@ goceanApp.controller('PayMomentCtrl', function ($scope, $rootScope, $state, $tim
                     alert("系统繁忙,请稍候再试");
                     return;
                 }
-                $rootScope.orderDetailsView = dto;
-                $rootScope.orderDetailsView.isInited = false;
+
                 $state.go("orderDetail", {
                     orderId: dto.id
                 });

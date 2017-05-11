@@ -62,6 +62,13 @@ var goceanApp = angular.module('starter', ['ui.router','angularFileUpload', 'Loc
                 templateUrl: 'templates/orderDetail.html',
                 controller: 'OrderDetailCtrl'
             })
+            .state('orderPay', {
+                cache:false,
+                params:{orderId: 0},
+                url: '/orderPay/:orderId',
+                templateUrl: 'templates/orderPay.html',
+                controller: 'OrderPayCtrl'
+            })
             .state('order.tuan', {
                 cache:false,
                 url: '/tuan',
@@ -110,16 +117,16 @@ var goceanApp = angular.module('starter', ['ui.router','angularFileUpload', 'Loc
             })
             .state('deliveryDetail',{
                 cache:false,
-                params : {'orderId':0},
+                params : {orderId:0},
                 url: '/deliveryDetail/:orderId',
                 templateUrl: 'templates/deliveryDetail.html',
                 controller: 'DeliverDetailCtrl'
             })
             .state('itemDetail', {
                 cache:false,
-                url: '/itemDetail/:goodsId',
+                url: '/itemDetail/:goodsId/:sharerIdStr',
                 // params : {'goodsId': null},
-                params:{'goodsId':0},
+                params:{goodsId:0, sharerIdStr:null},
                 templateUrl: 'templates/itemDetail.html',
                 controller: 'ItemDetailCtrl'
             })

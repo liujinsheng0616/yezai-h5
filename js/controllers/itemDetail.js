@@ -11,15 +11,32 @@ goceanApp.controller('ItemDetailCtrl', function($scope, $rootScope, $state, $tim
     }
 
     var goodsId = 0;
+    var sharerId = 0;
     if ($stateParams.goodsId){
         goodsId = $stateParams.goodsId;
     }
-
-    var _state = "itemDetail/"+goodsId;
-    if ($rootScope.passport == null){
-        window.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0cae6e3b9632e632&redirect_uri=http://wxsdk.yezaigou.com/wx/page/base&response_type=code&scope=snsapi_base&state="+_state;
-    	return;
+    if ($stateParams.sharerIdStr){
+    	var sharerIdStr = $stateParams.sharerIdStr;
+        sharerIdStr = sharerIdStr.replace("sharerId_","");
+        sharerId = parseInt(sharerIdStr);
     }
+
+    var _state = "itemDetail";
+    if ($rootScope.passport == null){
+
+        // if (goodsId == 0 || sharerId ==0) {
+        //     window.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0cae6e3b9632e632&redirect_uri=http://wxsdk.yezaigou.com/wx/page/base&response_type=code&scope=snsapi_base&state=" + _state;
+        //     return;
+        // }else{
+            window.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0cae6e3b9632e632&redirect_uri=http://wxsdk.yezaigou.com/wx/page/shared/"
+			+ goodsId + "/sharerId_" + sharerId +
+			"&response_type=code&scope=snsapi_userinfo&state="+_state;
+            return;
+		// }
+    }
+
+    thisUrl = thisUrl.split("sharerId_")[0];
+    thisUrl = thisUrl + "sharerId_" + $rootScope.passport.passportId;
 
     // 获取JSSDK
     getJssdkInfo();
@@ -389,7 +406,8 @@ goceanApp.controller('ItemDetailCtrl', function($scope, $rootScope, $state, $tim
 			price : _totalPrice,
 			thumbnail : itemDetail.thumbnail,
 			type : itemDetail.type,
-			payAttachment:_payAttachment
+			payAttachment:_payAttachment,
+			shareId:sharerId
 		})
 	}
 });
