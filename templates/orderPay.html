@@ -45,13 +45,13 @@
     </div>
 
     <div class="weui_btn_area ">
-        <!--
-        <a ui-sref="order.orderList" ui-sref-active="active" class="weui_btn weui_btn_primary" style="background-color:#666666">取消</a>
-        <a  href="javascript:;" class="weui_btn weui_btn_primary">支付</a>
-        -->
+
     </div>
 
-    <div class="weui_btn weui_btn_primary" ng-click="toWxPay(orderDetailsView)" style="border-radius:0px;height:3.33rem;line-height: 3.33rem;">立即支付</div>
-    <div class="weui_cells weui_cells_access" style="margin-top: 0px; height: 30px;color:#FFFFFF">
+    <div class="weui_cell" style="text-align:center;font-size: 18px;color:#ffffff; padding:0;">
+        <div class="weui_btn_primary" ng-click="toOrderList()" style="width:30%;border-radius:0px;height:3.33rem;line-height: 3.33rem;background-color:#666666">稍候</div>
+        <div class="weui_btn_primary" ng-click="toWxPay(orderDetailsView)" style="width:70%;border-radius:0px;height:3.33rem;line-height: 3.33rem;">立即支付</span>
     </div>
+
+
 </div>

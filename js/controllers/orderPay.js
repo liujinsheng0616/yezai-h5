@@ -55,6 +55,9 @@ goceanApp.controller('OrderPayCtrl', function ($scope, $rootScope, $state, $time
 
     refresh(orderId);
 
+    $scope.toOrderList = function () {
+        $state.go("order.orderList");
+    }
 
     // H5调起微信支付
     $scope.toWxPay = function (orderDetailsView) {
@@ -65,7 +68,7 @@ goceanApp.controller('OrderPayCtrl', function ($scope, $rootScope, $state, $time
             device : "WEB",
             title : orderDetailsView.itemList[0].title,
             pr : orderDetailsView.pr,
-            paid : 1,
+            paid : orderDetailsView.sales,
             skuId : orderDetailsView.itemList[0].id,
             tradeType : "JSAPI"
         };
