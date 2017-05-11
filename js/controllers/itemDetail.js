@@ -85,7 +85,7 @@ goceanApp.controller('ItemDetailCtrl', function($scope, $rootScope, $state, $tim
                         wx.showOptionMenu();
                         //分享到朋友圈
                         wx.onMenuShareTimeline({
-                            title: '也在购推荐---' + itemDetail.title, // 分享标题
+                            title: params.nickName + '也在购买: ' + itemDetail.title, // 分享标题
                             link: thisUrl, // 分享链接
                             imgUrl: 'http://static.yezaigou.com/' + itemDetail.thumbnail, // 分享图标
                             success: function () {
@@ -98,7 +98,7 @@ goceanApp.controller('ItemDetailCtrl', function($scope, $rootScope, $state, $tim
 
                         //分享给朋友
                         wx.onMenuShareAppMessage({
-                            title: '也在购推荐---' + itemDetail.title, // 分享标题
+                            title: params.nickName + '也在购买: ' + itemDetail.title, // 分享标题
                             desc: itemDetail.description, // 分享描述
                             link: thisUrl, // 分享链接
                             imgUrl: 'http://static.yezaigou.com/' + itemDetail.thumbnail, // 分享图标
