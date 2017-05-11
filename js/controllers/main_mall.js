@@ -1,7 +1,7 @@
 /**
  * Created by kingson·liu on 2017/3/9.
  */
-goceanApp.controller('MainMallCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, mallService, mallDetailService) {
+goceanApp.controller('MainMallCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, mallService, mallDetailService, configService) {
 
     var str = window.location.href;
     var arr = str.split("?");
@@ -20,6 +20,12 @@ goceanApp.controller('MainMallCtrl', function ($scope, $rootScope, $state, $time
             return;
         }
     }
+
+    // 隐藏右上角
+    setTimeout(function(){
+        configService.hideWXBtn();
+    },100);
+
     if ($rootScope.passport == null){
         $rootScope.passport = store.passport;
     }

@@ -15,6 +15,11 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
         return;
     }
 
+    // 隐藏右上角
+    setTimeout(function(){
+        configService.hideWXBtn();
+    },100);
+
     var tabIndex = 0;
 
     if ($rootScope.topicViewNavId == null) {
@@ -24,7 +29,6 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
     // 底部tab选中
     $("#activeHomePage").addClass('weui_active').siblings().removeClass('weui_active');
     $('#tab1').tab({defaultIndex:tabIndex,activeClass:"tab-green"});
-
 
     $scope.page = 1;
     $scope.rows = 10;

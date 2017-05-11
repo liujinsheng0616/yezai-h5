@@ -1,11 +1,16 @@
 /**
  * Created by 53983 on 2017/4/12.
  */
-goceanApp.controller('MainHomePublishCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, mallHomePublishService,topicCreationService, localStorageService) {
+goceanApp.controller('MainHomePublishCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, mallHomePublishService,topicCreationService, configService) {
     console.log('about MainHomePublishCtrl');
 
     $rootScope.tagList = $stateParams.tagList;
-    console.log($scope.tagList)
+
+    // 隐藏右上角
+    setTimeout(function(){
+        configService.hideWXBtn();
+    },100);
+
     // 获取JSSDK
     getJssdkInfo();
     function getJssdkInfo() {
@@ -30,7 +35,7 @@ goceanApp.controller('MainHomePublishCtrl', function ($scope, $rootScope, $state
             timestamp: data.result.timestamp , // 必填，生成签名的时间戳
             nonceStr: data.result.noncestr, // 必填，生成签名的随机串
             signature: data.result.signature,// 必填，签名，见附录1
-            jsApiList: ['chooseImage', 'uploadImage', 'previewImage'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+            jsApiList: ['chooseImage', 'uploadImage', 'previewImage', 'hideOptionMenu', 'hideAllNonBaseMenuItem'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
         });
     }
 

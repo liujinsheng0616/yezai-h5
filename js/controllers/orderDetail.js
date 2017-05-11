@@ -1,13 +1,18 @@
 /**
  * Created by kingson·liu on 2017/3/11.
  */
-goceanApp.controller('OrderDetailCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, orderDetailService, mallHomePublishService) {
+goceanApp.controller('OrderDetailCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, orderDetailService, configService) {
     console.log("about OrderDetailCtrl");
 
     var orderId = 0;
     if($stateParams.orderId){
         orderId = $stateParams.orderId;
     }
+
+    // 隐藏右上角
+    setTimeout(function(){
+        configService.hideWXBtn();
+    },100);
 
     function refresh(id) {
         if (id <= 0)

@@ -1,10 +1,10 @@
 /**
  * Created by 53983 on 2017/3/22.
  */
-goceanApp.controller('ItemDetailCtrl', function($scope, $rootScope, $state,
-		$timeout, $stateParams, mallDetailService,configService) {
-
-    var params = configService.parseQueryString(window.location.href);
+goceanApp.controller('ItemDetailCtrl', function($scope, $rootScope, $state, $timeout, $stateParams, mallDetailService, mainHomeService, configService) {
+    var url = window.location.href;
+    var params = configService.parseQueryString(url);
+    var thisUrl = url.split("?")[0];
     if (params.passportId){
         params.nickName = Base64.decode(params.nickName);
         $rootScope.passport = params;
@@ -21,15 +21,41 @@ goceanApp.controller('ItemDetailCtrl', function($scope, $rootScope, $state,
     	return;
     }
 
+    // 获取JSSDK
+    getJssdkInfo();
+    function getJssdkInfo() {
+        var sdkObj = {
+            url:location.href.split('#')[0]
+        };
+        mainHomeService.getJssdkInfo(sdkObj).then(function(data){
+            if (data){
+                setWxconfig(data);
+            }
+        },function(err){
+
+        });
+    }
+
+    // 配置微信config
+    function setWxconfig(data) {
+        wx.config({
+            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            appId: data.result.appId, // 必填，公众号的唯一标识
+            timestamp: data.result.timestamp , // 必填，生成签名的时间戳
+            nonceStr: data.result.noncestr, // 必填，生成签名的随机串
+            signature: data.result.signature,// 必填，签名，见附录1
+            jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+        });
+    }
+
     var itemDetail = null;
 	if ($rootScope.itemDetail && $rootScope.itemDetail.goodsId == goodsId){
     	init();
 	}else{
     	var obj = {
     		goodsId:goodsId
-		}
+		};
         mallDetailService.getMallDetail(obj).then(function(data){
-            console.log(data);
             if (data.status == "OK"){
                 $rootScope.itemDetail = data.result;
                 init();
@@ -41,7 +67,6 @@ goceanApp.controller('ItemDetailCtrl', function($scope, $rootScope, $state,
 	}
 
 	function init() {
-
         itemDetail = $rootScope.itemDetail;
         itemDetail.viewPrice = "￥" + itemDetail.minPrice + "~"
             + itemDetail.maxPrice;
@@ -51,6 +76,45 @@ goceanApp.controller('ItemDetailCtrl', function($scope, $rootScope, $state,
         }
 
         setTimeout(function () {
+
+        	// 设置分享
+            wx.ready(function() {
+                wx.checkJsApi({
+                    jsApiList: ['onMenuShareTimeline','onMenuShareAppMessage'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
+                    success: function (res) {
+                        wx.showOptionMenu();
+                        //分享到朋友圈
+                        wx.onMenuShareTimeline({
+                            title: '也在购推荐---' + itemDetail.title, // 分享标题
+                            link: thisUrl, // 分享链接
+                            imgUrl: 'http://static.yezaigou.com/' + itemDetail.thumbnail, // 分享图标
+                            success: function () {
+
+                            },
+                            cancel: function () {
+
+                            }
+                        });
+
+                        //分享给朋友
+                        wx.onMenuShareAppMessage({
+                            title: '也在购推荐---' + itemDetail.title, // 分享标题
+                            desc: itemDetail.description, // 分享描述
+                            link: thisUrl, // 分享链接
+                            imgUrl: 'http://static.yezaigou.com/' + itemDetail.thumbnail, // 分享图标
+                            type: '', // 分享类型,music、video或link，不填默认为link
+                            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                            success: function () {
+
+                            },
+                            cancel: function () {
+
+                            }
+                        });
+                    }
+                });
+            });
+
             // 设置sku高度
             if (!($scope.itemDetail == null || $scope.itemDetail == "undefined")) {
                 for (var i = 0; i < $scope.itemDetail.skuPropertyList.length; i++) {
@@ -59,7 +123,7 @@ goceanApp.controller('ItemDetailCtrl', function($scope, $rootScope, $state,
                     $("#skuEle" + i).css({
                         "padding-top": 0,
                         "height": (count * 65) + "px"
-                    })
+                    });
                     for (var j = 0; j < sku.eleList.length; j++) {
                         var ele = sku.eleList[j];
                         if (j % 3 == 0) {

@@ -1,13 +1,18 @@
 /**
  * Created by kingson·liu on 2017/3/12.
  */
-goceanApp.controller('AddressCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, addressService) {
+goceanApp.controller('AddressCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, addressService, configService) {
 
     var _state = "mall";
     if ($rootScope.passport == null){
         window.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0cae6e3b9632e632&redirect_uri=http://wxsdk.yezaigou.com/wx/page/base&response_type=code&scope=snsapi_base&state="+_state;
         return;
     }
+
+    // 隐藏右上角
+    setTimeout(function(){
+        configService.hideWXBtn();
+    },100);
 
     $("#ssx").cityPicker({
         title: "选择省市县"

@@ -1,7 +1,7 @@
 /**
  * Created by 53983 on 2017/3/27.
  */
-goceanApp.controller('NormalOrderDetailCtrl', ['$scope','$rootScope','$state', '$stateParams', '$filter','$upload', 'normalDetailService',function ($scope, $rootScope, $state, $stateParams, $filter, $upload, normalDetailService) {
+goceanApp.controller('NormalOrderDetailCtrl', ['$scope','$rootScope','$state', '$stateParams', '$filter','$upload', 'normalDetailService', 'configService',function ($scope, $rootScope, $state, $stateParams, $filter, $upload, normalDetailService, configService) {
 
    console.log("about NormalOrderDetailCtrl");
 
@@ -9,6 +9,11 @@ goceanApp.controller('NormalOrderDetailCtrl', ['$scope','$rootScope','$state', '
     if($stateParams.orderId){
         orderId = $stateParams.orderId;
     }
+
+    // 隐藏右上角
+    setTimeout(function(){
+        configService.hideWXBtn();
+    },100);
 
     function refresh(id) {
         if (id <= 0)

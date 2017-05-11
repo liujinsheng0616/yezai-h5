@@ -1,7 +1,7 @@
 /**
  * Created by 53983 on 2017/3/17.
  */
-goceanApp.controller('InServiceDetailCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, $filter, inServiceDetailService) {
+goceanApp.controller('InServiceDetailCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, $filter, inServiceDetailService, configService) {
     console.log("about InServiceDetailCtrl");
 
     var orderId = 0;
@@ -12,6 +12,11 @@ goceanApp.controller('InServiceDetailCtrl', function ($scope, $rootScope, $state
     if ( $rootScope.orderDetailsView){
         forwardList = $rootScope.orderDetailsView.forwardPlanDto.forwardList;
     }
+
+    // 隐藏右上角
+    setTimeout(function(){
+        configService.hideWXBtn();
+    },100);
 
     function init(orderDetailsDto){
         $rootScope.orderDetailsView = orderDetailsDto;

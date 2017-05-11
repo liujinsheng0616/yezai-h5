@@ -1,12 +1,17 @@
 /**
  * Created by 53983 on 2017/3/19.
  */
-goceanApp.controller('DeliverDetailCtrl',['$scope', '$rootScope','$state', '$stateParams', '$filter', '$upload', 'deliverDetailService', function ($scope, $rootScope, $state, $stateParams, $filter, $upload, deliverDetailService) {
+goceanApp.controller('DeliverDetailCtrl',['$scope', '$rootScope','$state', '$stateParams', '$filter', '$upload', 'deliverDetailService', 'configService', function ($scope, $rootScope, $state, $stateParams, $filter, $upload, deliverDetailService, configService) {
     console.log('about DeliverDetailCtrl');
 
     if ($stateParams.orderId){
         $scope.orderId = $stateParams.orderId;
     }
+
+    // 隐藏右上角
+    setTimeout(function(){
+        configService.hideWXBtn();
+    },100);
 
     var tmpl = '<li class="weui-uploader__file" style="background-image:url(#url#)"></li>',
         $gallery = $("#gallery"), $galleryImg = $("#galleryImg"),

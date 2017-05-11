@@ -14,6 +14,11 @@ goceanApp.controller('MainMineCtrl', function ($scope,$rootScope, $state, $timeo
         return;
     }
 
+    // 隐藏右上角
+    setTimeout(function(){
+        configService.hideWXBtn();
+    },100);
+
     $rootScope.passport.yeBean = 10;
 
     // 底部tab选中

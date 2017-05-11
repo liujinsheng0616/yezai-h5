@@ -14,6 +14,12 @@ goceanApp.controller('OrderListCtrl', function ($scope, $rootScope, $state, $tim
         window.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0cae6e3b9632e632&redirect_uri=http://wxsdk.yezaigou.com/wx/page/base&response_type=code&scope=snsapi_base&state="+_state;
         return;
     }
+
+    // 隐藏右上角
+    setTimeout(function(){
+        configService.hideWXBtn();
+    },100);
+
     // 底部tab选中
     $("#order").addClass("weui_active").siblings().removeClass('weui_active');
     $('#tab1').tab({defaultIndex:0,activeClass:"tab-green"});

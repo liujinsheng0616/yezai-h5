@@ -1,7 +1,7 @@
 /**
  * Created by 53983 on 2017/3/22.
  */
-goceanApp.controller('MailDetailCtrl', function ($scope, $rootScope,$state, $timeout, $stateParams,mallDetailService) {
+goceanApp.controller('MailDetailCtrl', function ($scope, $rootScope,$state, $timeout, $stateParams, mallDetailService, configService) {
     console.log("about MailDetailCtrl");
 
     var obj = {id:1};
@@ -14,6 +14,12 @@ goceanApp.controller('MailDetailCtrl', function ($scope, $rootScope,$state, $tim
     if (!$rootScope.type){
         $rootScope.type = $stateParams.type;
     }
+
+    // 隐藏右上角
+    setTimeout(function(){
+        configService.hideWXBtn();
+    },100);
+
     // 假数据映射
     if ($rootScope.type == "FORWARD"){
         $scope.mallDetail = store.item;

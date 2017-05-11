@@ -1,7 +1,7 @@
 /**
  * Created by 53983 on 2017/3/14.
  */
-goceanApp.controller('PayMomentCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, payMomentService) {
+goceanApp.controller('PayMomentCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, payMomentService, configService) {
     console.log("about PayMomentCtrl");
 
     var _state = "mall";//FIXME 登录后返回当前页面，需要参数skuId
@@ -9,6 +9,11 @@ goceanApp.controller('PayMomentCtrl', function ($scope, $rootScope, $state, $tim
         window.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0cae6e3b9632e632&redirect_uri=http://wxsdk.yezaigou.com/wx/page/userInfo&response_type=code&scope=snsapi_userinfo&state="+_state;
         return;
     }
+
+    // 隐藏右上角
+    setTimeout(function(){
+        configService.hideWXBtn();
+    },100);
 
     function getDefaultAddress() {
         var tokenedRo = {

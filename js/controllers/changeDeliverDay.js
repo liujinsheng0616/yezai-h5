@@ -1,17 +1,9 @@
 /**
  * Created by 53983 on 2017/3/19.
  */
-goceanApp.controller('ChangeDeliverDayCtrl', function ($rootScope,$scope, $state, $timeout, $stateParams,changeDeliverDayService,payMomentService) {
+goceanApp.controller('ChangeDeliverDayCtrl', function ($rootScope,$scope, $state, $timeout, $stateParams,configService) {
     console.log('about ChangeDeliverDayCtrl');
 
-    // 数据绑定
-    // var obj = {viewId : $stateParams.viewId};
-    // changeDeliverDayService.getDelayTimeList(obj).then(function(data){
-    //     console.log(data);
-    // },function(err){
-    //
-    // });
-    //
     if ($stateParams.forward) {
         $scope.keyForward = $stateParams.forward;
         $scope.deliveryDayDtoList = $stateParams.deliveryDayDtoList;
@@ -19,8 +11,10 @@ goceanApp.controller('ChangeDeliverDayCtrl', function ($rootScope,$scope, $state
         return;
     }
 
-    // $scope.template.deliveryDay.dayList;
-
+    // 隐藏右上角
+    setTimeout(function(){
+        configService.hideWXBtn();
+    },100);
 
     function initPlanSelector() {
 
@@ -44,11 +38,11 @@ goceanApp.controller('ChangeDeliverDayCtrl', function ($rootScope,$scope, $state
             var one = {
                 day:oneT.day,
                 time: oneT.time + 604800000 * (i - factoryOne)
-            }
+            };
             var two = {
                 day:twoT.day,
                 time: twoT.time + 604800000 * (i - factoryTwo)
-            }
+            };
             if (one.day < two.day){
                 $scope.nextPlanList.push(one);
                 $scope.nextPlanList.push(two);
