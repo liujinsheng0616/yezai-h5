@@ -3,22 +3,10 @@
  */
 goceanApp.controller('MainMallCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, mallService, mallDetailService, configService) {
 
-    var str = window.location.href;
-    var arr = str.split("?");
-    if (arr.length>1){
-        var kv = arr[1].split("&");
-        for (i in kv){
-            var kvArr = kv[i].split("=");
-            var key = kvArr[0];
-            var value = kvArr[1];
-            store.passport[key] = value;
-        }
-    }else{
-        var _state = "mall";
-        if ($rootScope.passport == null){
-            window.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0cae6e3b9632e632&redirect_uri=http://wxsdk.yezaigou.com/wx/page/base&response_type=code&scope=snsapi_base&state="+_state;
-            return;
-        }
+    var params = configService.parseQueryString(window.location.href);
+    if (params.passportId){
+        params.nickName = Base64.decode(params.nickName);
+        $rootScope.passport = params;
     }
 
     // 隐藏右上角
@@ -26,9 +14,7 @@ goceanApp.controller('MainMallCtrl', function ($scope, $rootScope, $state, $time
         configService.hideWXBtn();
     },100);
 
-    if ($rootScope.passport == null){
-        $rootScope.passport = store.passport;
-    }
+
     // 底部tab选中
     $("#mall").addClass('weui_active').siblings().removeClass('weui_active');
 

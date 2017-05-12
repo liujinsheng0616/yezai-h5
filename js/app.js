@@ -90,12 +90,15 @@ var goceanApp = angular.module('starter', ['ui.router','angularFileUpload', 'Loc
             .state('payment', {
                 cache:false,
                 params : {
-                    'goodsId':0,'skuId':0,
+                    'goodsId':0,
+                    'skuId':0,
                     'title' : null,
                 	'payDescription' : null, 
                 	'price' : null,
-                	'thumbnail':null,'type':null,
-                	'payAttachment':null
+                	'thumbnail':null,
+                    'type':null,
+                	'payAttachment':null,
+                    'sharerId':0
                 	},
                 url: '/payment',
                 templateUrl: 'templates/payMoment.html',
@@ -129,6 +132,14 @@ var goceanApp = angular.module('starter', ['ui.router','angularFileUpload', 'Loc
                 params:{goodsId:0, sharerIdStr:null},
                 templateUrl: 'templates/itemDetail.html',
                 controller: 'ItemDetailCtrl'
+            })
+            .state('itemShared', {
+                cache:false,
+                url: '/itemShared/:goodsId/:sharerIdStr',
+                // params : {'goodsId': null},
+                params:{goodsId:0, sharerIdStr:null},
+                templateUrl: 'templates/itemShared.html',
+                controller: 'ItemSharedCtrl'
             })
             .state('normalDetail', {
                 cache:false,

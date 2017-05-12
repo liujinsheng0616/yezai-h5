@@ -1,10 +1,9 @@
 /**
  * Created by 53983 on 2017/3/22.
  */
-goceanApp.controller('ItemDetailCtrl', function($scope, $rootScope, $state, $timeout, $stateParams, mallDetailService, mainHomeService, configService) {
+goceanApp.controller('ItemDetailCtrl', function($scope, $rootScope, $state, $timeout, $stateParams, appSettings,mallDetailService, mainHomeService, configService) {
     var url = window.location.href;
     var params = configService.parseQueryString(url);
-    var thisUrl = url.split("?")[0];
     if (params.passportId){
         params.nickName = Base64.decode(params.nickName);
         $rootScope.passport = params;
@@ -34,9 +33,9 @@ goceanApp.controller('ItemDetailCtrl', function($scope, $rootScope, $state, $tim
             return;
 		// }
     }
-
-    thisUrl = thisUrl.split("sharerId_")[0];
-    thisUrl = thisUrl + "sharerId_" + $rootScope.passport.passportId;
+    var thisUrl = appSettings.domain + "/index.html#/itemShared";
+    thisUrl = thisUrl + "/" + goodsId;
+    thisUrl = thisUrl + "/sharerId_" + $rootScope.passport.passportId;
 
     // 获取JSSDK
     getJssdkInfo();
@@ -102,7 +101,7 @@ goceanApp.controller('ItemDetailCtrl', function($scope, $rootScope, $state, $tim
                         wx.showOptionMenu();
                         //分享到朋友圈
                         wx.onMenuShareTimeline({
-                            title: params.nickName + '也在购买: ' + itemDetail.title, // 分享标题
+                            title: $rootScope.passport.nickName + '也在购买: ' + itemDetail.title, // 分享标题
                             link: thisUrl, // 分享链接
                             imgUrl: 'http://static.yezaigou.com/' + itemDetail.thumbnail, // 分享图标
                             success: function () {
@@ -115,7 +114,7 @@ goceanApp.controller('ItemDetailCtrl', function($scope, $rootScope, $state, $tim
 
                         //分享给朋友
                         wx.onMenuShareAppMessage({
-                            title: params.nickName + '也在购买: ' + itemDetail.title, // 分享标题
+                            title: $rootScope.passport.nickName + '也在购买: ' + itemDetail.title, // 分享标题
                             desc: itemDetail.description, // 分享描述
                             link: thisUrl, // 分享链接
                             imgUrl: 'http://static.yezaigou.com/' + itemDetail.thumbnail, // 分享图标
@@ -407,7 +406,7 @@ goceanApp.controller('ItemDetailCtrl', function($scope, $rootScope, $state, $tim
 			thumbnail : itemDetail.thumbnail,
 			type : itemDetail.type,
 			payAttachment:_payAttachment,
-			shareId:sharerId
+			sharerId:sharerId
 		})
 	}
 });

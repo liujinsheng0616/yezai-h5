@@ -4,6 +4,7 @@
 goceanApp.constant('appSettings', {
 	timeout : 30000,
 	// host:'http://localhost',
+	domain:'http://static.yezaigou.com',
 	host : 'http://m.yezaigou.com',
 	host2:'http://wxsdk.yezaigou.com',
 	requestURL : {

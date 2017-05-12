@@ -86,10 +86,8 @@ goceanApp.controller('PayMomentCtrl', function ($scope, $rootScope, $state, $tim
         if ($rootScope.orderRo == null) {
 
             var sharerId = 0;
-            if ($stateParams.payment){
-                if ($stateParams.payment.sharerId){
-                    sharerId = $stateParams.payment.sharerId;
-                }
+            if ($stateParams.sharerId){
+                sharerId = $stateParams.sharerId;
             }
 
 
