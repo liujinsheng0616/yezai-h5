@@ -12,6 +12,7 @@ goceanApp.constant('appSettings', {
 		wxUserInfo:'wx/page/userInfo',
 		item_listItem : '/item/listItem',
 		item_details : '/item/details',
+        getItemBrief:'/item/brief/get',
 		listTopic : '/sns/topic/listTopic',
 		createTopic : '/sns/topic/createTopic',
 		removeTopic : '/sns/topic/removeTopic',
@@ -40,8 +41,10 @@ goceanApp.constant('appSettings', {
 
         getForwardDetails:'/forward/details/get',
 
-		wxPay : "/payment/prepay"
+		wxPay : "/payment/prepay",
 
+        createQiusong:"/crowdFunding/create",
+        getQiusongDetailSponsor:"/crowdFunding/details/sponsor"
 	},
     appId:'wx0cae6e3b9632e632'
 });

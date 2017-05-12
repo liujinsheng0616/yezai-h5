@@ -104,6 +104,16 @@ var goceanApp = angular.module('starter', ['ui.router','angularFileUpload', 'Loc
                 templateUrl: 'templates/payMoment.html',
                 controller: 'PayMomentCtrl'
             })
+            .state('qiusongEntry', {
+                cache:false,
+                params : {
+                    itemId:0,
+                    sharerId:0
+                },
+                url: '/qiusongEntry/:itemId/:sharerId',
+                templateUrl: 'templates/qiusongEntry.html',
+                controller: 'QiusongEntryCtrl'
+            })
             .state('inServiceDetail', {
                 cache:false,
                 url: '/inServiceDetail/:orderId',
@@ -148,13 +158,21 @@ var goceanApp = angular.module('starter', ['ui.router','angularFileUpload', 'Loc
                 templateUrl: 'templates/normalOrderDetail.html',
                 controller: 'NormalOrderDetailCtrl'
             })
-	    .state('publish', {
+	        .state('publish', {
                 cache:false,
 		        params : {'tagList':null},
                 url: '/publish',
                 templateUrl: 'templates/mall_home_publish.html',
                 controller: 'MainHomePublishCtrl'
-             });
+             })
+            .state('qiusongDetailsSponsor', {
+                cache:false,
+                params : {'id':0},
+                url: '/qiusongDetailsSponsor/:id',
+                templateUrl: 'templates/qiusongDetails_Sponsor.html',
+                controller: 'QiusongDetailsSponsorCtrl'
+            });
+
 
         // if none of the above states are matched, use this as the fallback
         $urlRouterProvider.otherwise('/main/home');

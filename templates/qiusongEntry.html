@@ -1,0 +1,53 @@
+<div class="homeView">
+
+    <div class="weui_panel">
+        <div class="weui_panel_bd">
+            <div class="weui_media_box weui_media_appmsg">
+                <div class="weui_cell_hd">
+                    <img style="width:80px;height:80px;margin-right:5px;display:block" ng-src="{{qiusongRo.thumbnail}}" alt="">
+                </div>
+                <div class="weui_media_bd">
+                    <table border="0" style="width: 100%;margin-left: 8px;color:#888;font-size:0.855rem;">
+                        <tr style="height: 45px;font-size: 0.975rem;color: #000;">
+                            <td ng-bind="qiusongRo.title"></td>
+                        </tr>
+                        <tr style="height: 25px;">
+                            <td >{{qiusongRo.payDescription}}</td>
+                            <td style="font-size: 18px;font-weight: bold;color: #0d0d0d;">￥<span ng-bind="qiusongRo.price"></span></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="weui_cells" style="margin-top: 0px;">
+
+            <div class="weui_cell" style="border-top: 1px solid #d9d9d9;height:3.33rem;">
+                <div class="weui_cell_hd" style="width: 4.833rem;"><label class="weui_label">参与人数：</label></div>
+                <!--<div class="weui_cell_bd weui_cell_primary"> -->
+                <div class="weui_cell_ft" style="color: #000;">
+                    <input class="weui_input" style="font-size: 16px;" type="number"  ng-model="qiusongRo.memberCount" placeholder=" (默认最少需要３人次参与)"/>
+                </div>
+            </div>
+            <div class="weui_cell" style="border-top: 1px solid #d9d9d9;height:3.33rem;">
+                <div class="weui_cell_hd weui_cell_primary" style="width: 4.833rem;"><label class="weui_label">求送金额: </label></div>
+                <div class="weui_cell_ft" style="color: #000;">
+                    <span style="font-size: 20px;color: #04BE02;"  id="totalPrice">￥{{((qiusongRo.price + qiusongRo.memberCount - 1 )/ qiusongRo.memberCount)  | number:0}} /次</span>
+                </div>
+            </div>
+            <div class="weui_cell" style="border-top: 1px solid #d9d9d9;height:3.33rem;">
+                <div class="weui_cell_hd weui_cell_primary" style="width: 4.833rem;"><label class="weui_label">求送须知: </label></div>
+                <div class="weui_cell_ft" style="color: #000;">
+                    <span style="font-size: 14px;"  id="notes">可分享求送，但仅限于向熟人发起求送</span>
+                </div>
+            </div>
+            <div class="weui_cell" style="border-top: 1px solid #d9d9d9;height:3.33rem;">
+                <div class="weui_cell_hd weui_cell_primary" style="width: 4.833rem;"><label class="weui_label"></label></div>
+                <div class="weui_cell_ft" style="color: #000;">
+                    <span style="font-size: 20px;color: #04BE02;"  id="x"></span>
+                </div>
+            </div>
+
+            <a href="javascript:;" class="weui_btn weui_btn_primary" style="border-radius:0px;height:3.33rem;line-height: 3.33rem;" ng-click="create();">发起求送</a>
+        </div>
+    </div>
+</div>

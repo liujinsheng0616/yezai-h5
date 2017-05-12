@@ -409,4 +409,17 @@ goceanApp.controller('ItemDetailCtrl', function($scope, $rootScope, $state, $tim
 			sharerId:sharerId
 		})
 	}
+
+    // 购买页
+    $scope.toQiusong = function() {
+        if (_price == 0) {
+            $.alert("请选择主商品");
+            return;
+        }
+        $rootScope.payView = null;
+        $rootScope.orderRo = null;
+        $state.go("qiusongEntry", {
+            itemId:_skuId
+        })
+    }
 });

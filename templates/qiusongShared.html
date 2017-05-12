@@ -1,0 +1,34 @@
+<div class="homeView" style="overflow-x: hidden;">
+
+    <div class="weui_cells weui_cells_access" style="margin-top: 0px;">
+        <div class="weui_cell" style="font-size: 16px;">
+            <div style="color: #888;">{{crowdFundingDetails.sponsorName}}也在发起求送以下商品的活动, 邀请您参与</span></div>
+        </div>
+    </div>
+
+    <div class="weui_panel weui_panel_access">
+
+        <div class="weui_panel_bd"  ng-repeat="item in crowdFundingDetails.itemList">
+            <div class="weui_media_box weui_media_appmsg">
+                <div class="weui_cell_hd">
+                    <img style="width:80px;height:80px;margin-right:5px;display:block" ng-src="{{item.thumbnail}}" alt="">
+                </div>
+                <div class="weui_media_bd">
+                    <table border="0" style="width: 100%;margin-left: 8px;color:#888;font-size:0.755rem;">
+                        <tr style="height: 35px;font-size: 0.875rem;color: #000;">
+                            <td ng-bind="item.title"></td>
+                        </tr>
+                        <tr style="height: 25px;">
+                            <td><span ng-bind="item.payDescription"></span></td>
+                        </tr>
+                        <tr style="height: 25px;">
+                            <td>价格：￥<span ng-bind="item.price"></span></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
