@@ -69,10 +69,24 @@ var goceanApp = angular.module('starter', ['ui.router','angularFileUpload', 'Loc
                 templateUrl: 'templates/orderPay.html',
                 controller: 'OrderPayCtrl'
             })
+            .state('qiusongPrepay', {
+                cache:false,
+                params:{qiusongId: 0,memberId:0},
+                url: '/qiusongPrepay/:qiusongId/:memberId',
+                templateUrl: 'templates/qiusongPrepay.html',
+                controller: 'QiusongPrepayPayCtrl'
+            })
+            .state('qiusongPay', {
+                cache:false,
+                params:{qiusongId: 0,memberId:0},
+                url: '/qiusongPay/:qiusongId/:memberId',
+                templateUrl: 'templates/qiusongPay.html',
+                controller: 'QiusongPayPayCtrl'
+            })
             .state('order.qiusong', {
                 cache:false,
                 url: '/qiusong',
-                templateUrl: 'templates/order_qiusong.html',
+                templateUrl: 'templates/order_qiusongList.html',
                 controller: 'OrderQiusongCtrl'
             })
             .state('about', {

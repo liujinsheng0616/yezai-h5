@@ -1,0 +1,60 @@
+<div class="homeView" style="overflow: hidden;height: 100%;">
+    <div class="weui_tab " style="height:44px;" id="tab1"><!--tab-fixed添加顶部-->
+        <div class="weui_navbar" style="height:44px;">
+            <div class="weui_navbar_item" ng-click="listQiusong('ING')">
+                求送中
+            </div>
+            <div class="weui_navbar_item" ng-click="listQiusong('SUCCESSED')">
+                已完成
+            </div>
+            <div class="weui_navbar_item" ng-click="listQiusong('SETTLED')">
+                已结算
+            </div>
+            <div class="weui_navbar_item" ng-click="listQiusong('UN_PAY');">
+                未付款
+            </div>
+            <div class="weui_navbar_item" ng-click="listQiusong('PAID')">
+                已付款
+            </div>
+        </div>
+    </div>
+
+    <div style="overflow:auto;height: 100%;padding-bottom: 18%;">
+        <div class="weui_cells" ng-repeat="qiusong in qiusongList">
+            <div class="weui_cell" style="font-size: 14px;color:#000;">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p >{{qiusong.crowdFunding.createTime | date:"yyyy-MM-dd HH:mm:ss"}}</p>
+                </div>
+                <div class="weui_cell_ft" style="font-size: 12px;color: #000;">
+                    <span ng-bind="qiusong.statusView" ng-class="{redrText : qiusong.status == 'ORDER_CREATED'}"></span>
+                </div>
+            </div>
+
+            <div ng-click="goToOrderDetail(order)">
+                <div class="weui_cell" style="border-bottom: 1px solid #d9d9d9;border-top: 1px solid #d9d9d9;" >
+                    <div class="weui_cell_hd"><img ng-src="{{qiusong.skuBriefDto.thumbnail}}" alt="" style="width:80px;height: 80px;margin-right:5px;"></div>
+                    <table border="0" style="width: 70%;margin-left: 8px;color:#888;font-size: 13px;">
+                        <tr style="height: 35px;font-size: 15px;color: #000;">
+                            <td ng-bind="qiusong.skuBriefDto.title"></td>
+                        </tr>
+                        <tr style="height: 25px;" ng-hide="qiusong.skuBriefDto.payDescription == null || qiusong.skuBriefDto.payDescription == ''">
+                            <td ng-bind="qiusong.skuBriefDto.payDescription"></td></span></td>
+                        </tr>
+                        <tr style="height: 25px;">
+                            <td>价格：¥{{qiusong.skuBriefDto.price}}  <span style="float:right"> 求送金额：¥{{qiusong.crowdFunding.unitAmount}}/次</span></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="weui_cells_title" style="text-align: right;color:#000;height: 40px;line-height: 30px;border-bottom:  1px solid #d9d9d9;margin-bottom: 0;">
+                <span ng-if="qiusong.crowdFunding.sponsorId == passport.passportId"> 已收到：¥{{qiusong.crowdFunding.amount}}</span>
+                    <span ng-if="qiusong.crowdFunding.sponsorId != passport.passportId"> 实送：¥{{qiusong.crowdFunding.unitAmount}}</span>
+            </div>
+            <!--
+            <div class="weui_cells_title" style="text-align: right;color:#000;height: 40px;line-height: 30px;" ng-hide="order.status != 'ORDER_CREATED'" >
+                <a ui-sref-active="active" class="weui_btn weui_btn_primary" style="height: 30px;line-height: 30px;font-size: 14px;width:80px;border-radius:0px;margin-right: 0;">支付</a>
+            </div>
+            -->
+        </div>
+    </div>
+</div>

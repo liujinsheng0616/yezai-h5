@@ -66,7 +66,7 @@ goceanApp.controller('QiusongEntryCtrl', function ($scope, $rootScope, $state, $
             var obj = {//为了以后扩展用户自创建，而统一请求数据, itemId ==0
                 passportId:$rootScope.passport.passportId,
                 token:$rootScope.passport.token,
-                itemId:$scope.qiusongRo.skuId,
+                itemId:$scope.qiusongRo.id,
                 price:$scope.qiusongRo.price,
                 memberCount:$scope.qiusongRo.memberCount,//必要
                 title:$scope.qiusongRo.title,

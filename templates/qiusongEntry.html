@@ -22,7 +22,7 @@
         <div class="weui_cells" style="margin-top: 0px;">
 
             <div class="weui_cell" style="border-top: 1px solid #d9d9d9;height:3.33rem;">
-                <div class="weui_cell_hd" style="width: 4.833rem;"><label class="weui_label">参与人数：</label></div>
+                <div class="weui_cell_hd" style="width: 4.833rem;"><label class="weui_label">参与人次：</label></div>
                 <!--<div class="weui_cell_bd weui_cell_primary"> -->
                 <div class="weui_cell_ft" style="color: #000;">
                     <input class="weui_input" style="font-size: 16px;" type="number"  ng-model="qiusongRo.memberCount" placeholder=" (默认最少需要３人次参与)"/>
@@ -31,7 +31,7 @@
             <div class="weui_cell" style="border-top: 1px solid #d9d9d9;height:3.33rem;">
                 <div class="weui_cell_hd weui_cell_primary" style="width: 4.833rem;"><label class="weui_label">求送金额: </label></div>
                 <div class="weui_cell_ft" style="color: #000;">
-                    <span style="font-size: 20px;color: #04BE02;"  id="totalPrice">￥{{((qiusongRo.price + qiusongRo.memberCount - 1 )/ qiusongRo.memberCount)  | number:0}} /次</span>
+                    <span style="font-size: 20px;color: #04BE02;"  id="totalPrice">￥{{((qiusongRo.price + qiusongRo.memberCount - 1 )/ qiusongRo.memberCount)  | number:0}} / 次</span>
                 </div>
             </div>
             <div class="weui_cell" style="border-top: 1px solid #d9d9d9;height:3.33rem;">

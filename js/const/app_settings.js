@@ -45,7 +45,9 @@ goceanApp.constant('appSettings', {
         onPaying : "/order/onPaying",
 
         createQiusong:"/crowdFunding/create",
-        getQiusongDetailSponsor:"/crowdFunding/details/sponsor"
+        getQiusongDetailSponsor:"/crowdFunding/details/sponsor",
+		qiusongList:"/crowdFunding/list",
+        getQiusongDetail:'/crowdFunding/details'
 	},
     appId:'wx0cae6e3b9632e632'
 });
