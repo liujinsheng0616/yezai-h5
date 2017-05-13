@@ -37,5 +37,21 @@ goceanApp.factory('orderDetailService', ['$http', '$q','$rootScope', 'ajaxUtil',
             return defer.promise;
         };
 
+        // 微信支付请求
+        orderDetailServiceObj.onPaying = function (params) {
+            var defer = $q.defer();
+            var obj = {
+                url:appSettings.host+appSettings.requestURL.onPaying,
+                type:'POST',
+                params:params
+            };
+            ajaxUtil.ajax(obj).then(function(data){
+                defer.resolve(data);
+            },function(err){
+                defer.reject(err);
+            });
+            return defer.promise;
+        };
+
         return orderDetailServiceObj;
     }]);

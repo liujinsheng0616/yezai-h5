@@ -10,6 +10,17 @@ goceanApp.controller('NormalOrderDetailCtrl', ['$scope','$rootScope','$state', '
         orderId = $stateParams.orderId;
     }
 
+    var params = configService.parseQueryString(window.location.href);
+    if (params.passportId){
+        params.nickName = Base64.decode(params.nickName);
+        $rootScope.passport = params;
+    }
+    if ($rootScope.passport == null ){
+        var _state = "normalDetail/"+orderId;
+        window.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0cae6e3b9632e632&redirect_uri=http://wxsdk.yezaigou.com/wx/page/base&response_type=code&scope=snsapi_base&state="+_state;
+        return;
+    }
+
     // 隐藏右上角
     setTimeout(function(){
         configService.hideWXBtn();
@@ -27,6 +38,7 @@ goceanApp.controller('NormalOrderDetailCtrl', ['$scope','$rootScope','$state', '
             if ("OK" == data.status){
                 var orderDetailsDto = data.result;
                 $rootScope.orderDetailsView = orderDetailsDto;
+                $rootScope.orderDetailsView.isInited = true;
                 initStatusView(orderDetailsDto);
                 initPic(orderDetailsDto.orderExt);
             }
@@ -135,11 +147,11 @@ goceanApp.controller('NormalOrderDetailCtrl', ['$scope','$rootScope','$state', '
         $gallery.fadeOut(100);
     });
 
-    if (! $rootScope.orderDetailsView) {
+    if ($rootScope.orderDetailsView == null) {
         refresh(orderId);
         return;
     }else if ($rootScope.orderDetailsView.isInited == false){
-        $rootScope.orderDetailsView.isInited == true;
+        $rootScope.orderDetailsView.isInited = true;
         initStatusView($rootScope.orderDetailsView);
         initPic($rootScope.orderDetailsView.orderExt);
         return;

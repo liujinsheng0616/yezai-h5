@@ -74,6 +74,7 @@ goceanApp.controller('OrderPayCtrl', function ($scope, $rootScope, $state, $time
         };
         orderDetailService.toWxPay(obj).then(function(data){
             if (data.result){
+
                 WeixinJSBridge.invoke('getBrandWCPayRequest',{
                     "appId" : data.result.appId,
                     "timeStamp" : data.result.timeStamp+"",
@@ -84,6 +85,26 @@ goceanApp.controller('OrderPayCtrl', function ($scope, $rootScope, $state, $time
                 },function(res){
                     if(res.err_msg == "get_brand_wcpay_request:ok"){
                         console.log("微信支付成功!");
+                        var order = {
+                            orderId:orderId
+                        };
+                        orderDetailService.onPaying(order).then(function(data){
+                            if (data.status == "OK") {
+                                if (data.result == "PAID"){
+                                    $rootScope.orderDetailsView = null;
+                                    if (orderDetailsView.type == 'FORWARD_PLAN'){
+                                        $state.go('inServiceDetail', {orderId : orderId});
+                                    } else if (orderDetailsView.type == 'NORMAL') {
+                                        $state.go('normalDetail', {orderId: orderId});
+                                    }
+                                }else {
+                                    $state.go('order.orderList');
+                                }
+                            }
+                        },function(err){
+
+                        });
+
                     }else if(res.err_msg == "get_brand_wcpay_request:cancel"){
                         console.log("用户取消支付!");
                     }else{

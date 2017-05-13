@@ -42,6 +42,7 @@ goceanApp.constant('appSettings', {
         getForwardDetails:'/forward/details/get',
 
 		wxPay : "/payment/prepay",
+        onPaying : "/order/onPaying",
 
         createQiusong:"/crowdFunding/create",
         getQiusongDetailSponsor:"/crowdFunding/details/sponsor"

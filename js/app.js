@@ -69,11 +69,11 @@ var goceanApp = angular.module('starter', ['ui.router','angularFileUpload', 'Loc
                 templateUrl: 'templates/orderPay.html',
                 controller: 'OrderPayCtrl'
             })
-            .state('order.tuan', {
+            .state('order.qiusong', {
                 cache:false,
-                url: '/tuan',
-                templateUrl: 'templates/order_tuan.html',
-                controller: 'OrderTuanCtrl'
+                url: '/qiusong',
+                templateUrl: 'templates/order_qiusong.html',
+                controller: 'OrderQiusongCtrl'
             })
             .state('about', {
                 cache:false,

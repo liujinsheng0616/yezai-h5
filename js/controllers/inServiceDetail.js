@@ -8,6 +8,18 @@ goceanApp.controller('InServiceDetailCtrl', function ($scope, $rootScope, $state
     if($stateParams.orderId){
         orderId = $stateParams.orderId;
     }
+
+    var params = configService.parseQueryString(window.location.href);
+    if (params.passportId){
+        params.nickName = Base64.decode(params.nickName);
+        $rootScope.passport = params;
+    }
+    if ($rootScope.passport == null ){
+        var _state = "inServiceDetail/"+orderId;
+        window.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0cae6e3b9632e632&redirect_uri=http://wxsdk.yezaigou.com/wx/page/base&response_type=code&scope=snsapi_base&state="+_state;
+        return;
+    }
+
     var forwardList = null;
     if ( $rootScope.orderDetailsView){
         forwardList = $rootScope.orderDetailsView.forwardPlanDto.forwardList;
@@ -20,6 +32,7 @@ goceanApp.controller('InServiceDetailCtrl', function ($scope, $rootScope, $state
 
     function init(orderDetailsDto){
         $rootScope.orderDetailsView = orderDetailsDto;
+        $rootScope.orderDetailsView.isInited = true;
         forwardList = $rootScope.orderDetailsView.forwardPlanDto.forwardList;
         $rootScope.keyForward = forwardList[forwardList.length-1];
         $rootScope.orderDetailsView.keyIndex = parseInt((forwardList.length-1) / 4);
@@ -180,8 +193,7 @@ goceanApp.controller('InServiceDetailCtrl', function ($scope, $rootScope, $state
 
     }
 
-    if (! $rootScope.orderDetailsView) {
-        $rootScope.orderDetailsView.isInited = true;
+    if ($rootScope.orderDetailsView == null) {
         refresh(orderId);
         return;
     }else if ($rootScope.orderDetailsView.isInited == false){

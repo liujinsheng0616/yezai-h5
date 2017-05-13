@@ -33,7 +33,10 @@ goceanApp.controller('QiusongDetailsSponsorCtrl', function ($scope, $rootScope, 
 
         qiusongDetailsSponsorService.getQiusongDetailSponsor(obj).then(function(data){
             if (data.status == "OK") {
-
+                // CrowdFunding crowdFunding;
+                // SkuBriefDto skuBriefDto;
+                // List<CrowdFundingMember> memberList
+                $scope.crowdFundingDetails = data.result;
             }else{
                 alert("系统繁忙,请稍候再试");
             }
