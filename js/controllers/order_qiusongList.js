@@ -78,31 +78,32 @@ goceanApp.controller('OrderQiusongCtrl', function ($rootScope,$scope, $state, $t
             $state.go('qiusongPrepay', {qiusongId: qiusong.crowdFundingId.id, memberId: $rootScope.passport.passportId});
         }else {
 
-            var obj = {
-                passportId: $rootScope.passport.passportId,
-                token: $rootScope.passport.token,
-                crowdFundingId: qiusong.crowdFunding.id
-            };
-            qiusongListService.getDetails(obj).then(function (data) {
-                if ("OK" == data.status) {
-                    var qiusongDetailsDto = data.result;
-                    $rootScope.qiusongDetailsView = qiusongDetailsDto;
-                    $rootScope.qiusongDetailsView.isInited = false;
-
-                    adaptDetails(qiusong);
-                }
-            }, function (err) {
-
-            });
+            adaptDetails(qiusong);
+            // var obj = {
+            //     passportId: $rootScope.passport.passportId,
+            //     token: $rootScope.passport.token,
+            //     crowdFundingId: qiusong.crowdFunding.id
+            // };
+            // qiusongListService.getDetails(obj).then(function (data) {
+            //     if ("OK" == data.status) {
+            //         var qiusongDetailsDto = data.result;
+            //         $rootScope.qiusongDetailsView = qiusongDetailsDto;
+            //         $rootScope.qiusongDetailsView.isInited = false;
+            //
+            //         adaptDetails(qiusong);
+            //     }
+            // }, function (err) {
+            //
+            // });
         }
 
     }
 
     function adaptDetails(qiusong){
-        var id = qiusong.id;
+        var id = qiusong.crowdFunding.id;
         var status = qiusong.status;
-        if (qiusong.sponsorId == $rootScope.passport.passportId){
-
+        if (qiusong.crowdFunding.sponsorId == $rootScope.passport.passportId){
+            $state.go("qiusongDetailsSponsor",{id:id});
         } else{
 
         }
