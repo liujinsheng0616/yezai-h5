@@ -75,13 +75,13 @@ goceanApp.controller('OrderQiusongCtrl', function ($rootScope,$scope, $state, $t
         $rootScope.qiusongDetailsView = null;
 
         if (qiusong.payStatus == "UN_PAY" && qiusong.sponsorId != $rootScope.passport.passportId){
-            $state.go('qiusongPrepay', {qiusongId: qiusong.id, memberId: $rootScope.passport.passportId});
+            $state.go('qiusongPrepay', {qiusongId: qiusong.crowdFundingId.id, memberId: $rootScope.passport.passportId});
         }else {
 
             var obj = {
                 passportId: $rootScope.passport.passportId,
                 token: $rootScope.passport.token,
-                qiusongId: qiusong.id
+                crowdFundingId: qiusong.crowdFunding.id
             };
             qiusongListService.getDetails(obj).then(function (data) {
                 if ("OK" == data.status) {
