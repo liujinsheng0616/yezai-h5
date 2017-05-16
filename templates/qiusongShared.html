@@ -1,34 +1,86 @@
 <div class="homeView" style="overflow-x: hidden;">
 
-    <div class="weui_cells weui_cells_access" style="margin-top: 0px;">
-        <div class="weui_cell" style="font-size: 16px;">
-            <div style="color: #888;">{{crowdFundingDetails.sponsorName}}也在发起求送以下商品的活动, 邀请您参与</span></div>
+    <div class="weui_panel weui_panel_access" style="margin-top: 0px;">
+        <div class="weui_panel_hd" style="font-size: 16px;">
+            <div style="color: #888;">Kingson·liu也在发起求送以下商品的活动,邀请您参与</span></div>
+        </div>
+    </div>
+
+    <div class="weui_grids grids-small" style="background: #ffffff;">
+        <div href="javascript:void(0);" class="grid" style="padding:0;width:25%;color: #04BE02;" >
+            <div class="weui_grid_icon">
+                <span class="icon icon-34" style="font-size: 30px;"></span>
+            </div>
+            <p class="weui_grid_label" style="margin-top: 25px;margin-bottom: 10px;color: #04BE02;">
+                发起
+            </p>
+        </div>
+        <div href="javascript:void(0);" class="grid" style="width: 12.5%;color: #04BE02;">
+            <div class="weui_grid_icon">
+                <span class="icon icon-108" style="font-size: 30px;"></span>
+            </div>
+            <p class="weui_grid_label" style="margin-top: 25px;margin-bottom: 10px">
+            </p>
+        </div>
+        <div href="javascript:void(0);" class="grid" style="padding:0;width: 25%;color: #04BE02;" >
+            <div class="weui_grid_icon">
+                <span class="icon icon-3" style="font-size: 30px;"></span>
+            </div>
+            <p class="weui_grid_label" style="margin-top: 25px;margin-bottom: 10px;color: #04BE02;">
+                分享
+            </p>
+        </div>
+        <div href="javascript:void(0);" class="grid" style="width: 12.5%;color: #9E9E9E;">
+            <div class="weui_grid_icon">
+                <span class="icon icon-108" style="font-size: 30px;"></span>
+            </div>
+            <p class="weui_grid_label" style="margin-top: 25px;margin-bottom: 10px">
+            </p>
+        </div>
+        <div href="javascript:void(0);" class="grid" style="padding:0;width: 25%;color: #9E9E9E;" >
+            <div class="weui_grid_icon">
+                <span class="icon icon-71" style="font-size: 30px;"></span>
+            </div>
+            <p class="weui_grid_label" style="margin-top: 25px;margin-bottom: 10px;color: #9E9E9E;">
+                完成
+            </p>
         </div>
     </div>
 
     <div class="weui_panel weui_panel_access">
-
-        <div class="weui_panel_bd"  ng-repeat="item in crowdFundingDetails.itemList">
+        <div class="weui_panel_bd">
             <div class="weui_media_box weui_media_appmsg">
                 <div class="weui_cell_hd">
-                    <img style="width:80px;height:80px;margin-right:5px;display:block" ng-src="{{item.thumbnail}}" alt="">
+                    <img style="width:80px;height:80px;margin-right:5px;display:block" src="images/12.png" alt="">
                 </div>
                 <div class="weui_media_bd">
                     <table border="0" style="width: 100%;margin-left: 8px;color:#888;font-size:0.755rem;">
                         <tr style="height: 35px;font-size: 0.875rem;color: #000;">
-                            <td ng-bind="item.title"></td>
+                            <td>131231</td>
                         </tr>
                         <tr style="height: 25px;">
-                            <td><span ng-bind="item.payDescription"></span></td>
+                            <td><span>aaaaaaaa</span></td>
                         </tr>
                         <tr style="height: 25px;">
-                            <td>价格：￥<span ng-bind="item.price"></span></td>
+                            <td>价格：￥<span>123</span></td>
                         </tr>
                     </table>
                 </div>
             </div>
         </div>
-
     </div>
 
+
+    <div class="weui_panel weui_panel_access">
+        <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;color:#000;">商品总额：<span style="float: right;color: #0d0d0d;">￥3</span></div>
+        <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;color:#000;">参与人数：<span style="float: right;color: #0d0d0d;">3</span></div>
+        <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;color:#000;">人均支付：<span style="float: right;color: #09BB07;">￥1</span></div>
+    </div>
+
+    <div class="weui_cells weui_cells_access">
+        <div class="weui_cell" style="text-align:center;font-size: 18px;color:#ffffff; padding:0;">
+            <div class="weui_btn_primary" ng-click="" style="width:30%;border-radius:0px;height:3.33rem;line-height: 3.33rem;background-color:#666666">求送</div>
+            <div class="weui_btn_primary" ng-click="" style="width:70%;border-radius:0px;height:3.33rem;line-height: 3.33rem;">确定参与</span></div>
+        </div>
+    </div>
 </div>

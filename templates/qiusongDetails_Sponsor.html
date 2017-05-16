@@ -97,7 +97,7 @@
         <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;color:#000;">求送金额：<span style="float: right;color: #09BB07;" ng-bind="'￥' + qiusong.crowdFunding.unitAmount"></span></div>
     </div>
 
-    <div class="weui_cells weui_cells_access">
+    <div class="weui_cells weui_cells_access" style="margin-top: 10px;">
         <div class="weui_cell" style="text-align: center">
             <div class="friend">
                 <div class="friend_list">
@@ -124,12 +124,17 @@
         </div>
     </div>
 
-    <div class="weui_btn_area ">
-        <!--
-        <a ui-sref="order.orderList" ui-sref-active="active" class="weui_btn weui_btn_primary" style="background-color:#666666">取消</a>
-        <a  href="javascript:;" class="weui_btn weui_btn_primary">支付</a>
-        -->
+    <div class="page-bd-15">
+        <div class="weui-share" onclick="$(this).fadeOut();$(this).removeClass('fadeOut')">
+            <div class="weui-share-box">
+                点击右上角发送给指定朋友或分享到朋友圈 <i></i>
+            </div>
+        </div>
     </div>
 
-    <a ng-if="crowdFundingDetails.member.status=='ORDER_CREATED'" href="javascript:;" class="weui_btn weui_btn_primary" style="border-radius:0px;height:3.33rem;line-height: 3.33rem;" ng-click="pay();">立即支付</a>
+    <div class="weui_panel weui_panel_access">
+        <div class="weui_panel_hd">
+            <a onclick="$('.weui-share').show().addClass('fadeIn');" class="weui_btn weui_btn_primary" href="javascript:void(0)" ><i class='icon icon-12 f20'></i>分享给好友或朋友圈</a>
+        </div>
+    </div>
 </div>
