@@ -18,7 +18,7 @@ goceanApp.controller('QiusongEntryCtrl', function ($scope, $rootScope, $state, $
     }
 
     if (skuId == 0) {
-        alert("没有此求送商品,id = " + skuId);
+        $.alert("没有此求送商品,id = " + skuId);
         return;
     }
 
@@ -36,7 +36,47 @@ goceanApp.controller('QiusongEntryCtrl', function ($scope, $rootScope, $state, $
         configService.hideWXBtn();
     },100);
 
+    function upDownOperation(element)
+    {
+        var _input = element.parent().find('input'),
+            _value = _input.val(),
+            _step = _input.attr('data-step') || 1;
+        //检测当前操作的元素是否有disabled，有则去除
+        element.hasClass('disabled') && element.removeClass('disabled');
+        //检测当前操作的元素是否是操作的添加按钮（.input-num-up）‘是’ 则为加操作，‘否’ 则为减操作
+        if ( element.hasClass('weui-number-plus') )
+        {
+            var _new_value = parseInt( parseFloat(_value) + parseFloat(_step) ),
+                _max = _input.attr('data-max') || false,
+                _down = element.parent().find('.weui-number-sub');
 
+            //若执行‘加’操作且‘减’按钮存在class='disabled'的话，则移除‘减’操作按钮的class 'disabled'
+            _down.hasClass('disabled') && _down.removeClass('disabled');
+            if (_max && _new_value >= _max) {
+                _new_value = _max;
+                element.addClass('disabled');
+            }
+        } else {
+            var _new_value = parseInt( parseFloat(_value) - parseFloat(_step) ),
+                _min = _input.attr('data-min') || false,
+                _up = element.parent().find('.weui-number-plus');
+            //若执行‘减’操作且‘加’按钮存在class='disabled'的话，则移除‘加’操作按钮的class 'disabled'
+            _up.hasClass('disabled') && _up.removeClass('disabled');
+            if (_min && _new_value <= _min) {
+                _new_value = _min;
+                element.addClass('disabled');
+            }
+        }
+        _input.val( _new_value );
+    }
+
+
+    $('.weui-number-plus').click(function(){
+        upDownOperation( $(this) );
+    });
+    $('.weui-number-sub').click(function(){
+        upDownOperation( $(this) );
+    });
 
     function init () {
 
@@ -50,10 +90,10 @@ goceanApp.controller('QiusongEntryCtrl', function ($scope, $rootScope, $state, $
                 $scope.qiusongRo = itemBrief;
                 $scope.qiusongRo.memberCount = 3;
             }else{
-                alert("系统繁忙,请稍候再试");
+                $.alert("系统繁忙,请稍候再试");
             }
         },function(err){
-            alert("系统繁忙,请稍候再试");
+            $.alert("系统繁忙,请稍候再试");
         });
 
     };
@@ -72,7 +112,7 @@ goceanApp.controller('QiusongEntryCtrl', function ($scope, $rootScope, $state, $
                 title:$scope.qiusongRo.title,
                 thumbnail:$scope.qiusongRo.thumbnail,
                 payDescription:$scope.qiusongRo.payDescriptio
-            }
+            };
 
         qiusongEntryService.createQiusong(obj).then(function(data){
             if (data.status == "OK") {
@@ -81,10 +121,10 @@ goceanApp.controller('QiusongEntryCtrl', function ($scope, $rootScope, $state, $
                     id: id
                 });
             }else{
-                alert("系统繁忙,请稍候再试");
+                $.alert("系统繁忙,请稍候再试");
             }
         },function(err){
-            alert("系统繁忙,请稍候再试");
+            $.alert("系统繁忙,请稍候再试");
         });
     };
 

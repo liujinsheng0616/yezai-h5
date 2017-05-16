@@ -19,35 +19,40 @@
                 </div>
             </div>
         </div>
-        <div class="weui_cells" style="margin-top: 0px;">
-
-            <div class="weui_cell" style="border-top: 1px solid #d9d9d9;height:3.33rem;">
-                <div class="weui_cell_hd" style="width: 4.833rem;"><label class="weui_label">参与人次：</label></div>
-                <!--<div class="weui_cell_bd weui_cell_primary"> -->
-                <div class="weui_cell_ft" style="color: #000;">
-                    <input class="weui_input" style="font-size: 16px;" type="number"  ng-model="qiusongRo.memberCount" placeholder=" (默认最少需要３人次参与)"/>
-                </div>
-            </div>
-            <div class="weui_cell" style="border-top: 1px solid #d9d9d9;height:3.33rem;">
-                <div class="weui_cell_hd weui_cell_primary" style="width: 4.833rem;"><label class="weui_label">求送金额: </label></div>
-                <div class="weui_cell_ft" style="color: #000;">
-                    <span style="font-size: 20px;color: #04BE02;"  id="totalPrice">￥{{((qiusongRo.price + qiusongRo.memberCount - 1 )/ qiusongRo.memberCount)  | number:0}} / 次</span>
-                </div>
-            </div>
-            <div class="weui_cell" style="border-top: 1px solid #d9d9d9;height:3.33rem;">
-                <div class="weui_cell_hd weui_cell_primary" style="width: 4.833rem;"><label class="weui_label">求送须知: </label></div>
-                <div class="weui_cell_ft" style="color: #000;">
-                    <span style="font-size: 14px;"  id="notes">可分享求送，但仅限于向熟人发起求送</span>
-                </div>
-            </div>
-            <div class="weui_cell" style="border-top: 1px solid #d9d9d9;height:3.33rem;">
-                <div class="weui_cell_hd weui_cell_primary" style="width: 4.833rem;"><label class="weui_label"></label></div>
-                <div class="weui_cell_ft" style="color: #000;">
-                    <span style="font-size: 20px;color: #04BE02;"  id="x"></span>
-                </div>
-            </div>
-
-            <a href="javascript:;" class="weui_btn weui_btn_primary" style="border-radius:0px;height:3.33rem;line-height: 3.33rem;" ng-click="create();">发起求送</a>
-        </div>
     </div>
+    <div class="weui_cells" style="margin-top: 0px;">
+
+        <div class="weui_cell">
+            <div class="weui_cell_bd weui_cell_primary"> <p>参与人次：</p> </div>
+            <div style="font-size: 0px;" class="weui_cell_ft" ng-style="">
+                <a class="weui-number weui-number-sub needsclick" style="height:30px;">-</a>
+                <input pattern="[0-9]*" class="weui-number-input" ng-model="qiusongRo.memberCount" style="width: 50px;height: 30px;" data-min="3" data-max="10" data-step="1">
+                <a class="weui-number weui-number-plus needsclick" style="height:30px;">+</a>
+            </div>
+
+            <div class="weui_cell_ft" style="display: none;"> 0 </div>
+        </div>
+
+        <div class="weui_cell" style="border-top: 1px solid #d9d9d9;height:3.33rem;">
+            <div class="weui_cell_hd weui_cell_primary" style="width: 4.833rem;"><label class="weui_label">求送金额: </label></div>
+            <div class="weui_cell_ft" style="color: #000;">
+                <span style="font-size: 20px;color: #04BE02;"  id="totalPrice">￥{{((qiusongRo.price + qiusongRo.memberCount - 1 )/ qiusongRo.memberCount)  | number:0}} / 次</span>
+            </div>
+        </div>
+        <div class="weui_cell" style="border-top: 1px solid #d9d9d9;height:3.33rem;">
+            <div class="weui_cell_hd weui_cell_primary" style="width: 4.833rem;"><label class="weui_label">求送须知: </label></div>
+            <div class="weui_cell_ft" style="color: #000;">
+                <span style="font-size: 14px;"  id="notes">可分享求送，但仅限于向熟人发起求送</span>
+            </div>
+        </div>
+        <div class="weui_cell" style="border-top: 1px solid #d9d9d9;height:3.33rem;">
+            <div class="weui_cell_hd weui_cell_primary" style="width: 4.833rem;"><label class="weui_label"></label></div>
+            <div class="weui_cell_ft" style="color: #000;">
+                <span style="font-size: 20px;color: #04BE02;"  id="x"></span>
+            </div>
+        </div>
+
+        <a href="javascript:void(0);" class="weui_btn weui_btn_primary" style="border-radius:0px;height:3.33rem;line-height: 3.33rem;" ng-click="create();">发起求送</a>
+    </div>
+
 </div>

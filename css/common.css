@@ -378,3 +378,9 @@
     background-position: 50%;
     background-size: 100%;
 }
+
+.friend{position: relative;font-size: 0.37037rem;width:100%;}
+.friend .friend_list{margin:auto;text-align: center;}
+.friend .friend_list img{width: 4rem;height: 4rem;border-radius: 50%;}
+.friend .friend_list .photo {width:4rem;height:5rem;display: inline-block;}
+.friend .friend_list p {width:4rem;height:1rem;}

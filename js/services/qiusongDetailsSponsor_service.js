@@ -3,13 +3,13 @@
  */
 goceanApp.factory('qiusongDetailsSponsorService', ['$http', '$q','$rootScope', 'ajaxUtil','appSettings',
     function ($http, $q, $rootScope,ajaxUtil,appSettings) {
-        var qiusongEntryServiceObj = {};
+        var qiusongDetailsSponsorServiceObj = {};
         /*给服务对象注册方法*/
         //获得订单详情
-        qiusongDetailsSponsorServiceObj.getQiusongDetailSponsor = function (params) {
+        qiusongDetailsSponsorServiceObj.getQiusongDetail = function (params) {
             var defer = $q.defer();
             var obj = {
-                url:appSettings.host+appSettings.requestURL.getQiusongDetailSponsor,
+                url:appSettings.host+appSettings.requestURL.getQiusongDetail,
                 type:'POST',
                 params:params
             };
