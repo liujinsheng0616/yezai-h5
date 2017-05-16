@@ -11,8 +11,14 @@
     float: left;
     margin-left: 0.555rem;
 }
-.grid:before {
-    border:0;
+.grid:before{
+    border-right:0;
+}
+.grid:after{
+    border-bottom: 0;
+}
+.weui_grids:before{
+    border-top:0px;
 }
 .i_one {
     float: left;

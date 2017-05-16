@@ -1,11 +1,66 @@
 <div class="homeView">
 
-    <div class="weui_cells weui_cells_access" style="margin-top: 0px;">
+    <div class="weui_cells weui_cells_access" style="margin-top: 0px;border-bottom: 0;">
         <div class="weui_cell" style="font-size: 14px;">
             <div class="weui_cell_bd weui_cell_primary">
                 <p style="color: #888;" ng-bind="qiusong.crowdFunding.status"></p>
             </div>
             <div style="color: #888;">参与时间：<span style="float:right" >{{qiusong.crowdFunding.createTime | date:"yyyy-MM-dd hh:mm:ss"}}</span></div>
+        </div>
+    </div>
+    <div class="weui_grids grids-small" style="background: #ffffff;">
+        <div href="javascript:void(0);" class="grid" style="padding:0;width:25%;color: #04BE02;" >
+            <div class="weui_grid_icon">
+                <span class="icon icon-34" style="font-size: 30px;"></span>
+            </div>
+            <p class="weui_grid_label" style="margin-top: 25px;margin-bottom: 10px;color: #04BE02;">
+                发起
+            </p>
+        </div>
+        <div href="javascript:void(0);" class="grid" style="width: 12.5%;color: #04BE02;">
+            <div class="weui_grid_icon">
+                <span class="icon icon-108" style="font-size: 30px;"></span>
+            </div>
+            <p class="weui_grid_label" style="margin-top: 25px;margin-bottom: 10px">
+            </p>
+        </div>
+        <div href="javascript:void(0);" class="grid" style="padding:0;width: 25%;color: #04BE02;" >
+            <div class="weui_grid_icon">
+                <span class="icon icon-3" style="font-size: 30px;"></span>
+            </div>
+            <p class="weui_grid_label" style="margin-top: 25px;margin-bottom: 10px;color: #04BE02;">
+                分享
+            </p>
+        </div>
+        <div href="javascript:void(0);" ng-hide="qiusong.crowdFunding.status != '求送中'" class="grid" style="width: 12.5%;color: #9E9E9E;">
+            <div class="weui_grid_icon">
+                <span class="icon icon-108" style="font-size: 30px;"></span>
+            </div>
+            <p class="weui_grid_label" style="margin-top: 25px;margin-bottom: 10px">
+            </p>
+        </div>
+        <div href="javascript:void(0);" ng-hide="qiusong.crowdFunding.status == '求送中'" class="grid" style="width: 12.5%;color: #04BE02;">
+            <div class="weui_grid_icon">
+                <span class="icon icon-108" style="font-size: 30px;"></span>
+            </div>
+            <p class="weui_grid_label" style="margin-top: 25px;margin-bottom: 10px">
+            </p>
+        </div>
+        <div href="javascript:void(0);" ng-hide="qiusong.crowdFunding.status != '求送中'" class="grid" style="padding:0;width: 25%;color: #9E9E9E;" >
+            <div class="weui_grid_icon">
+                <span class="icon icon-71" style="font-size: 30px;"></span>
+            </div>
+            <p class="weui_grid_label" style="margin-top: 25px;margin-bottom: 10px;color: #9E9E9E;">
+                完成
+            </p>
+        </div>
+        <div href="javascript:void(0);" class="grid" ng-hide="qiusong.crowdFunding.status == '求送中'" style="padding:0;width: 25%;color: #04BE02;" >
+            <div class="weui_grid_icon">
+                <span class="icon icon-70" style="font-size: 30px;"></span>
+            </div>
+            <p class="weui_grid_label" style="margin-top: 25px;margin-bottom: 10px;color: #04BE02;">
+                完成
+            </p>
         </div>
     </div>
     <div class="weui_panel weui_panel_access">
@@ -39,8 +94,7 @@
         <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;color:#000;">活动编号：<span style="float: right;color: #0d0d0d;">1234567890</span></div>
         <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;color:#000;">商品总额：<span style="float: right;color: #0d0d0d;" ng-bind="'￥' + qiusong.crowdFunding.targetAmount "></span></div>
         <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;color:#000;">参与人数：<span style="float: right;color: #0d0d0d;" ng-bind="qiusong.crowdFunding.memberCount"></span></div>
-        <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;color:#000;">求送金额：<span style="float: right;color: #09BB07;" ng-bind="'￥' + qiusong.crowdFunding.unitAmount
- "></span></div>
+        <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;color:#000;">求送金额：<span style="float: right;color: #09BB07;" ng-bind="'￥' + qiusong.crowdFunding.unitAmount"></span></div>
     </div>
 
     <div class="weui_cells weui_cells_access">
