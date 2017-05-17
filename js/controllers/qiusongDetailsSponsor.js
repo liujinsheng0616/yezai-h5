@@ -39,16 +39,16 @@ goceanApp.controller('QiusongDetailsSponsorCtrl', function ($scope, $rootScope, 
                 // SkuBriefDto skuBriefDto;
                 // List<CrowdFundingMember> memberList
                 $scope.qiusong = data.result;
-                if ($scope.qiusong.crowdFunding.status == "ING") {
-                    $scope.qiusong.crowdFunding.status = "求送中";
-                } else if ($scope.qiusong.crowdFunding.status == "SUCCESSED") {
+                if ($scope.qiusong.status == "ING") {
+                    $scope.qiusong.status = "求送中";
+                } else if ($scope.qiusong.status == "SUCCESSED") {
                     $scope.qiusong.crowdFunding.status = "已完成";
-                } else if ($scope.qiusong.crowdFunding.status == "SETTLED") {
+                } else if ($scope.qiusong.status == "SETTLED") {
                     $scope.qiusong.crowdFunding.status = "已结算";
-                } else if ($scope.qiusong.crowdFunding.status == "UN_PAY") {
+                } else if ($scope.qiusong.status == "UN_PAY") {
                     $scope.qiusong.crowdFunding.status = "未付款";
-                } else if ($scope.qiusong.crowdFunding.status == "PAID") {
-                    $scope.qiusong.crowdFunding.status = "已付款";
+                } else if ($scope.qiusong.status == "PAID") {
+                    $scope.qiusong.status = "已付款";
                 }
             }else{
                 $.alert("系统繁忙,请稍候再试");

@@ -188,7 +188,8 @@ var goceanApp = angular.module('starter', ['ui.router','angularFileUpload', 'Loc
             })
             .state ('qiusongShared', {
                 cache : false,
-                url : '/qiusongShared',
+                url : '/qiusongShared/:sponsorId',
+                params : {'sponsorId':0},
                 templateUrl : 'templates/qiusongShared.html',
                 controller : 'QiusongSharedCtrl'
             });
