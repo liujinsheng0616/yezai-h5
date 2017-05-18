@@ -32,7 +32,6 @@ goceanApp.controller('QiusongDetailsSponsorCtrl', function ($scope, $rootScope, 
         };
         mainHomeService.getJssdkInfo(sdkObj).then(function(data){
             if (data){
-                console.log(data);
                 setWxconfig(data);
             }
         },function(err){
@@ -79,58 +78,56 @@ goceanApp.controller('QiusongDetailsSponsorCtrl', function ($scope, $rootScope, 
                     $scope.qiusong.status = "已付款";
                 }
                 $scope.qiusong.sponsorName = Base64.decode($scope.qiusong.sponsorName);
+                // 分享组装
+                shared();
             }else{
                 $.alert("系统繁忙,请稍候再试");
             }
         },function(err){
             $.alert("系统繁忙,请稍候再试");
         })
-
-        setTimeout(function () {
-            // 设置分享
-            wx.ready(function() {
-                wx.checkJsApi({
-                    jsApiList: ['onMenuShareTimeline','onMenuShareAppMessage'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
-                    success: function (res) {
-                        wx.showOptionMenu();
-                        //分享到朋友圈
-                        wx.onMenuShareTimeline({
-                            title: $rootScope.passport.nickName + '也在发起求送: 邀请你参与---' + $scope.qiusong.skuBriefDto.title, // 分享标题
-                            link:  sharedUrl, // 分享链接
-                            imgUrl: 'http://static.yezaigou.com/' + $scope.qiusong.skuBriefDto.thumbnail, // 分享图标
-                            success: function () {
-
-                            },
-                            cancel: function () {
-
-                            }
-                        });
-
-                        //分享给朋友
-                        wx.onMenuShareAppMessage({
-                            title: $rootScope.passport.nickName + '也在发起求送: 邀请你参与---' + $scope.qiusong.skuBriefDto.title, // 分享标题
-                            desc: $scope.qiusong.skuBriefDto.payDescription, // 分享描述
-                            link: sharedUrl, // 分享链接
-                            imgUrl: 'http://static.yezaigou.com/' + $scope.qiusong.skuBriefDto.thumbnail, // 分享图标
-                            type: '', // 分享类型,music、video或link，不填默认为link
-                            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-                            success: function () {
-
-                            },
-                            cancel: function () {
-
-                            }
-                        });
-                    }
-                });
-            });
-        },100)
-
     };
 
     init();
 
+    // 分享
+    function shared (){
+        // 设置分享
+        wx.ready(function() {
+            wx.checkJsApi({
+                jsApiList: ['onMenuShareTimeline','onMenuShareAppMessage'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
+                success: function (res) {
+                    wx.showOptionMenu();
+                    //分享到朋友圈
+                    wx.onMenuShareTimeline({
+                        title: $rootScope.passport.nickName + '也在发起求送: 邀请你参与---' + $scope.qiusong.skuBriefDto.title, // 分享标题
+                        link:  sharedUrl, // 分享链接
+                        imgUrl: 'http://static.yezaigou.com/' + $scope.qiusong.skuBriefDto.thumbnail, // 分享图标
+                        success: function () {
 
+                        },
+                        cancel: function () {
 
+                        }
+                    });
 
+                    //分享给朋友
+                    wx.onMenuShareAppMessage({
+                        title: $rootScope.passport.nickName + '也在发起求送: 邀请你参与---' + $scope.qiusong.skuBriefDto.title, // 分享标题
+                        desc: $scope.qiusong.skuBriefDto.payDescription, // 分享描述
+                        link: sharedUrl, // 分享链接
+                        imgUrl: 'http://static.yezaigou.com/' + $scope.qiusong.skuBriefDto.thumbnail, // 分享图标
+                        type: '', // 分享类型,music、video或link，不填默认为link
+                        dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                        success: function () {
+
+                        },
+                        cancel: function () {
+
+                        }
+                    });
+                }
+            });
+        });
+    }
 });
