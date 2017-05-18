@@ -15,12 +15,9 @@ goceanApp.controller('QiusongSharedCtrl', function ($scope, $rootScope, $state, 
     if ($stateParams.id){
         id = $stateParams.id;
     }
+
     if ($stateParams.sharerId){
         sharerId = $stateParams.sharerId;
-    }
-    $scope.userFlag = false;
-    if ($rootScope.passport.passportId == sharerId){
-        $scope.userFlag = true;
     }
 
     var _state = "qiusongShared";//FIXME ，需要参数sponsorId
@@ -31,8 +28,11 @@ goceanApp.controller('QiusongSharedCtrl', function ($scope, $rootScope, $state, 
             "&response_type=code&scope=snsapi_userinfo&state="+_state;
         return;
     }
-    //再分享
-    var sharedUrl = appSettings.domain + "/#/qiusongShared/"+id +"/"+$rootScope.passport.passportId;
+
+    $scope.userFlag = false;
+    if ($rootScope.passport.passportId == sharerId){
+        $scope.userFlag = true;
+    }
 
     // 初始化
     init();
@@ -46,7 +46,6 @@ goceanApp.controller('QiusongSharedCtrl', function ($scope, $rootScope, $state, 
             if (data.status == "OK") {
                 $scope.qiusong = data.result;
                 $scope.qiusong.sponsorName = Base64.decode($scope.qiusong.sponsorName);
-                console.log($scope.qiusong)
             }else{
                 $.alert("系统繁忙,请稍候再试");
             }
