@@ -1,7 +1,7 @@
 /**
  * Created by 53983 on 2017/5/16.
  */
-goceanApp.controller('QiusongSharedCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, qiusongSharedService, configService) {
+goceanApp.controller('QiusongSharedCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, qiusongSharedService, configService, appSettings, mainHomeService) {
     console.log("about QiusongSharedCtrl");
     // 页面传参
     var params = configService.parseQueryString(window.location.href);
@@ -18,6 +18,10 @@ goceanApp.controller('QiusongSharedCtrl', function ($scope, $rootScope, $state, 
     if ($stateParams.sharerId){
         sharerId = $stateParams.sharerId;
     }
+    $scope.userFlag = false;
+    if ($rootScope.passport.passportId == sharerId){
+        $scope.userFlag = true;
+    }
 
     var _state = "qiusongShared";//FIXME ，需要参数sponsorId
     if ($rootScope.passport == null){//如果是基础用户，这里不要求授权用户信息; 若果没登录，就直接通过授权模式登录
@@ -28,7 +32,8 @@ goceanApp.controller('QiusongSharedCtrl', function ($scope, $rootScope, $state, 
         return;
     }
     //再分享
-    var sharedUrl = appSettings.domain + "/#/qiusongShared/"+id +"/"+$rootScope.passport+passportId;
+    var sharedUrl = appSettings.domain + "/#/qiusongShared/"+id +"/"+$rootScope.passport.passportId;
+
     // 初始化
     init();
     function init() {
@@ -41,6 +46,7 @@ goceanApp.controller('QiusongSharedCtrl', function ($scope, $rootScope, $state, 
             if (data.status == "OK") {
                 $scope.qiusong = data.result;
                 $scope.qiusong.sponsorName = Base64.decode($scope.qiusong.sponsorName);
+                console.log($scope.qiusong)
             }else{
                 $.alert("系统繁忙,请稍候再试");
             }

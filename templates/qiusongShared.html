@@ -42,7 +42,12 @@
 
     <div class="weui_panel weui_panel_access" style="margin-top: 0px;">
         <div class="weui_panel_hd" style="font-size: 16px;">
-            <div style="color: #888;"><span ng-bind="qiusong.sponsorName"></span>也在发起求送以下商品的活动,邀请您参与</span></div>
+            <div style="color: #888;">
+                <div class="photo" style="float: left;">
+                    <img style="width: 4rem;height: 4rem;border-radius: 50%;" ng-src="{{qiusong.sponsorIcon}}">
+                </div>
+                <div style="float: left;margin-left: 10px;width: 75%;" ng-bind="qiusong.sponsorName + '也在发起求送以下商品的活动,邀请您参与'"></div>
+            </div>
         </div>
     </div>
 
@@ -50,18 +55,18 @@
         <div class="weui_panel_bd">
             <div class="weui_media_box weui_media_appmsg">
                 <div class="weui_cell_hd">
-                    <img style="width:80px;height:80px;margin-right:5px;display:block" src="images/12.png" alt="">
+                    <img style="width:80px;height:80px;margin-right:5px;display:block" ng-src="{{qiusong.skuBriefDto.thumbnail}}" alt="">
                 </div>
                 <div class="weui_media_bd">
                     <table border="0" style="width: 100%;margin-left: 8px;color:#888;font-size:0.755rem;">
                         <tr style="height: 35px;font-size: 0.875rem;color: #000;">
-                            <td>131231</td>
+                            <td ng-bind="qiusong.skuBriefDto.title"></td>
                         </tr>
                         <tr style="height: 25px;">
-                            <td><span>aaaaaaaa</span></td>
+                            <td><span ng-bind="qiusong.skuBriefDto.payDescription"></span></td>
                         </tr>
                         <tr style="height: 25px;">
-                            <td>价格：￥<span>123</span></td>
+                            <td>价格：￥<span ng-bind="qiusong.skuBriefDto.price"></span></td>
                         </tr>
                     </table>
                 </div>
@@ -71,12 +76,24 @@
 
 
     <div class="weui_panel weui_panel_access">
-        <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;color:#000;">商品总额：<span style="float: right;color: #0d0d0d;">￥3</span></div>
-        <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;color:#000;">参与人数：<span style="float: right;color: #0d0d0d;">3</span></div>
-        <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;color:#000;">人均支付：<span style="float: right;color: #09BB07;">￥1</span></div>
+        <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;color:#000;">商品总额：<span style="float: right;color: #0d0d0d;" ng-bind="'￥' + qiusong.targetAmount"></span></div>
+        <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;color:#000;">参与人数：<span style="float: right;color: #0d0d0d;" ng-bind="qiusong.memberCount"></span></div>
+        <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;color:#000;">人均支付：<span style="float: right;color: #09BB07;" ng-bind="'￥' + qiusong.unitAmount"></span></div>
     </div>
 
-    <div class="weui_cells weui_cells_access">
+    <div class="weui_cells" ng-if="qiusong.memberList.size > 0" style="margin-top: 10px;">
+        <div class="weui_cell" style="text-align: center">
+            <div class="friend">
+                <div class="friend_list">
+                    <div class="photo" ng-repeat="sponsor in qiusong.memberList">
+                        <img ng-src="{{sponsor.icon}}"><span ng-bind="sponsor.nickName"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="weui_cells weui_cells_access" ng-if="!userFlag">
         <div class="weui_cell" style="text-align:center;font-size: 18px;color:#ffffff; padding:0;">
             <div class="weui_btn_primary" ng-click="toQiusong();" style="width:30%;border-radius:0px;height:3.33rem;line-height: 3.33rem;background-color:#666666">求送</div>
             <div class="weui_btn_primary" ng-click="" style="width:70%;border-radius:0px;height:3.33rem;line-height: 3.33rem;">确定参与</span></div>

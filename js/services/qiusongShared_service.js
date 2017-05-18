@@ -9,7 +9,7 @@ goceanApp.factory('qiusongSharedService', ['$http', '$q','$rootScope', 'ajaxUtil
         qiusongSharedServiceObj.getDetails = function (params) {
             var defer = $q.defer();
             var obj = {
-                url:appSettings.host+appSettings.requestURL.getQiusongDetailSponsor,
+                url:appSettings.host+appSettings.requestURL.getQiusongDetail,
                 type:'POST',
                 params:params
             };
