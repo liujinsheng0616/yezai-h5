@@ -5,7 +5,7 @@
             <div class="weui_cell_bd weui_cell_primary">
                 <p style="color: #888;" ng-bind="qiusong.status"></p>
             </div>
-            <div style="color: #888;">参与时间：<span style="float:right" >{{qiusong.createTime | date:"yyyy-MM-dd hh:mm:ss"}}</span></div>
+            <div style="color: #888;">发起时间：<span style="float:right" >{{qiusong.createTime | date:"yyyy-MM-dd hh:mm:ss"}}</span></div>
         </div>
     </div>
     <div class="weui_grids grids-small" style="background: #ffffff;">
@@ -88,10 +88,10 @@
 
     </div>
     <div class="weui_panel weui_panel_access">
-        <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;color:#000;">商品求送人：<span style="float: right;color: #0d0d0d;" >kingson·liu</span></div>
+        <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;color:#000;">商品求送人：<span style="float: right;color: #0d0d0d;" >{{qiusong.sponsorName}}</span></div>
     </div>
     <div class="weui_panel weui_panel_access">
-        <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;color:#000;">活动编号：<span style="float: right;color: #0d0d0d;">1234567890</span></div>
+        <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;color:#000;">活动编号：<span style="float: right;color: #0d0d0d;">{{qiusong.seriaNumber}}</span></div>
         <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;color:#000;">商品总额：<span style="float: right;color: #0d0d0d;" ng-bind="'￥' + qiusong.targetAmount "></span></div>
         <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;color:#000;">参与人数：<span style="float: right;color: #0d0d0d;" ng-bind="qiusong.memberCount"></span></div>
         <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;color:#000;">求送金额：<span style="float: right;color: #09BB07;" ng-bind="'￥' + qiusong.unitAmount"></span></div>

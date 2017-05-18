@@ -11,15 +11,24 @@ goceanApp.controller('QiusongSharedCtrl', function ($scope, $rootScope, $state, 
     }
 
     var id = 0;
-    if ($stateParams.sponsorId){
-        id = $stateParams.sponsorId;
+    var sharerId = 0;
+    if ($stateParams.id){
+        id = $stateParams.id;
     }
-    var _state = "qiusongShared/" + id;//FIXME ，需要参数sponsorId
-    if ($rootScope.passport == null){//如果是基础用户，这里不要求授权用户信息; 若果没登录，就直接通过授权模式登录
-        window.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0cae6e3b9632e632&redirect_uri=http://wxsdk.yezaigou.com/wx/page/userInfo&response_type=code&scope=snsapi_userinfo&state="+_state;
-        return;
+    if ($stateParams.sharerId){
+        sharerId = $stateParams.sharerId;
     }
 
+    var _state = "qiusongShared";//FIXME ，需要参数sponsorId
+    if ($rootScope.passport == null){//如果是基础用户，这里不要求授权用户信息; 若果没登录，就直接通过授权模式登录
+        window.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0cae6e3b9632e632" +
+            "&redirect_uri=http://wxsdk.yezaigou.com/wx/page/qiusong" +
+            "/" + id + "/"+sharerId +
+            "&response_type=code&scope=snsapi_userinfo&state="+_state;
+        return;
+    }
+    //再分享
+    var sharedUrl = appSettings.domain + "/#/qiusongShared/"+id +"/"+$rootScope.passport+passportId;
     // 初始化
     init();
     function init() {
@@ -43,7 +52,7 @@ goceanApp.controller('QiusongSharedCtrl', function ($scope, $rootScope, $state, 
     // 购买页
     $scope.toQiusong = function() {
         $state.go("qiusongEntry", {
-            itemId:4
+            itemId:$scope.qiusong.itemId
         })
     }
 });

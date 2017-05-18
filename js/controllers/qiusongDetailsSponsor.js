@@ -11,14 +11,14 @@ goceanApp.controller('QiusongDetailsSponsorCtrl', function ($scope, $rootScope, 
         $rootScope.passport = params;
     }
 
-    var id = 0;//这里和购买不一样，做服务端要特殊处理，先获得goodsId
+    var id = 0;//这里和购买不一样，做服务端要特殊处理，qiusongId
     var sharerId = 0;
     if ($stateParams.id){
         id = $stateParams.id;
     }
 
 
-    var _state = "qiusongDetailsSponsor/" + id;//FIXME 登录后返回当前页面，需要参数skuId
+    var _state = "qiusongDetailsSponsor/" + id;//FIXME
     if ($rootScope.passport == null){//如果是基础用户，这里不要求授权用户信息; 若果没登录，就直接通过授权模式登录
         window.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0cae6e3b9632e632&redirect_uri=http://wxsdk.yezaigou.com/wx/page/userInfo&response_type=code&scope=snsapi_userinfo&state="+_state;
         return;
@@ -42,14 +42,15 @@ goceanApp.controller('QiusongDetailsSponsorCtrl', function ($scope, $rootScope, 
                 if ($scope.qiusong.status == "ING") {
                     $scope.qiusong.status = "求送中";
                 } else if ($scope.qiusong.status == "SUCCESSED") {
-                    $scope.qiusong.crowdFunding.status = "已完成";
+                    $scope.qiusong.status = "已完成";
                 } else if ($scope.qiusong.status == "SETTLED") {
-                    $scope.qiusong.crowdFunding.status = "已结算";
+                    $scope.qiusong.status = "已结算";
                 } else if ($scope.qiusong.status == "UN_PAY") {
-                    $scope.qiusong.crowdFunding.status = "未付款";
+                    $scope.qiusong.status = "未付款";
                 } else if ($scope.qiusong.status == "PAID") {
                     $scope.qiusong.status = "已付款";
                 }
+                $scope.qiusong.sponsorName = Base64.decode($scope.qiusong.sponsorName);
             }else{
                 $.alert("系统繁忙,请稍候再试");
             }
@@ -59,7 +60,7 @@ goceanApp.controller('QiusongDetailsSponsorCtrl', function ($scope, $rootScope, 
 
     };
 
-
-
     init();
+
+
 });
