@@ -195,9 +195,9 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
         // 延迟出现
         setTimeout(function () {
             // 获取JSSDK
-            configService.getJssdkInfo(window.location.href);
+            configService.getJssdkInfo();
             // 隐藏右上角
-            configService.hideWXBtn();
+
 
             //定义文本
             $('.paragraph').each(function (index) {

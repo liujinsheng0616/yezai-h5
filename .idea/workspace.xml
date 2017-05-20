@@ -1,36 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="beffecf3-f557-4e5e-853d-f3d5b641d2bb" name="Default" comment="分享页开发">
+    <list default="true" id="beffecf3-f557-4e5e-853d-f3d5b641d2bb" name="Default" comment="求送支付+jssdk组件化">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/app.js" afterPath="$PROJECT_DIR$/js/app.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/const/app_settings.js" afterPath="$PROJECT_DIR$/js/const/app_settings.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/const/config.js" afterPath="$PROJECT_DIR$/js/const/config.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/controllers/changeDeliverDay.js" afterPath="$PROJECT_DIR$/js/controllers/changeDeliverDay.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/controllers/deliveryDetail.js" afterPath="$PROJECT_DIR$/js/controllers/deliveryDetail.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/controllers/inServiceDetail.js" afterPath="$PROJECT_DIR$/js/controllers/inServiceDetail.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/controllers/itemDetail.js" afterPath="$PROJECT_DIR$/js/controllers/itemDetail.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/controllers/main_home.js" afterPath="$PROJECT_DIR$/js/controllers/main_home.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/controllers/main_home_publish.js" afterPath="$PROJECT_DIR$/js/controllers/main_home_publish.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/controllers/main_mall.js" afterPath="$PROJECT_DIR$/js/controllers/main_mall.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/controllers/main_mine.js" afterPath="$PROJECT_DIR$/js/controllers/main_mine.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/controllers/mallDetail.js" afterPath="$PROJECT_DIR$/js/controllers/mallDetail.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/controllers/normalOrderDetail.js" afterPath="$PROJECT_DIR$/js/controllers/normalOrderDetail.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/controllers/orderDetail.js" afterPath="$PROJECT_DIR$/js/controllers/orderDetail.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/controllers/orderPay.js" afterPath="$PROJECT_DIR$/js/controllers/orderPay.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/controllers/order_orderList.js" afterPath="$PROJECT_DIR$/js/controllers/order_orderList.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/controllers/order_qiusongList.js" afterPath="$PROJECT_DIR$/js/controllers/order_qiusongList.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/controllers/payMoment.js" afterPath="$PROJECT_DIR$/js/controllers/payMoment.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/controllers/qiusongDetailsSponsor.js" afterPath="$PROJECT_DIR$/js/controllers/qiusongDetailsSponsor.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/controllers/qiusongEntry.js" afterPath="$PROJECT_DIR$/js/controllers/qiusongEntry.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/controllers/qiusongPay.js" afterPath="$PROJECT_DIR$/js/controllers/qiusongPay.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/controllers/qiusongPrepay.js" afterPath="$PROJECT_DIR$/js/controllers/qiusongPrepay.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/controllers/qiusongShared.js" afterPath="$PROJECT_DIR$/js/controllers/qiusongShared.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/services/qiusongPay_service.js" afterPath="$PROJECT_DIR$/js/services/qiusongPay_service.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/services/qiusongShared_service.js" afterPath="$PROJECT_DIR$/js/services/qiusongShared_service.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/qiusongPay.html" afterPath="$PROJECT_DIR$/templates/qiusongPay.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/qiusongPrepay.html" afterPath="$PROJECT_DIR$/templates/qiusongPrepay.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/qiusongShared.html" afterPath="$PROJECT_DIR$/templates/qiusongShared.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/order_orderList.html" afterPath="$PROJECT_DIR$/templates/order_orderList.html" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -51,41 +27,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="450">
-      <file leaf-file-name="qiusongShared.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/controllers/qiusongShared.js">
+      <file leaf-file-name="main_home.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/js/controllers/main_home.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="782">
-              <caret line="34" column="30" lean-forward="false" selection-start-line="34" selection-start-column="30" selection-end-line="34" selection-end-column="30" />
+            <state relative-caret-position="10925">
+              <caret line="497" column="76" lean-forward="true" selection-start-line="475" selection-start-column="4" selection-end-line="497" selection-end-column="76" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main_mall.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/controllers/main_mall.js">
+      <file leaf-file-name="order_orderList.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/js/controllers/order_orderList.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="322">
-              <caret line="14" column="30" lean-forward="true" selection-start-line="14" selection-start-column="30" selection-end-line="14" selection-end-column="30" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main_mine.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/controllers/main_mine.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="437">
-              <caret line="19" column="30" lean-forward="false" selection-start-line="19" selection-start-column="30" selection-end-line="19" selection-end-column="30" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="qiusongEntry.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/controllers/qiusongEntry.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1482">
-              <caret line="36" column="30" lean-forward="false" selection-start-line="36" selection-start-column="30" selection-end-line="36" selection-end-column="30" />
+            <state relative-caret-position="197">
+              <caret line="41" column="0" lean-forward="true" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -94,58 +50,46 @@
       <file leaf-file-name="qiusongPay.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/controllers/qiusongPay.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="215">
-              <caret line="90" column="32" lean-forward="false" selection-start-line="90" selection-start-column="32" selection-end-line="90" selection-end-column="32" />
+            <state relative-caret-position="805">
+              <caret line="86" column="31" lean-forward="false" selection-start-line="86" selection-start-column="31" selection-end-line="86" selection-end-column="31" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="qiusongPrepay.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/controllers/qiusongPrepay.js">
+      <file leaf-file-name="main_home.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/main_home.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="161">
-              <caret line="7" column="3" lean-forward="true" selection-start-line="7" selection-start-column="3" selection-end-line="7" selection-end-column="3" />
-              <folding />
+            <state relative-caret-position="619">
+              <caret line="88" column="18" lean-forward="true" selection-start-line="86" selection-start-column="12" selection-end-line="88" selection-end-column="18" />
+              <folding>
+                <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mallDetail.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/controllers/mallDetail.js">
+      <file leaf-file-name="order_orderList.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/order_orderList.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="17" column="4" lean-forward="true" selection-start-line="17" selection-start-column="4" selection-end-line="20" selection-end-column="30" />
-              <folding />
+            <state relative-caret-position="299">
+              <caret line="19" column="66" lean-forward="false" selection-start-line="19" selection-start-column="66" selection-end-line="19" selection-end-column="66" />
+              <folding>
+                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="payMoment.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/controllers/payMoment.js">
+      <file leaf-file-name="common.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/css/common.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="15" column="30" lean-forward="true" selection-start-line="15" selection-start-column="30" selection-end-line="15" selection-end-column="30" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="qiusongDetailsSponsor.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/controllers/qiusongDetailsSponsor.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="265">
-              <caret line="57" column="22" lean-forward="false" selection-start-line="57" selection-start-column="16" selection-end-line="57" selection-end-column="22" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="qiusongDetails_Sponsor.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/qiusongDetails_Sponsor.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="353">
-              <caret line="88" column="10" lean-forward="true" selection-start-line="88" selection-start-column="10" selection-end-line="88" selection-end-column="10" />
+            <state relative-caret-position="302">
+              <caret line="359" column="1" lean-forward="false" selection-start-line="359" selection-start-column="1" selection-end-line="359" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -191,6 +135,7 @@
       <find>onPaying</find>
       <find>hideOptionMenu</find>
       <find>shared</find>
+      <find>initData</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -228,7 +173,6 @@
         <option value="$PROJECT_DIR$/js/const/app_settings.js" />
         <option value="$PROJECT_DIR$/js/controllers/qiusongPrepay.js" />
         <option value="$PROJECT_DIR$/js/app.js" />
-        <option value="$PROJECT_DIR$/js/controllers/main_home.js" />
         <option value="$PROJECT_DIR$/js/controllers/main_home_publish.js" />
         <option value="$PROJECT_DIR$/js/controllers/changeDeliverDay.js" />
         <option value="$PROJECT_DIR$/js/controllers/deliveryDetail.js" />
@@ -239,13 +183,15 @@
         <option value="$PROJECT_DIR$/js/controllers/main_mine.js" />
         <option value="$PROJECT_DIR$/js/controllers/mallDetail.js" />
         <option value="$PROJECT_DIR$/js/controllers/normalOrderDetail.js" />
-        <option value="$PROJECT_DIR$/js/controllers/order_orderList.js" />
         <option value="$PROJECT_DIR$/js/controllers/order_qiusongList.js" />
         <option value="$PROJECT_DIR$/js/controllers/orderPay.js" />
         <option value="$PROJECT_DIR$/js/controllers/payMoment.js" />
         <option value="$PROJECT_DIR$/js/controllers/qiusongDetailsSponsor.js" />
         <option value="$PROJECT_DIR$/js/controllers/qiusongEntry.js" />
         <option value="$PROJECT_DIR$/js/controllers/qiusongShared.js" />
+        <option value="$PROJECT_DIR$/js/controllers/main_home.js" />
+        <option value="$PROJECT_DIR$/templates/order_orderList.html" />
+        <option value="$PROJECT_DIR$/js/controllers/order_orderList.js" />
         <option value="$PROJECT_DIR$/js/controllers/qiusongPay.js" />
       </list>
     </option>
@@ -510,7 +456,7 @@
       <workItem from="1495121853777" duration="448000" />
       <workItem from="1495203780105" duration="2615000" />
       <workItem from="1495208487719" duration="2435000" />
-      <workItem from="1495275489071" duration="10693000" />
+      <workItem from="1495275489071" duration="12996000" />
     </task>
     <task id="LOCAL-00001" summary="微信支付">
       <created>1494436265482</created>
@@ -596,11 +542,18 @@
       <option name="project" value="LOCAL" />
       <updated>1495122272962</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="求送支付+jssdk组件化">
+      <created>1495291747021</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1495291747021</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="125562000" />
+    <option name="totallyTimeSpent" value="127865000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
@@ -639,7 +592,8 @@
     <MESSAGE value="覆盖更新" />
     <MESSAGE value="修改" />
     <MESSAGE value="分享页开发" />
-    <option name="LAST_COMMIT_MESSAGE" value="分享页开发" />
+    <MESSAGE value="求送支付+jssdk组件化" />
+    <option name="LAST_COMMIT_MESSAGE" value="求送支付+jssdk组件化" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -648,18 +602,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/images/head_icon.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/css/weui2.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="363">
-          <caret line="2638" column="162" lean-forward="false" selection-start-line="2638" selection-start-column="162" selection-end-line="2638" selection-end-column="162" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/css/weui.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="294">
@@ -692,23 +634,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="253">
           <caret line="11" column="63" lean-forward="true" selection-start-line="11" selection-start-column="63" selection-end-line="11" selection-end-column="63" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/css/common.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="8947">
-          <caret line="389" column="69" lean-forward="false" selection-start-line="389" selection-start-column="25" selection-end-line="389" selection-end-column="69" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/main_home.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="20" lean-forward="false" selection-start-line="0" selection-start-column="12" selection-end-line="0" selection-end-column="20" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -915,26 +840,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="974">
-          <caret line="80" column="36" lean-forward="false" selection-start-line="80" selection-start-column="36" selection-end-line="80" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/services/qiusongPay_service.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="376">
           <caret line="40" column="44" lean-forward="false" selection-start-line="40" selection-start-column="44" selection-end-line="40" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/controllers/main_home.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-228">
-          <caret line="197" column="59" lean-forward="false" selection-start-line="197" selection-start-column="59" selection-end-line="197" selection-end-column="59" />
           <folding />
         </state>
       </provider>
@@ -1033,14 +942,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/controllers/order_orderList.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="519">
-          <caret line="106" column="6" lean-forward="false" selection-start-line="106" selection-start-column="6" selection-end-line="106" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/controllers/orderPay.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-631">
@@ -1121,10 +1022,74 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/templates/qiusongDetails_Member.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-710">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="399">
+          <caret line="181" column="41" lean-forward="false" selection-start-line="181" selection-start-column="20" selection-end-line="181" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/main_home.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="619">
+          <caret line="88" column="18" lean-forward="true" selection-start-line="86" selection-start-column="12" selection-end-line="88" selection-end-column="18" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/controllers/main_home.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="10925">
+          <caret line="497" column="76" lean-forward="true" selection-start-line="475" selection-start-column="4" selection-end-line="497" selection-end-column="76" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/common.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="302">
+          <caret line="359" column="1" lean-forward="false" selection-start-line="359" selection-start-column="1" selection-end-line="359" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/order_orderList.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="19" column="66" lean-forward="false" selection-start-line="19" selection-start-column="66" selection-end-line="19" selection-end-column="66" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/controllers/order_orderList.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="197">
+          <caret line="41" column="0" lean-forward="true" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/js/controllers/qiusongPay.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="215">
-          <caret line="90" column="32" lean-forward="false" selection-start-line="90" selection-start-column="32" selection-end-line="90" selection-end-column="32" />
+        <state relative-caret-position="805">
+          <caret line="86" column="31" lean-forward="false" selection-start-line="86" selection-start-column="31" selection-end-line="86" selection-end-column="31" />
           <folding />
         </state>
       </provider>

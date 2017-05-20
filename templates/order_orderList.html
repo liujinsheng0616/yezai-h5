@@ -17,38 +17,52 @@
     </div>
 
     <div style="overflow:auto;height: 100%;padding-bottom: 18%;">
-        <div class="weui_cells" ng-repeat="order in orderList">
-            <div class="weui_cell" style="font-size: 14px;color:#000;">
-                <div class="weui_cell_bd weui_cell_primary">
-                    <p >{{order.createTime | date:"yyyy-MM-dd hh:mm:ss"}}</p>
+        <div class="weui-pull-to-refresh" style="background: #eee;" data-infinite="[object Object]">
+            <div class="scrollArea" style="padding-bottom: 5%;">
+                <div class="weui-pull-to-refresh-layer">
+                    <div class="pull-to-refresh-arrow"></div>
+                    <div class="pull-to-refresh-preloader"></div>
+                    <div class="down">下拉刷新</div>
+                    <div class="up">释放刷新</div>
+                    <div class="refresh">正在刷新...</div>
                 </div>
-                <div class="weui_cell_ft" style="font-size: 12px;color: #000;">
-                    <span ng-bind="order.statusView" ng-class="{redrText : order.status == 'ORDER_CREATED'}"></span>
-                </div>
-            </div>
+                <div class="weui_cells" ng-repeat="order in orderList">
+                    <div class="weui_cell" style="font-size: 14px;color:#000;">
+                        <div class="weui_cell_bd weui_cell_primary">
+                            <p >{{order.createTime | date:"yyyy-MM-dd hh:mm:ss"}}</p>
+                        </div>
+                        <div class="weui_cell_ft" style="font-size: 12px;color: #000;">
+                            <span ng-bind="order.statusView" ng-class="{redrText : order.status == 'ORDER_CREATED'}"></span>
+                        </div>
+                    </div>
 
-            <div ng-repeat="item in order.itemList" ng-click="goToOrderDetail(order)">
-            <div class="weui_cell" style="border-bottom: 1px solid #d9d9d9;border-top: 1px solid #d9d9d9;" >
-                <div class="weui_cell_hd"><img ng-src="{{item.thumbnail}}" alt="" style="width:80px;height: 80px;margin-right:5px;"></div>
-                <table border="0" style="width: 70%;margin-left: 8px;color:#888;font-size: 13px;">
-                    <tr style="height: 35px;font-size: 15px;color: #000;">
-                        <td ng-bind="item.title"></td>
-                    </tr>
-                    <tr style="height: 25px;" ng-hide="item.payDescription == null || item.payDescription == ''">
-                        <td ng-bind="item.payDescription"></td></span></td>
-                    </tr>
-                    <tr style="height: 25px;">
-                        <td>价格：{{item.priceView}}</td>
-                    </tr>
-                </table>
+                    <div ng-repeat="item in order.itemList" ng-click="goToOrderDetail(order)">
+                    <div class="weui_cell" style="border-bottom: 1px solid #d9d9d9;border-top: 1px solid #d9d9d9;" >
+                        <div class="weui_cell_hd"><img ng-src="{{item.thumbnail}}" alt="" style="width:80px;height: 80px;margin-right:5px;"></div>
+                        <table border="0" style="width: 70%;margin-left: 8px;color:#888;font-size: 13px;">
+                            <tr style="height: 35px;font-size: 15px;color: #000;">
+                                <td ng-bind="item.title"></td>
+                            </tr>
+                            <tr style="height: 25px;" ng-hide="item.payDescription == null || item.payDescription == ''">
+                                <td ng-bind="item.payDescription"></td></span></td>
+                            </tr>
+                            <tr style="height: 25px;">
+                                <td>价格：{{item.priceView}}</td>
+                            </tr>
+                        </table>
+                        </div>
+                    </div>
+                    <div class="weui_cells_title" style="text-align: right;color:#000;height: 40px;line-height: 30px;border-bottom:  1px solid #d9d9d9;margin-bottom: 0;">实付：¥ <span ng-bind="order.paid"></span></div>
+                    <!--
+                    <div class="weui_cells_title" style="text-align: right;color:#000;height: 40px;line-height: 30px;" ng-hide="order.status != 'ORDER_CREATED'" >
+                        <a ui-sref-active="active" class="weui_btn weui_btn_primary" style="height: 30px;line-height: 30px;font-size: 14px;width:80px;border-radius:0px;margin-right: 0;">支付</a>
+                    </div>
+                    -->
+                </div>
+                <div class="weui-infinite-scroll">
+                    <p class="loading"><div class="infinite-preloader"></div>正在加载...</p>
                 </div>
             </div>
-            <div class="weui_cells_title" style="text-align: right;color:#000;height: 40px;line-height: 30px;border-bottom:  1px solid #d9d9d9;margin-bottom: 0;">实付：¥ <span ng-bind="order.paid"></span></div>
-            <!--
-            <div class="weui_cells_title" style="text-align: right;color:#000;height: 40px;line-height: 30px;" ng-hide="order.status != 'ORDER_CREATED'" >
-                <a ui-sref-active="active" class="weui_btn weui_btn_primary" style="height: 30px;line-height: 30px;font-size: 14px;width:80px;border-radius:0px;margin-right: 0;">支付</a>
-            </div>
-            -->
         </div>
     </div>
 </div>

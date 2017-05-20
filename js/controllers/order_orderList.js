@@ -20,29 +20,51 @@ goceanApp.controller('OrderListCtrl', function ($scope, $rootScope, $state, $tim
     // 隐藏右上角
     configService.hideWXBtn();
 
+    $scope.page = 1;
+    $scope.rows = 10;
+    // 下拉刷新
+    var loading = false;
+
     // 底部tab选中
     $("#order").addClass("weui_active").siblings().removeClass('weui_active');
     $('#tab1').tab({defaultIndex:0,activeClass:"tab-green"});
 
     $scope.page = 1;
     $scope.rows = 10;
-    var status = 'ALL';
+    $scope.curentStatus = 'ALL';
     //请求参数
     // 全部数据
     $scope.listOrder = function(status){
+        if ($scope.curentStatus != status){
+            $scope.curentStatus = status;
+            $scope.orderList = [];
+        }
+
         var obj = {
             page:$scope.page,
             rows:$scope.rows,
             passportId:$rootScope.passport.passportId,
             token:$rootScope.passport.token,
-            status:status};
+            status:$scope.curentStatus
+        };
 
         orderListService.listOrder(obj).then(function(data){
-            console.log(data);
             if ("OK" == data.status){
                 var orderList = data.result;
-                initView(orderList);
-                $scope.orderList = orderList;
+                if (orderList && orderList.length > 0){
+                    initView(orderList);
+                    if ($scope.orderList && $scope.orderList.length > 0){
+                        $scope.orderList = $scope.orderList.concat(orderList);
+                    } else {
+                        $scope.orderList = orderList;
+                    }
+                    if(!$scope.$$phase){
+                        $scope.$apply();
+                    }
+                } else {
+                    $(".weui-infinite-scroll").html('<p class="bottomNoMore"><div class="infinite-preloader"></div>没有更多</p>')
+                    loading = true;
+                }
             }
         },function(err){
 
@@ -119,4 +141,28 @@ goceanApp.controller('OrderListCtrl', function ($scope, $rootScope, $state, $tim
             $state.go('orderDetail', {orderId : id});
         }
     }
+
+    // 上拉刷新
+    $("div.weui-pull-to-refresh").pullToRefresh().on("pull-to-refresh", function () {
+        $scope.page = 1;
+        setTimeout(function () {
+            $(".comment-content").each(function(){
+                $(this).remove();
+            });
+            $scope.listOrder($scope.curentStatus);
+            $("div.weui-pull-to-refresh").pullToRefreshDone(); // 重置下拉刷新
+        }, 1000);   //模拟延迟
+    });
+
+    // 下拉刷新
+    $("div.weui-pull-to-refresh").infinite().on("infinite", function () {
+        if (loading) return;
+        $scope.page++;
+        loading = true;
+        setTimeout(function () {
+            $scope.listOrder($scope.curentStatus);
+            loading = false;
+        }, 1000);   //模拟延迟
+    });
+    $(".infinite-preloader").on("show", function () { alert("it show!"); });
 });

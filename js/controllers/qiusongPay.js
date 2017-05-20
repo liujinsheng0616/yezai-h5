@@ -92,19 +92,16 @@ goceanApp.controller('QiusongPayCtrl', function ($scope, $rootScope, $state, $ti
                     if(res.err_msg == "get_brand_wcpay_request:ok"){
                         console.log("微信支付成功!");
                         var order = {
+                            passportId : $rootScope.passport.passportId,
+                            token : $rootScope.passport.token,
                             crowdFundingId : qiusongId
                         };
                         qiusongPayService.qiusongOnPaying(order).then(function(data){
                             if (data.status == "OK") {
                                 if (data.result == "PAID"){
-                                    $rootScope.qiusongDetailsView = null;
-                                    if (qiusongDetailsView.type == 'FORWARD_PLAN'){
-                                        $state.go('inServiceDetail', {orderId : orderId});
-                                    } else if (qiusongDetailsView.type == 'NORMAL') {
-                                        $state.go('normalDetail', {orderId: orderId});
-                                    }
+                                    $state.go('qiusongDetailsSponsor', {id : qiusongId});
                                 }else {
-                                    $state.go('order.orderList');
+                                    $state.go('order.qiusong');
                                 }
                             }
                         },function(err){
