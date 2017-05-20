@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="beffecf3-f557-4e5e-853d-f3d5b641d2bb" name="Default" comment="navbar BUG修复">
+    <list default="true" id="beffecf3-f557-4e5e-853d-f3d5b641d2bb" name="Default" comment="求送详情页 优化">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/common.css" afterPath="$PROJECT_DIR$/css/common.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/controllers/qiusongDetailsSponsor.js" afterPath="$PROJECT_DIR$/js/controllers/qiusongDetailsSponsor.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/controllers/qiusongShared.js" afterPath="$PROJECT_DIR$/js/controllers/qiusongShared.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/itemDetail.html" afterPath="$PROJECT_DIR$/templates/itemDetail.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/qiusongDetails_Sponsor.html" afterPath="$PROJECT_DIR$/templates/qiusongDetails_Sponsor.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/qiusongShared.html" afterPath="$PROJECT_DIR$/templates/qiusongShared.html" />
     </list>
@@ -49,11 +45,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="qiusongShared.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="qiusongShared.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/qiusongShared.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="468">
-              <caret line="89" column="112" lean-forward="false" selection-start-line="89" selection-start-column="112" selection-end-line="89" selection-end-column="112" />
+              <caret line="89" column="126" lean-forward="true" selection-start-line="89" selection-start-column="100" selection-end-line="89" selection-end-column="126" />
               <folding>
                 <element signature="n#style#0;n#div#4;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#4;n#div#0;n#!!top" expanded="true" />
@@ -73,11 +69,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="qiusongDetails_Sponsor.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="qiusongDetails_Sponsor.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/templates/qiusongDetails_Sponsor.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="550">
-              <caret line="105" column="112" lean-forward="false" selection-start-line="105" selection-start-column="112" selection-end-line="105" selection-end-column="112" />
+            <state relative-caret-position="573">
+              <caret line="106" column="64" lean-forward="true" selection-start-line="106" selection-start-column="64" selection-end-line="106" selection-end-column="64" />
               <folding>
                 <element signature="n#style#0;n#div#5;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#5;n#div#0;n#!!top" expanded="true" />
@@ -184,8 +180,8 @@
         <option value="$PROJECT_DIR$/js/controllers/qiusongDetailsSponsor.js" />
         <option value="$PROJECT_DIR$/js/controllers/qiusongShared.js" />
         <option value="$PROJECT_DIR$/css/common.css" />
-        <option value="$PROJECT_DIR$/templates/qiusongDetails_Sponsor.html" />
         <option value="$PROJECT_DIR$/templates/qiusongShared.html" />
+        <option value="$PROJECT_DIR$/templates/qiusongDetails_Sponsor.html" />
       </list>
     </option>
   </component>
@@ -413,7 +409,7 @@
       <workItem from="1495121853777" duration="448000" />
       <workItem from="1495203780105" duration="2615000" />
       <workItem from="1495208487719" duration="2435000" />
-      <workItem from="1495275489071" duration="17749000" />
+      <workItem from="1495275489071" duration="17826000" />
     </task>
     <task id="LOCAL-00001" summary="微信支付">
       <created>1494436265482</created>
@@ -527,11 +523,18 @@
       <option name="project" value="LOCAL" />
       <updated>1495296710830</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="求送详情页 优化">
+      <created>1495298778514</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1495298778514</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="132618000" />
+    <option name="totallyTimeSpent" value="132695000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
@@ -574,7 +577,8 @@
     <MESSAGE value="订单列表分页" />
     <MESSAGE value="navbar BUG修复" />
     <MESSAGE value="样式修改" />
-    <option name="LAST_COMMIT_MESSAGE" value="样式修改" />
+    <MESSAGE value="求送详情页 优化" />
+    <option name="LAST_COMMIT_MESSAGE" value="求送详情页 优化" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -997,26 +1001,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/qiusongDetails_Sponsor.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="550">
-          <caret line="105" column="112" lean-forward="false" selection-start-line="105" selection-start-column="112" selection-end-line="105" selection-end-column="112" />
-          <folding>
-            <element signature="n#style#0;n#div#5;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#5;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#5;n#div#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/qiusongShared.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="468">
-          <caret line="89" column="112" lean-forward="false" selection-start-line="89" selection-start-column="112" selection-end-line="89" selection-end-column="112" />
+          <caret line="89" column="126" lean-forward="true" selection-start-line="89" selection-start-column="100" selection-end-line="89" selection-end-column="126" />
           <folding>
             <element signature="n#style#0;n#div#4;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#4;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#0;n#div#5;n#div#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/qiusongDetails_Sponsor.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="573">
+          <caret line="106" column="64" lean-forward="true" selection-start-line="106" selection-start-column="64" selection-end-line="106" selection-end-column="64" />
+          <folding>
+            <element signature="n#style#0;n#div#5;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#5;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#5;n#div#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>

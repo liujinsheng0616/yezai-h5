@@ -103,7 +103,7 @@
                 <div class="friend_list">
                     <div class="photo" ng-repeat="sponsor in qiusong.memberList">
                         <img ng-src="{{sponsor.icon}}">
-                        <span class="weui-badge" style="position: absolute;top: -.4em;right: -.4em;" ng-bind="'x' + sponsor.times"></span>
+                        <span class="weui-badge" style="position: absolute;top: -.4em;right: -.4em;" ng-if="sponsor.times > 1" ng-bind="'x' + sponsor.times"></span>
                         <span ng-bind="sponsor.nickName"></span>
                     </div>
                 </div>
