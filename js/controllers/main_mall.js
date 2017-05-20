@@ -1,7 +1,7 @@
 /**
  * Created by kingson·liu on 2017/3/9.
  */
-goceanApp.controller('MainMallCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, mallService, mallDetailService, configService) {
+goceanApp.controller('MainMallCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, mallService, mallDetailService, configService, localStorageService) {
 
     var params = configService.parseQueryString(window.location.href);
     if (params.passportId){
@@ -31,7 +31,6 @@ goceanApp.controller('MainMallCtrl', function ($scope, $rootScope, $state, $time
         rows:$scope.rows
     };
     mallService.getMallList(obj).then(function(data){
-        console.log(data);
         if (data.status == "OK"){
         	$scope.itemList = data.result;
             if(!$scope.$$phase){
@@ -47,10 +46,17 @@ goceanApp.controller('MainMallCtrl', function ($scope, $rootScope, $state, $time
     $rootScope.viewCateory = store.mall.viewCateory;
     var tabWidth = 20 * $scope.viewCateory.length;
     $("#cTab").css({"width":tabWidth+"%","height":"44px"});
+
     setTimeout(function () {
-            $('#tab1').tab({defaultIndex:0,activeClass:"tab-green"})
-    },10
-    );
+        $('#tab1').tab({defaultIndex:0,activeClass:"tab-green"});
+        var selectViewId = localStorageService.get("selectViewId");
+        if (selectViewId){
+            $("#view"+ selectViewId).addClass("tab-green").siblings().removeClass('tab-green');
+            $scope.listItems(selectViewId);
+        }
+    }, 10);
+
+
 
     /*
      * DEMO 分页，没用，
@@ -80,6 +86,8 @@ goceanApp.controller('MainMallCtrl', function ($scope, $rootScope, $state, $time
 
     $scope.listItems = function (id) {
         $rootScope.viewCatetoryId = id;
+        localStorageService.remove("selectViewId");
+        localStorageService.set("selectViewId", id);
         var obj = {
                 viewCategoryId:id,
                 page:$scope.page,

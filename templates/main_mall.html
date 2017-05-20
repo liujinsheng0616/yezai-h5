@@ -2,7 +2,7 @@
     <div class="weui_tab" style="height:44px;width: 100%;overflow: auto;display:-webkit-box;-webkit-overflow-scrolling:touch;z-index: 99;top:0;border-bottom: 1px solid #d9d9d9" id="tab1" >
         <div class="weui_navbar" id="cTab">
             <div class="weui_navbar" style="height: 44px;background-color: #FFFFFF;z-index: 9;">
-                <div class="weui_navbar_item" id="t{{$index}}" ng-repeat="cateory in viewCateory track by $index" ng-click="listItems(cateory.id)">
+                <div class="weui_navbar_item" id="view{{cateory.id}}" ng-repeat="cateory in viewCateory track by $index" ng-click="listItems(cateory.id)">
                     {{cateory.name}}
                 </div>
             </div>
