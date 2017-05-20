@@ -54,6 +54,11 @@ goceanApp.controller('QiusongDetailsSponsorCtrl', function ($scope, $rootScope, 
                     $scope.qiusong.status = "已付款";
                 }
                 $scope.qiusong.sponsorName = Base64.decode($scope.qiusong.sponsorName);
+                if ($scope.qiusong.memberList && $scope.qiusong.memberList.length > 0){
+                    for(i in $scope.qiusong.memberList){
+                        $scope.qiusong.memberList[i].nickName = Base64.decode($scope.qiusong.memberList[i].nickName);
+                    }
+                }
                 // 分享组装
                 shared();
             }else{

@@ -48,9 +48,15 @@ goceanApp.controller('QiusongSharedCtrl', function ($scope, $rootScope, $state, 
             crowdFundingId : id
         };
         qiusongSharedService.getDetails(obj).then(function(data){
+            console.log(data);
             if (data.status == "OK") {
                 $scope.qiusong = data.result;
                 $scope.qiusong.sponsorName = Base64.decode($scope.qiusong.sponsorName);
+                if ($scope.qiusong.memberList && $scope.qiusong.memberList.length > 0){
+                    for(i in $scope.qiusong.memberList){
+                        $scope.qiusong.memberList[i].nickName = Base64.decode($scope.qiusong.memberList[i].nickName);
+                    }
+                }
             }else{
                 $.alert("系统繁忙,请稍候再试");
             }

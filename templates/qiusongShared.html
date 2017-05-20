@@ -81,12 +81,14 @@
         <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;color:#000;">人均支付：<span style="float: right;color: #09BB07;" ng-bind="'￥' + qiusong.unitAmount"></span></div>
     </div>
 
-    <div class="weui_cells" ng-if="qiusong.memberList.size > 0" style="margin-top: 10px;">
+    <div class="weui_cells" ng-if="qiusong.memberList.length > 0" style="margin-top: 10px;">
         <div class="weui_cell" style="text-align: center">
             <div class="friend">
                 <div class="friend_list">
                     <div class="photo" ng-repeat="sponsor in qiusong.memberList">
-                        <img ng-src="{{sponsor.icon}}"><span ng-bind="sponsor.nickName"></span>
+                        <img ng-src="{{sponsor.icon}}">
+                        <span class="weui-badge" style="position: absolute;top: -.4em;right: -.4em;" ng-bind="'x' + sponsor.times"></span>
+                        <span ng-bind="sponsor.nickName"></span>
                     </div>
                 </div>
             </div>
