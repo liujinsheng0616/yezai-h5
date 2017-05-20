@@ -10,10 +10,10 @@ goceanApp.controller('PayMomentCtrl', function ($scope, $rootScope, $state, $tim
         return;
     }
 
+    // 获取JSSDK
+    configService.getJssdkInfo(window.location.href);
     // 隐藏右上角
-    setTimeout(function(){
-        configService.hideWXBtn();
-    },100);
+    configService.hideWXBtn();
 
     function getDefaultAddress() {
         var tokenedRo = {

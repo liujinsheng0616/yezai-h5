@@ -18,10 +18,10 @@ goceanApp.controller('OrderPayCtrl', function ($scope, $rootScope, $state, $time
         orderId = $stateParams.orderId;
     }
 
+    // 获取JSSDK
+    configService.getJssdkInfo(window.location.href);
     // 隐藏右上角
-    setTimeout(function(){
-        configService.hideWXBtn();
-    },100);
+    configService.hideWXBtn();
 
     function refresh(id) {
         if (id <= 0)
@@ -57,7 +57,7 @@ goceanApp.controller('OrderPayCtrl', function ($scope, $rootScope, $state, $time
 
     $scope.toOrderList = function () {
         $state.go("order.orderList");
-    }
+    };
 
     // H5调起微信支付
     $scope.toWxPay = function (orderDetailsView) {

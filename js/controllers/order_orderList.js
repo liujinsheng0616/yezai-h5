@@ -15,10 +15,10 @@ goceanApp.controller('OrderListCtrl', function ($scope, $rootScope, $state, $tim
         return;
     }
 
+    // 获取JSSDK
+    configService.getJssdkInfo(window.location.href);
     // 隐藏右上角
-    setTimeout(function(){
-        configService.hideWXBtn();
-    },100);
+    configService.hideWXBtn();
 
     // 底部tab选中
     $("#order").addClass("weui_active").siblings().removeClass('weui_active');
@@ -104,7 +104,7 @@ goceanApp.controller('OrderListCtrl', function ($scope, $rootScope, $state, $tim
             });
         }
 
-    }
+    };
 
     function adapteDetails(order){
         var id = order.id;

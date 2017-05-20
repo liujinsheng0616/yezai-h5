@@ -31,10 +31,10 @@ goceanApp.controller('QiusongEntryCtrl', function ($scope, $rootScope, $state, $
         return;
     }
 
+    // 获取JSSDK
+    configService.getJssdkInfo(window.location.href);
     // 隐藏右上角
-    setTimeout(function(){
-        configService.hideWXBtn();
-    },100);
+    configService.hideWXBtn();
 
     function upDownOperation(element)
     {

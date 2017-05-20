@@ -29,6 +29,11 @@ goceanApp.controller('QiusongSharedCtrl', function ($scope, $rootScope, $state, 
         return;
     }
 
+    // 获取JSSDK
+    configService.getJssdkInfo(window.location.href);
+    // 隐藏右上角
+    configService.hideWXBtn();
+
     $scope.userFlag = false;
     if ($rootScope.passport.passportId == sharerId){
         $scope.userFlag = true;
@@ -59,5 +64,26 @@ goceanApp.controller('QiusongSharedCtrl', function ($scope, $rootScope, $state, 
         $state.go("qiusongEntry", {
             itemId:$scope.qiusong.itemId
         })
+    };
+
+    // 支付页
+    $scope.doParticipate = function () {
+        var obj = {
+            passportId: $rootScope.passport.passportId,
+            token : $rootScope.passport.token,
+            crowdFundingId : $scope.qiusong.id
+        };
+
+        qiusongSharedService.participate(obj).then(function (data) {
+            if (data.status == "OK"){
+                $state.go("qiusongPrepay", {
+                    qiusongId : $scope.qiusong.id
+                })
+            } else {
+                $.alert("系统繁忙,请稍候再试");
+            }
+        },function(err){
+            $.alert("系统繁忙,请稍候再试");
+        });
     }
 });

@@ -38,31 +38,7 @@ goceanApp.controller('ItemDetailCtrl', function($scope, $rootScope, $state, $tim
     thisUrl = thisUrl + "/sharerId_" + $rootScope.passport.passportId;
 
     // 获取JSSDK
-    getJssdkInfo();
-    function getJssdkInfo() {
-        var sdkObj = {
-            url:location.href.split('#')[0]
-        };
-        mainHomeService.getJssdkInfo(sdkObj).then(function(data){
-            if (data){
-                setWxconfig(data);
-            }
-        },function(err){
-
-        });
-    }
-
-    // 配置微信config
-    function setWxconfig(data) {
-        wx.config({
-            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-            appId: data.result.appId, // 必填，公众号的唯一标识
-            timestamp: data.result.timestamp , // 必填，生成签名的时间戳
-            nonceStr: data.result.noncestr, // 必填，生成签名的随机串
-            signature: data.result.signature,// 必填，签名，见附录1
-            jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
-        });
-    }
+    configService.getJssdkInfo(window.location.href);
 
     var itemDetail = null;
 	if ($rootScope.itemDetail && $rootScope.itemDetail.goodsId == goodsId){
@@ -378,7 +354,7 @@ goceanApp.controller('ItemDetailCtrl', function($scope, $rootScope, $state, $tim
                                     skuId: att.skuId,
                                     payDescription: att.title + " " + att.payDescription,
                                     price: att.price
-                                }
+                                };
                                 _payAttachment.push(simpleAtt);
                             }
 						}
@@ -408,7 +384,7 @@ goceanApp.controller('ItemDetailCtrl', function($scope, $rootScope, $state, $tim
 			payAttachment:_payAttachment,
 			sharerId:sharerId
 		})
-	}
+	};
 
     // 购买页
     $scope.toQiusong = function() {

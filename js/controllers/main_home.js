@@ -15,11 +15,6 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
         return;
     }
 
-    // 隐藏右上角
-    setTimeout(function(){
-        configService.hideWXBtn();
-    },100);
-
     var tabIndex = 0;
 
     if ($rootScope.topicViewNavId == null) {
@@ -200,31 +195,9 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
         // 延迟出现
         setTimeout(function () {
             // 获取JSSDK
-            getJssdkInfo();
-            function getJssdkInfo() {
-                var sdkObj = {
-                    url:location.href.split('#')[0]
-                };
-                mainHomeService.getJssdkInfo(sdkObj).then(function(data){
-                    if (data){
-                        setWxconfig(data);
-                    }
-                },function(err){
-
-                });
-            }
-
-            // 配置微信config
-            function setWxconfig(data) {
-                wx.config({
-                    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-                    appId: data.result.appId, // 必填，公众号的唯一标识
-                    timestamp: data.result.timestamp , // 必填，生成签名的时间戳
-                    nonceStr: data.result.noncestr, // 必填，生成签名的随机串
-                    signature: data.result.signature,// 必填，签名，见附录1
-                    jsApiList: ['chooseImage', 'uploadImage', 'previewImage'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
-                });
-            }
+            configService.getJssdkInfo(window.location.href);
+            // 隐藏右上角
+            configService.hideWXBtn();
 
             //定义文本
             $('.paragraph').each(function (index) {

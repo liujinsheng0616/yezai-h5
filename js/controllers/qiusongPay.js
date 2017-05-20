@@ -13,63 +13,69 @@ goceanApp.controller('QiusongPayCtrl', function ($scope, $rootScope, $state, $ti
         }
     }
 
-    var orderId = 0;
-    if($stateParams.orderId){
-        orderId = $stateParams.orderId;
+    var qiusongId = 0;
+    var memberId = 0;
+    if($stateParams.qiusongId){
+        qiusongId = $stateParams.qiusongId;
     }
 
+    // 获取JSSDK
+    configService.getJssdkInfo(window.location.href);
     // 隐藏右上角
-    setTimeout(function(){
-        configService.hideWXBtn();
-    },100);
+    configService.hideWXBtn();
 
     function refresh(id) {
         if (id <= 0)
             return;
         var obj = {
-            passportId:$rootScope.passport.passportId,
-            token:$rootScope.passport.token,
-            orderId:id};
-        qiusongPayService.getDetails(obj).then(function(data){
+            passportId : $rootScope.passport.passportId,
+            token : $rootScope.passport.token,
+            crowdFundingId : id
+        };
+        qiusongPayService.getPayDetails(obj).then(function(data){
             console.log(data);
             if ("OK" == data.status){
-                var orderDetailsDto = data.result;
-                init(orderDetailsDto);
+                var qiusongDetailsDto = data.result;
+                init(qiusongDetailsDto);
             }
         },function(err){
 
         });
     }
 
-    function init(orderDetailsDto) {
+    function init(qiusongDetailsDto) {
 
-        $scope.orderDetailsView = orderDetailsDto;
-        if ($scope.orderDetailsView.status == "ORDER_CREATED" || $scope.orderDetailsView.status == "BLANK") {
-            $scope.orderDetailsView.statusView = "未付款";
-        } else if ($scope.orderDetailsView.status == "ORDER_PAID") {
-            $scope.orderDetailsView.statusView = "服务中";
-        } else if ($scope.orderDetailsView.status == "ORDER_FINISHED") {
-            $scope.orderDetailsView.statusView = "已完成";
+        $scope.qiusongDetailsView = qiusongDetailsDto;
+        if ($scope.qiusongDetailsView.status == "ING") {
+            $scope.qiusongDetailsView.statusView = "求送中";
+        } else if ($scope.qiusongDetailsView.status == "SUCCESSED") {
+            $scope.qiusongDetailsView.statusView = "已完成";
+        } else if ($scope.qiusongDetailsView.status == "SETTLED") {
+            $scope.qiusongDetailsView.statusView = "已结算";
+        } else if ($scope.qiusongDetailsView.status == "UN_PAY") {
+            $scope.qiusongDetailsView.statusView = "未付款";
+        } else if ($scope.qiusongDetailsView.status == "PAID") {
+            $scope.qiusongDetailsView.statusView = "已付款";
         }
     }
 
-    refresh(orderId);
-
-    $scope.toOrderList = function () {
-        $state.go("order.orderList");
-    }
+    refresh(qiusongId);
+    // 返回求送列表
+    $scope.toQiusongList = function () {
+        $state.go("order.qiusong");
+    };
 
     // H5调起微信支付
-    $scope.toWxPay = function (orderDetailsView) {
+    $scope.toWxPay = function (qiusongDetailsView) {
         var obj = {
             passportId : $rootScope.passport.passportId,
             token : $rootScope.passport.token,
             openid : $rootScope.passport.token3,
             device : "WEB",
-            title : orderDetailsView.itemList[0].title,
-            pr : orderDetailsView.pr,
-            paid : orderDetailsView.sales,
-            skuId : orderDetailsView.itemList[0].id,
+            title : qiusongDetailsView.skuBriefDto.title,
+            pr : qiusongDetailsView.pr,
+            paid : qiusongDetailsView.unitAmount,
+            skuId : qiusongDetailsView.skuBriefDto.id,
             tradeType : "JSAPI"
         };
         qiusongPayService.toWxPay(obj).then(function(data){
@@ -86,15 +92,15 @@ goceanApp.controller('QiusongPayCtrl', function ($scope, $rootScope, $state, $ti
                     if(res.err_msg == "get_brand_wcpay_request:ok"){
                         console.log("微信支付成功!");
                         var order = {
-                            orderId:orderId
+                            crowdFundingId : qiusongId
                         };
-                        qiusongPayService.onPaying(order).then(function(data){
+                        qiusongPayService.qiusongOnPaying(order).then(function(data){
                             if (data.status == "OK") {
                                 if (data.result == "PAID"){
-                                    $rootScope.orderDetailsView = null;
-                                    if (orderDetailsView.type == 'FORWARD_PLAN'){
+                                    $rootScope.qiusongDetailsView = null;
+                                    if (qiusongDetailsView.type == 'FORWARD_PLAN'){
                                         $state.go('inServiceDetail', {orderId : orderId});
-                                    } else if (orderDetailsView.type == 'NORMAL') {
+                                    } else if (qiusongDetailsView.type == 'NORMAL') {
                                         $state.go('normalDetail', {orderId: orderId});
                                     }
                                 }else {

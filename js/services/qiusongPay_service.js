@@ -6,10 +6,10 @@ goceanApp.factory('qiusongPayService', ['$http', '$q','$rootScope', 'ajaxUtil','
         var qiusongPayServiceObj = {};
         /*给服务对象注册方法*/
         //获得订单详情
-        qiusongPayServiceObj.getDetails = function (params) {
+        qiusongPayServiceObj.getPayDetails = function (params) {
             var defer = $q.defer();
             var obj = {
-                url:appSettings.host+appSettings.requestURL.orderDetails,
+                url:appSettings.host+appSettings.requestURL.qiusongPayDetail,
                 type:'POST',
                 params:params
             };
@@ -38,10 +38,10 @@ goceanApp.factory('qiusongPayService', ['$http', '$q','$rootScope', 'ajaxUtil','
         };
 
         // 微信支付请求
-        qiusongPayServiceObj.onPaying = function (params) {
+        qiusongPayServiceObj.qiusongOnPaying = function (params) {
             var defer = $q.defer();
             var obj = {
-                url:appSettings.host+appSettings.requestURL.onPaying,
+                url:appSettings.host+appSettings.requestURL.qiusongOnPaying,
                 type:'POST',
                 params:params
             };

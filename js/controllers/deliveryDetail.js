@@ -8,10 +8,10 @@ goceanApp.controller('DeliverDetailCtrl',['$scope', '$rootScope','$state', '$sta
         $scope.orderId = $stateParams.orderId;
     }
 
+    // 获取JSSDK
+    configService.getJssdkInfo(window.location.href);
     // 隐藏右上角
-    setTimeout(function(){
-        configService.hideWXBtn();
-    },100);
+    configService.hideWXBtn();
 
     var tmpl = '<li class="weui-uploader__file" style="background-image:url(#url#)"></li>',
         $gallery = $("#gallery"), $galleryImg = $("#galleryImg"),
@@ -23,7 +23,7 @@ goceanApp.controller('DeliverDetailCtrl',['$scope', '$rootScope','$state', '$sta
         passportId:$rootScope.passport.passportId,
         token:$rootScope.passport.token,
         orderId:$scope.orderId
-    }
+    };
 
     deliverDetailService.getForwardDetails(obj).then(function(data){
         console.log(data);

@@ -15,10 +15,10 @@ goceanApp.controller('OrderQiusongCtrl', function ($rootScope,$scope, $state, $t
         return;
     }
 
+    // 获取JSSDK
+    configService.getJssdkInfo(window.location.href);
     // 隐藏右上角
-    setTimeout(function(){
-        configService.hideWXBtn();
-    },100);
+    configService.hideWXBtn();
 
     // 底部tab选中
     $("#qiusong").addClass("weui_active").siblings().removeClass('weui_active');
@@ -97,7 +97,7 @@ goceanApp.controller('OrderQiusongCtrl', function ($rootScope,$scope, $state, $t
             // });
         }
 
-    }
+    };
 
     function adaptDetails(qiusong){
         var id = qiusong.crowdFunding.id;

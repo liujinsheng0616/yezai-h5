@@ -14,10 +14,10 @@ goceanApp.controller('MainMineCtrl', function ($scope,$rootScope, $state, $timeo
         return;
     }
 
+    // 获取JSSDK
+    configService.getJssdkInfo(window.location.href);
     // 隐藏右上角
-    setTimeout(function(){
-        configService.hideWXBtn();
-    },100);
+    configService.hideWXBtn();
 
     $rootScope.passport.yeBean = 10;
 

@@ -25,10 +25,10 @@ goceanApp.controller('InServiceDetailCtrl', function ($scope, $rootScope, $state
         forwardList = $rootScope.orderDetailsView.forwardPlanDto.forwardList;
     }
 
+    // 获取JSSDK
+    configService.getJssdkInfo(window.location.href);
     // 隐藏右上角
-    setTimeout(function(){
-        configService.hideWXBtn();
-    },100);
+    configService.hideWXBtn();
 
     function init(orderDetailsDto){
         $rootScope.orderDetailsView = orderDetailsDto;
@@ -49,7 +49,7 @@ goceanApp.controller('InServiceDetailCtrl', function ($scope, $rootScope, $state
         currentForwardList.push(forwardList[index * 4 + 1]);
         currentForwardList.push(forwardList[index * 4 + 2]);
         currentForwardList.push(forwardList[index * 4 + 3]);
-    }
+    };
 
     function onReady(){
 
@@ -123,14 +123,14 @@ goceanApp.controller('InServiceDetailCtrl', function ($scope, $rootScope, $state
     $scope.toRightPlan = function () {
         $rootScope.orderDetailsView.index += 1;
         $scope.resetPlan($rootScope.orderDetailsView.index);
-    }
+    };
 
 
     // 左切换
     $scope.toLeftPlan = function(){
         $rootScope.orderDetailsView.index -= 1;
         $scope.resetPlan($rootScope.orderDetailsView.index);
-    }
+    };
 
     // 查看服务详情
     $scope.toServiceDetail = function (forward) {
@@ -138,7 +138,7 @@ goceanApp.controller('InServiceDetailCtrl', function ($scope, $rootScope, $state
             return;
         }
         $state.go('deliveryDetail', {orderId:forward.orderId});
-    }
+    };
 
     // 切换收货地址界面
     $scope.toAddress = function () {
@@ -146,7 +146,7 @@ goceanApp.controller('InServiceDetailCtrl', function ($scope, $rootScope, $state
             return;
         }
         $state.go('address')
-    }
+    };
 
     function changeDeliveryDay(){
         if ($rootScope.isDeliveryDayChanged == 0)
@@ -158,7 +158,7 @@ goceanApp.controller('InServiceDetailCtrl', function ($scope, $rootScope, $state
             orderId: $rootScope.orderDetailsView.id,
             day: $rootScope.deliveryDayChanged.day,
             time: $rootScope.deliveryDayChanged.time
-        }
+        };
 
         inServiceDetailService.changeDeliveryDay(obj).then(function(data){
             console.log(data);

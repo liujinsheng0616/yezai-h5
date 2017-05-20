@@ -15,10 +15,10 @@ goceanApp.controller('MailDetailCtrl', function ($scope, $rootScope,$state, $tim
         $rootScope.type = $stateParams.type;
     }
 
+    // 获取JSSDK
+    configService.getJssdkInfo(window.location.href);
     // 隐藏右上角
-    setTimeout(function(){
-        configService.hideWXBtn();
-    },100);
+    configService.hideWXBtn();
 
     // 假数据映射
     if ($rootScope.type == "FORWARD"){

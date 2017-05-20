@@ -9,10 +9,10 @@ goceanApp.controller('MainMallCtrl', function ($scope, $rootScope, $state, $time
         $rootScope.passport = params;
     }
 
+    // 获取JSSDK
+    configService.getJssdkInfo(window.location.href);
     // 隐藏右上角
-    setTimeout(function(){
-        configService.hideWXBtn();
-    },100);
+    configService.hideWXBtn();
 
 
     // 底部tab选中
@@ -76,7 +76,7 @@ goceanApp.controller('MainMallCtrl', function ($scope, $rootScope, $state, $time
         },function(err){
 
         });
-    }
+    };
 
     $scope.listItems = function (id) {
         $rootScope.viewCatetoryId = id;
