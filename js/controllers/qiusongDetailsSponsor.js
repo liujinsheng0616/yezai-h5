@@ -43,16 +43,20 @@ goceanApp.controller('QiusongDetailsSponsorCtrl', function ($scope, $rootScope, 
                 $scope.qiusong = data.result;
                 console.log($scope.qiusong);
                 if ($scope.qiusong.status == "ING") {
-                    $scope.qiusong.status = "求送中";
+                    $scope.qiusong.statusView = "求送中";
+                    if ($scope.qiusong.totalTimes >= $scope.qiusong.memberCount){
+                        $scope.qiusong.statusView = "审核中";
+                    }
                 } else if ($scope.qiusong.status == "SUCCESSED") {
-                    $scope.qiusong.status = "已完成";
+                    $scope.qiusong.statusView = "已完成";
                 } else if ($scope.qiusong.status == "SETTLED") {
-                    $scope.qiusong.status = "已结算";
-                } else if ($scope.qiusong.status == "UN_PAY") {
-                    $scope.qiusong.status = "未付款";
-                } else if ($scope.qiusong.status == "PAID") {
-                    $scope.qiusong.status = "已付款";
+                    $scope.qiusong.statusView = "已结算";
                 }
+                // else if ($scope.qiusong.status == "UN_PAY") {
+                //     $scope.qiusong.status = "未付款";
+                // } else if ($scope.qiusong.status == "PAID") {
+                //     $scope.qiusong.status = "已付款";
+                // }
                 $scope.qiusong.sponsorName = Base64.decode($scope.qiusong.sponsorName);
                 if ($scope.qiusong.memberList && $scope.qiusong.memberList.length > 0){
                     for(i in $scope.qiusong.memberList){
@@ -81,7 +85,8 @@ goceanApp.controller('QiusongDetailsSponsorCtrl', function ($scope, $rootScope, 
                     wx.showOptionMenu();
                     //分享到朋友圈
                     wx.onMenuShareTimeline({
-                        title: $rootScope.passport.nickName + '也在发起求送: 邀请你参与---' + $scope.qiusong.skuBriefDto.title, // 分享标题
+                        title:  $scope.qiusong.sponsorName + '也在发起求送，邀请你参与！',// 分享标题
+                        desc:  $scope.qiusong.skuBriefDto.title +"(" +$scope.qiusong.skuBriefDto.payDescription +")", // 分享描述
                         link:  sharedUrl, // 分享链接
                         imgUrl: 'http://static.yezaigou.com/' + $scope.qiusong.skuBriefDto.thumbnail, // 分享图标
                         success: function () {
@@ -94,8 +99,8 @@ goceanApp.controller('QiusongDetailsSponsorCtrl', function ($scope, $rootScope, 
 
                     //分享给朋友
                     wx.onMenuShareAppMessage({
-                        title: $rootScope.passport.nickName + '也在发起求送: 邀请你参与---' + $scope.qiusong.skuBriefDto.title, // 分享标题
-                        desc: $scope.qiusong.skuBriefDto.payDescription, // 分享描述
+                        title: $scope.qiusong.sponsorName + '也在发起求送，邀请你参与！',// 分享标题
+                        desc:  $scope.qiusong.skuBriefDto.title +"(" +$scope.qiusong.skuBriefDto.payDescription +")", // 分享描述
                         link: sharedUrl, // 分享链接
                         imgUrl: 'http://static.yezaigou.com/' + $scope.qiusong.skuBriefDto.thumbnail, // 分享图标
                         type: '', // 分享类型,music、video或link，不填默认为link
@@ -110,5 +115,9 @@ goceanApp.controller('QiusongDetailsSponsorCtrl', function ($scope, $rootScope, 
                 }
             });
         });
+    }
+
+    $scope.toItem = function(id){
+        $state.go("itemDetail",{goodsId:id,sharerIdStr:"sharerId_"+$rootScope.passport.passportId})
     }
 });

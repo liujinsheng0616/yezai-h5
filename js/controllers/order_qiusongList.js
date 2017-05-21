@@ -27,9 +27,11 @@ goceanApp.controller('OrderQiusongCtrl', function ($rootScope,$scope, $state, $t
     $scope.page = 1;
     $scope.rows = 10;
     var status = 'ING';
+    $scope.status = status;
     //请求参数
     // 全部数据
     $scope.listQiusong = function(status){
+        $scope.status = status;
         var obj = {
             page:$scope.page,
             rows:$scope.rows,
@@ -41,7 +43,7 @@ goceanApp.controller('OrderQiusongCtrl', function ($rootScope,$scope, $state, $t
             console.log(data);
             if ("OK" == data.status){
                 var qiusongList = data.result;
-                initView(qiusongList);
+                initView(qiusongList, status);
                 $scope.qiusongList = qiusongList;
             }
         },function(err){
@@ -51,15 +53,28 @@ goceanApp.controller('OrderQiusongCtrl', function ($rootScope,$scope, $state, $t
     // 页面刷新加载
     $scope.listQiusong(status);
 
-    function initView(qiusongList){
+    function initView(qiusongList, status){
         for (i in qiusongList){
             var brief = qiusongList[i];
             if (brief.crowdFunding.status == "ING"){
                 brief.statusView = "求送中";
+                if (brief.totalTimes >= brief.crowdFunding.memberCount){
+                    brief.statusView = "审核中";
+                }
             }else if (brief.crowdFunding.status == "SUCCESSED"){
                 brief.statusView = "已完成";
             }else if (brief.crowdFunding.status == "SETTLED"){
                 brief.statusView = "已结算";
+            }
+
+            if (status == "UN_PAY"){
+                brief.payStatus = "UN_PAY";
+                if (brief.crowdFunding.status == "SUCCESSED" || brief.crowdFunding.status == "SETTLED"){
+                    brief.statusView = "已超时";
+                }
+
+            }else if (status = "PAID"){
+                brief.payStatus = "PAID";
             }
 
             var itemList = brief.itemList;
@@ -75,7 +90,12 @@ goceanApp.controller('OrderQiusongCtrl', function ($rootScope,$scope, $state, $t
         $rootScope.qiusongDetailsView = null;
 
         if (qiusong.payStatus == "UN_PAY" && qiusong.sponsorId != $rootScope.passport.passportId){
-            $state.go('qiusongPrepay', {qiusongId: qiusong.crowdFundingId.id, memberId: $rootScope.passport.passportId});
+            if (!(qiusong.crowdFunding.status == "SUCCESSED" || qiusong.crowdFunding.status == "SETTLED")){
+                $state.go('qiusongPrepay', {
+                    qiusongId: qiusong.crowdFunding.id,
+                    memberId: $rootScope.passport.passportId
+                });
+            }
         }else {
 
             adaptDetails(qiusong);
@@ -101,11 +121,12 @@ goceanApp.controller('OrderQiusongCtrl', function ($rootScope,$scope, $state, $t
 
     function adaptDetails(qiusong){
         var id = qiusong.crowdFunding.id;
-        var status = qiusong.status;
-        if (qiusong.crowdFunding.sponsorId == $rootScope.passport.passportId){
-            $state.go("qiusongDetailsSponsor",{id:id});
-        } else{
+        // if (qiusong.crowdFunding.sponsorId == $rootScope.passport.passportId){
+        //     $state.go("qiusongDetailsSponsor",{id:id});
+        // } else{
+        //
+        // }
 
-        }
+        $state.go("qiusongDetailsSponsor",{id:id});
     }
 });

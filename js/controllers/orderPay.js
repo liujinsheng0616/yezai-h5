@@ -34,7 +34,13 @@ goceanApp.controller('OrderPayCtrl', function ($scope, $rootScope, $state, $time
             console.log(data);
             if ("OK" == data.status){
                 var orderDetailsDto = data.result;
+                if (orderDetailsDto.status != "ORDER_CREATED") {
+                    $state.go('order.orderList');
+                    return;
+                }
                 init(orderDetailsDto);
+            }else{
+                $state.go('order.orderList');
             }
         },function(err){
 

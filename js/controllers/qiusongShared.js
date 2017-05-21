@@ -35,9 +35,6 @@ goceanApp.controller('QiusongSharedCtrl', function ($scope, $rootScope, $state, 
     configService.hideWXBtn();
 
     $scope.userFlag = false;
-    if ($rootScope.passport.passportId == sharerId){
-        $scope.userFlag = true;
-    }
 
     // 初始化
     init();
@@ -57,8 +54,13 @@ goceanApp.controller('QiusongSharedCtrl', function ($scope, $rootScope, $state, 
                         $scope.qiusong.memberList[i].nickName = Base64.decode($scope.qiusong.memberList[i].nickName);
                     }
                 }
+
+                if ($rootScope.passport.passportId == $scope.qiusong.sponsorId){
+                    $scope.userFlag = true;
+                }
+
             }else{
-                $.alert("系统繁忙,请稍候再试");
+                $.alert(data.result);
             }
         },function(err){
 
@@ -86,7 +88,7 @@ goceanApp.controller('QiusongSharedCtrl', function ($scope, $rootScope, $state, 
                     qiusongId : $scope.qiusong.id
                 })
             } else {
-                $.alert("系统繁忙,请稍候再试");
+                $.alert(data.message);
             }
         },function(err){
             $.alert("系统繁忙,请稍候再试");

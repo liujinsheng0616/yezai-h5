@@ -37,6 +37,8 @@ goceanApp.controller('QiusongPayCtrl', function ($scope, $rootScope, $state, $ti
             if ("OK" == data.status){
                 var qiusongDetailsDto = data.result;
                 init(qiusongDetailsDto);
+            }else{
+                $state.go("order.qiusong");
             }
         },function(err){
 

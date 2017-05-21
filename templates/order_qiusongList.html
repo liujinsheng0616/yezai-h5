@@ -47,8 +47,9 @@
                 </div>
             </div>
             <div class="weui_cells_title" style="text-align: right;color:#000;height: 40px;line-height: 30px;border-bottom:  1px solid #d9d9d9;margin-bottom: 0;">
-                <span ng-if="qiusong.crowdFunding.sponsorId == passport.passportId"> 已收到：¥{{qiusong.crowdFunding.amount}}</span>
-                    <span ng-if="qiusong.crowdFunding.sponsorId != passport.passportId"> 实送：¥{{qiusong.crowdFunding.unitAmount}}</span>
+                <span ng-if="qiusong.crowdFunding.sponsorId == passport.passportId"> 已收：¥{{qiusong.totalTimes * qiusong.crowdFunding.unitAmount}}</span>
+                <span ng-if="status=='PAID'"> 已送：¥{{qiusong.crowdFunding.unitAmount * qiusong.paidTimes}} </span>
+                <span ng-if="status=='UN_PAY'"> 实送：¥{{qiusong.crowdFunding.unitAmount}} </span>
             </div>
             <!--
             <div class="weui_cells_title" style="text-align: right;color:#000;height: 40px;line-height: 30px;" ng-hide="order.status != 'ORDER_CREATED'" >

@@ -23,18 +23,33 @@
                 分享
             </p>
         </div>
-        <div href="javascript:void(0);" class="grid" style="width: 12.5%;color: #9E9E9E;">
+        <div href="javascript:void(0);" ng-if=" !(qiusong.status == 'SUCCESSED' || qiusong.status == 'SETTLED')" class="grid" style="width: 12.5%;color: #9E9E9E;">
             <div class="weui_grid_icon">
                 <span class="icon icon-108" style="font-size: 30px;"></span>
             </div>
             <p class="weui_grid_label" style="margin-top: 25px;margin-bottom: 10px">
             </p>
         </div>
-        <div href="javascript:void(0);" class="grid" style="padding:0;width: 25%;color: #9E9E9E;" >
+        <div href="javascript:void(0);" ng-if=" qiusong.status == 'SUCCESSED' || qiusong.status == 'SETTLED'" class="grid" style="width: 12.5%;color: #04BE02;">
+            <div class="weui_grid_icon">
+                <span class="icon icon-108" style="font-size: 30px;"></span>
+            </div>
+            <p class="weui_grid_label" style="margin-top: 25px;margin-bottom: 10px">
+            </p>
+        </div>
+        <div href="javascript:void(0);" ng-if=" !(qiusong.status == 'SUCCESSED' || qiusong.status == 'SETTLED')" class="grid" style="padding:0;width: 25%;color: #9E9E9E;" >
             <div class="weui_grid_icon">
                 <span class="icon icon-71" style="font-size: 30px;"></span>
             </div>
             <p class="weui_grid_label" style="margin-top: 25px;margin-bottom: 10px;color: #9E9E9E;">
+                完成
+            </p>
+        </div>
+        <div href="javascript:void(0);" class="grid" ng-if="qiusong.status == 'SUCCESSED' || qiusong.status == 'SETTLED'" style="padding:0;width: 25%;color: #04BE02;" >
+            <div class="weui_grid_icon">
+                <span class="icon icon-70" style="font-size: 30px;"></span>
+            </div>
+            <p class="weui_grid_label" style="margin-top: 25px;margin-bottom: 10px;color: #04BE02;">
                 完成
             </p>
         </div>
@@ -46,7 +61,7 @@
                 <div class="photo" style="float: left;">
                     <img style="width: 4rem;height: 4rem;border-radius: 50%;" ng-src="{{qiusong.sponsorIcon}}">
                 </div>
-                <div style="float: left;margin-left: 10px;width: 75%;" ng-bind="qiusong.sponsorName + '也在发起求送以下商品的活动,邀请您参与'"></div>
+                <div style="float: left;margin-left: 10px;width: 75%;" ng-bind="qiusong.sponsorName + '需要以下商品，而发起了求送活动, 邀请您参与'"></div>
             </div>
         </div>
     </div>
