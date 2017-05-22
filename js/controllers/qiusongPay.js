@@ -74,7 +74,7 @@ goceanApp.controller('QiusongPayCtrl', function ($scope, $rootScope, $state, $ti
             token : $rootScope.passport.token,
             openid : $rootScope.passport.token3,
             device : "WEB",
-            title : qiusongDetailsView.skuBriefDto.title,
+            title : qiusongDetailsView.skuBriefDto.title + "(参与"+qiusongDetailsView.sponsorName+"的求送活动)",
             pr : qiusongDetailsView.pr,
             paid : qiusongDetailsView.unitAmount,
             skuId : qiusongDetailsView.skuBriefDto.id,
