@@ -46,11 +46,19 @@
                     </table>
                 </div>
             </div>
-            <div class="weui_cells_title" style="text-align: right;color:#000;height: 40px;line-height: 30px;border-bottom:  1px solid #d9d9d9;margin-bottom: 0;">
+            <div ng-if="qiusong.crowdFunding.sponsorId == passport.passportId" class="weui_cells_title" style="text-align:right;color:#000;height: 40px;line-height: 30px;border-bottom:  1px solid #d9d9d9;margin-bottom: 0;">
                 <span ng-if="qiusong.crowdFunding.sponsorId == passport.passportId"> 已收：¥{{qiusong.totalTimes * qiusong.crowdFunding.unitAmount}}</span>
-                <span ng-if="status=='PAID'"> 已送：¥{{qiusong.crowdFunding.unitAmount * qiusong.paidTimes}} </span>
-                <span ng-if="status=='UN_PAY'"> 实送：¥{{qiusong.crowdFunding.unitAmount}} </span>
             </div>
+
+            <div ng-if="status=='PAID'|| status=='UN_PAY'" class="weui_cells_title" style="font-size: 14px;color:#000;height: 40px;line-height: 30px;border-bottom:  1px solid #d9d9d9;margin-bottom: 0;">
+                    <span style="float:left">
+                         求送人：{{qiusong.sponsorName}}
+                    </span>
+
+                    <span ng-if="status=='PAID'" style="float:right" >已送：¥ {{qiusong.crowdFunding.unitAmount * qiusong.paidTimes}} </span>
+                    <span ng-if="status=='UN_PAY'" style="float:right" >实送：¥ {{qiusong.crowdFunding.unitAmount}} </span>
+            </div>
+
             <!--
             <div class="weui_cells_title" style="text-align: right;color:#000;height: 40px;line-height: 30px;" ng-hide="order.status != 'ORDER_CREATED'" >
                 <a ui-sref-active="active" class="weui_btn weui_btn_primary" style="height: 30px;line-height: 30px;font-size: 14px;width:80px;border-radius:0px;margin-right: 0;">支付</a>

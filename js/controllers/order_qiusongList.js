@@ -76,6 +76,9 @@ goceanApp.controller('OrderQiusongCtrl', function ($rootScope,$scope, $state, $t
             }else if (status = "PAID"){
                 brief.payStatus = "PAID";
             }
+            if (status == "UN_PAY" || status == "PAID") {
+                brief.sponsorName = Base64.decode(brief.sponsorName);
+            }
 
             var itemList = brief.itemList;
             for (j in itemList){

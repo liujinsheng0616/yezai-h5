@@ -36,6 +36,7 @@ goceanApp.controller('QiusongPayCtrl', function ($scope, $rootScope, $state, $ti
             console.log(data);
             if ("OK" == data.status){
                 var qiusongDetailsDto = data.result;
+                qiusongDetailsDto.sponsorName = Base64.decode(qiusongDetailsDto.sponsorName);
                 init(qiusongDetailsDto);
             }else{
                 $state.go("order.qiusong");
@@ -50,14 +51,13 @@ goceanApp.controller('QiusongPayCtrl', function ($scope, $rootScope, $state, $ti
         $scope.qiusongDetailsView = qiusongDetailsDto;
         if ($scope.qiusongDetailsView.status == "ING") {
             $scope.qiusongDetailsView.statusView = "求送中";
+            if ($scope.qiusongDetailsView.totalTimes >= $scope.qiusongDetailsView.memberCount){
+                $scope.qiusongDetailsView.statusView = "审核中";
+            }
         } else if ($scope.qiusongDetailsView.status == "SUCCESSED") {
             $scope.qiusongDetailsView.statusView = "已完成";
         } else if ($scope.qiusongDetailsView.status == "SETTLED") {
             $scope.qiusongDetailsView.statusView = "已结算";
-        } else if ($scope.qiusongDetailsView.status == "UN_PAY") {
-            $scope.qiusongDetailsView.statusView = "未付款";
-        } else if ($scope.qiusongDetailsView.status == "PAID") {
-            $scope.qiusongDetailsView.statusView = "已付款";
         }
     }
 
