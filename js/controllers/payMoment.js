@@ -230,7 +230,7 @@ goceanApp.controller('PayMomentCtrl', function ($scope, $rootScope, $state, $tim
         obj.orderAddress = $rootScope.defaultAddress;
 
         if ($rootScope.orderRo.isPaid){
-            qiusongDetailsSponsorService.settle(obj).then(function (data) {
+            qiusongDetailsSponsorService.qiusongSettle(obj).then(function (data) {
                 if (data.status == "OK") {
                     var dto = data.result;
                     if (dto == null || dto == "undefined") {
@@ -244,8 +244,8 @@ goceanApp.controller('PayMomentCtrl', function ($scope, $rootScope, $state, $tim
                 } else {
                     alert("系统繁忙,请稍候再试");
                 }
-            }).error(function (data) {
-                alert("系统繁忙,请稍候再试!");
+            },function(err){
+                alert("系统繁忙,请稍候再试");
             });
         }else {
 
@@ -263,8 +263,8 @@ goceanApp.controller('PayMomentCtrl', function ($scope, $rootScope, $state, $tim
                 } else {
                     alert("系统繁忙,请稍候再试");
                 }
-            }).error(function (data) {
-                alert("系统繁忙,请稍候再试!");
+            },function(err){
+                alert("系统繁忙,请稍候再试");
             });
         }
     };
