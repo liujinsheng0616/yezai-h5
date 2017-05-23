@@ -129,7 +129,7 @@ goceanApp.controller('QiusongDetailsSponsorCtrl', function ($scope, $rootScope, 
         };
         qiusongDetailsSponsorService.qiusongAbort(obj).then(function(data){
             if (data.status == "OK") {
-                $state.go("qiusongDetailsSponsor",{id:id});
+                window.location.reload();
             }else{
                 $.alert("系统繁忙,请稍候再试");
             }
