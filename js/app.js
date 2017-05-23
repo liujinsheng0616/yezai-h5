@@ -112,7 +112,9 @@ var goceanApp = angular.module('starter', ['ui.router','angularFileUpload', 'Loc
                 	'thumbnail':null,
                     'type':null,
                 	'payAttachment':null,
-                    'sharerId':0
+                    'sharerId':0,
+                    'isPaid':false,
+                    'crowdFundingId':0
                 	},
                 url: '/payment',
                 templateUrl: 'templates/payMoment.html',
