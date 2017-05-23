@@ -58,7 +58,7 @@
             </div>
         </div>
         <div class="weui_cells" style="margin-top: 0px;">
-            <div class="weui_cell" style="border-top: 1px solid #d9d9d9;height:3.33rem;">
+            <div ng-if="orderRo.isPaid" class="weui_cell" style="border-top: 1px solid #d9d9d9;height:3.33rem;">
                 <div class="weui_cell_hd" style="width: 4.833rem;color: #04BE02;"><label class="weui_label">加价：</label></div>
                 <div class="weui_cell_bd weui_cell_primary">
                     <input class="weui_input" style="font-size: 16px;color: #04BE02;" type="number" pattern="[0-9]*" placeholder="(加价可获得更好的服务和产品)" ng-model="orderRo.pricePlus">

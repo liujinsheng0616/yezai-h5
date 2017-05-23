@@ -119,5 +119,41 @@ goceanApp.controller('QiusongDetailsSponsorCtrl', function ($scope, $rootScope, 
 
     $scope.toItem = function(id){
         $state.go("itemDetail",{goodsId:id,sharerIdStr:"sharerId_"+$rootScope.passport.passportId})
-    }
+    };
+
+    $scope.abort = function(qiusong){
+        var obj = {
+            passportId: $rootScope.passport.passportId,
+            token : $rootScope.passport.token,
+            crowdFundingId : id
+        };
+        qiusongDetailsSponsorService.qiusongAbort(obj).then(function(data){
+            if (data.status == "OK") {
+                $state.go("qiusongDetailsSponsor",{id:id});
+            }else{
+                $.alert("系统繁忙,请稍候再试");
+            }
+        },function(err){
+            $.alert("系统繁忙,请稍候再试");
+        })
+    };
+
+    $scope.settle = function(qiusong){
+        var dto = $scope.qiusong.skuBriefDto;
+        $state.go("payment", {
+            goodsId:dto.goodsId,
+            skuId:dto.id,
+            title : dto.title,
+            payDescription : dto.payDescription,
+            price : dto.price,
+            thumbnail : dto.thumbnail,
+            type : dto.type,
+            payAttachment:null,
+            sharerId:0,
+            isPaid:true,
+            crowdFundingId:$scope.qiusong.id
+        });
+    };
+
+
 });

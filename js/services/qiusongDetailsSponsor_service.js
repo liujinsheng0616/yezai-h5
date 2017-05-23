@@ -21,7 +21,35 @@ goceanApp.factory('qiusongDetailsSponsorService', ['$http', '$q','$rootScope', '
             return defer.promise;
         };
 
+        qiusongDetailsSponsorServiceObj.qiusongAbort = function (params) {
+            var defer = $q.defer();
+            var obj = {
+                url:appSettings.host+appSettings.requestURL.qiusongAbort,
+                type:'POST',
+                params:params
+            };
+            ajaxUtil.ajax(obj).then(function(data){
+                defer.resolve(data);
+            },function(err){
+                defer.reject(err);
+            });
+            return defer.promise;
+        };
 
+        qiusongDetailsSponsorServiceObj.qiusongSettle = function (params) {
+            var defer = $q.defer();
+            var obj = {
+                url:appSettings.host+appSettings.requestURL.qiusongSettle,
+                type:'POST',
+                params:params
+            };
+            ajaxUtil.ajax(obj).then(function(data){
+                defer.resolve(data);
+            },function(err){
+                defer.reject(err);
+            });
+            return defer.promise;
+        };
 
 
         return qiusongDetailsSponsorServiceObj;

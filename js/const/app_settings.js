@@ -51,7 +51,10 @@ goceanApp.constant('appSettings', {
 
         participate : '/crowdFunding/member/participate',
 		qiusongPayDetail : '/crowdFunding/details/pay',
-		qiusongOnPaying : '/crowdFunding/onPaying'
+		qiusongOnPaying : '/crowdFunding/onPaying',
+
+		qiusongAbort: '/crowdFunding/abort',
+		qiusongSettle: '/crowdFunding/settle'
 	},
     appId:'wx0cae6e3b9632e632'
 });

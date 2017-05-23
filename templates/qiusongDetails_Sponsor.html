@@ -94,10 +94,14 @@
         <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;color:#000;">活动编号：<span style="float: right;color: #0d0d0d;">{{qiusong.serialNumber}}</span></div>
         <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;color:#000;">商品总额：<span style="float: right;color: #0d0d0d;" ng-bind="'￥' + qiusong.targetAmount "></span></div>
         <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;color:#000;">参与人数：<span style="float: right;color: #0d0d0d;" ng-bind="qiusong.memberCount"></span></div>
-        <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;color:#000;">求送金额：<span style="float: right;color: #09BB07;" ng-bind="'￥' + qiusong.unitAmount"></span></div>
+        <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;color:#000;">求送金额：<span style="float: right;color: #09BB07;" ng-bind="'￥' + qiusong.unitAmount + '/次'"></span></div>
     </div>
 
-    <div class="weui_cells weui_cells_access" ng-if="qiusong.memberList.length > 0" style="margin-top: 10px;">
+    <div ng-if="qiusong.sponsorId == passport.passportId" class="weui_cells weui_cells_access" style="margin-top: 10px;">
+        <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;color:#000;">实收金额：<span style="float: right;color: #0d0d0d;">{{qiusong.}}</span></div>
+    </div>
+
+    <div ng-if="qiusong.memberList.length > 0" class="weui_cells weui_cells_access"  style="margin-top: 10px;">
         <div class="weui_cell" style="text-align: center">
             <div class="friend">
                 <div class="friend_list">
@@ -110,4 +114,17 @@
             </div>
         </div>
     </div>
+
+    <div ng-if="qiusong.status == 'SUCCESSED'" class="weui_cells weui_cells_access" style="margin-top: 10px;">
+        <div class="weui_cell" > 中止, 意味着求送的商品不能满足您现在的需求，中止后，可提现。平台扣除10%的保证金，在下次任意购买时, 按支付总额10%的比例抵扣现金。</div>
+
+        <div class="weui_cell"> 下单结算，意味着确定购物并结清。余额部分也适用中止条款。</div>
+        <div style="height:60px"> </div>
+    </div>
+
+    <div ng-if="qiusong.status == 'SUCCESSED'" class="weui_panel_hd weui_bottomBtn" style="text-align:center;font-size: 18px;color:#ffffff; padding:0;">
+        <div class="weui_btn_primary" ng-click="abort(qiusong)" style="width:30%;border-radius:0px;height:3.33rem;line-height: 3.33rem;background-color:#666666">中止</div>
+        <div class="weui_btn_primary" ng-click="settle(qiusong);" style="width:70%;border-radius:0px;height:3.33rem;line-height: 3.33rem;">下单结算</span></div>
+    </div>
+
 </div>

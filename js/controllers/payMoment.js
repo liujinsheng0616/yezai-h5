@@ -1,7 +1,7 @@
 /**
  * Created by 53983 on 2017/3/14.
  */
-goceanApp.controller('PayMomentCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, payMomentService, configService) {
+goceanApp.controller('PayMomentCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, payMomentService, qiusongDetailsSponsorService,configService) {
     console.log("about PayMomentCtrl");
 
     var _state = "mall";//FIXME 登录后返回当前页面，需要参数skuId
@@ -109,7 +109,9 @@ goceanApp.controller('PayMomentCtrl', function ($scope, $rootScope, $state, $tim
                     sharerId:sharerId,
                     invitorId:$rootScope.passport.invitorId
                 },
-                orderAddress:null
+                orderAddress:null,
+                isPaid:false,
+                pr:null
             };
 
             $rootScope.payView = {
@@ -135,6 +137,13 @@ goceanApp.controller('PayMomentCtrl', function ($scope, $rootScope, $state, $tim
             }
             if ($stateParams.type) {
                 $rootScope.orderRo.type = $stateParams.type;
+            }
+            if ($stateParams.isPaid) {
+                $rootScope.orderRo.isPaid = $stateParams.isPaid;
+            }
+
+            if ($stateParams.crowdFundingId) {
+                $rootScope.orderRo.crowdFundingId = $stateParams.crowdFundingId;
             }
 
             if ($rootScope.attachment != null){
@@ -219,23 +228,45 @@ goceanApp.controller('PayMomentCtrl', function ($scope, $rootScope, $state, $tim
 
         var obj = $rootScope.orderRo;
         obj.orderAddress = $rootScope.defaultAddress;
-        payMomentService.placeOrder(obj).then(function(data){
-            if (data.status == "OK") {
-                var dto = data.result;
-                if (dto == null || dto == "undefined"){
-                    alert("系统繁忙,请稍候再试");
-                    return;
-                }
 
-                $state.go("orderDetail", {
-                    orderId: dto.id
-                });
-            }else{
-                alert("系统繁忙,请稍候再试");
-            }
-        }).error(function (data) {
-            alert("系统繁忙,请稍候再试!");
-        });
+        if ($rootScope.orderRo.isPaid){
+            qiusongDetailsSponsorService.settle(obj).then(function (data) {
+                if (data.status == "OK") {
+                    var dto = data.result;
+                    if (dto == null || dto == "undefined") {
+                        alert("系统繁忙,请稍候再试");
+                        return;
+                    }
+
+                    $state.go("orderDetail", {
+                        orderId: dto.id
+                    });
+                } else {
+                    alert("系统繁忙,请稍候再试");
+                }
+            }).error(function (data) {
+                alert("系统繁忙,请稍候再试!");
+            });
+        }else {
+
+            payMomentService.placeOrder(obj).then(function (data) {
+                if (data.status == "OK") {
+                    var dto = data.result;
+                    if (dto == null || dto == "undefined") {
+                        alert("系统繁忙,请稍候再试");
+                        return;
+                    }
+
+                    $state.go("orderDetail", {
+                        orderId: dto.id
+                    });
+                } else {
+                    alert("系统繁忙,请稍候再试");
+                }
+            }).error(function (data) {
+                alert("系统繁忙,请稍候再试!");
+            });
+        }
     };
 
     init();
