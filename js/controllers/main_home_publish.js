@@ -73,7 +73,7 @@ goceanApp.controller('MainHomePublishCtrl', function ($scope, $rootScope, $state
             coordinate:"",
             passportId:$rootScope.passport.passportId,//groupId
             token:$rootScope.passport.token,//登录后的我们自己的token
-            device:"WX"// WX | ANDROID | IOS | PC
+            device:"WEB"// WX | ANDROID | IOS | PC
         };
 
         topicCreationService.createTopic(topic);
