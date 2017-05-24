@@ -30,9 +30,6 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
     // 下拉刷新
     var loading = false;
 
-    // 获取JSSDK
-    configService.getJssdkInfo(window.location.href);
-
     $scope.initData = function (viewTypeId,firstFlag) {
         if ($rootScope.topicViewNavId != viewTypeId){
             $scope.page = 1;
@@ -51,7 +48,6 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
         mainHomeService.listTopic(obj).then(function(data){
             if (data.status == "OK"){
                 var result = data.result;
-                console.log(result);
                 if (firstFlag){
                     $scope.topicList = [];
                     $scope.userList = [];
@@ -89,25 +85,11 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
 
     // 处理数据
     function operateData() {
-        $(".weui-infinite-scroll").html('');
+
         // 处理数据
         for (i in $scope.topicList) {
             var topic = $scope.topicList[i];
-            // 下载微信图片
-            for (p in topic.photoList){
-                var photo = topic.photoList[p];
-                if (!configService.isPicture(photo)){
-                    wx.ready(function () {
-                        wx.downloadImage({
-                            serverId: photo, // 需要下载的图片的服务器端ID，由uploadImage接口获得
-                            isShowProgressTips: 0, // 默认为1，显示进度提示
-                            success: function (res) {
-                                photo = res.localId; // 返回图片下载后的本地ID
-                            }
-                        });
-                    });
-                }
-            }
+
             var posterId = topic.posterId;
             for (k in $scope.userList) {
                 var user = $scope.userList[k];
@@ -212,6 +194,11 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
         const maxParagraphLength = 80;
         // 延迟出现
         setTimeout(function () {
+            // 获取JSSDK
+            configService.getJssdkInfo(window.location.href);
+            // 隐藏右上角
+
+
             //定义文本
             $('.paragraph').each(function (index) {
                 const paragraphText = $("#paragraph" + index).text();

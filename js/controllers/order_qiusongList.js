@@ -26,9 +26,6 @@ goceanApp.controller('OrderQiusongCtrl', function ($rootScope,$scope, $state, $t
 
     $scope.page = 1;
     $scope.rows = 10;
-    // 下拉刷新
-    var loading = false;
-
     var status = 'ING';
     $scope.status = status;
     //请求参数
@@ -46,22 +43,8 @@ goceanApp.controller('OrderQiusongCtrl', function ($rootScope,$scope, $state, $t
             console.log(data);
             if ("OK" == data.status){
                 var qiusongList = data.result;
-                if (qiusongList && qiusongList.length > 0){
-                    initView(qiusongList, status);
-                    if ($scope.qiusongList && $scope.qiusongList.length > 0){
-                        $scope.qiusongList = $scope.qiusongList.concat(qiusongList);
-                    } else {
-                        $scope.qiusongList = qiusongList;
-                    }
-                    if(!$scope.$$phase){
-                        $scope.$apply();
-                    }
-                    $(".weui-infinite-scroll").html('');
-                } else {
-                    $(".weui-infinite-scroll").html('<p class="bottomNoMore"><div class="infinite-preloader"></div>没有更多</p>')
-                    loading = true;
-                }
-
+                initView(qiusongList, status);
+                $scope.qiusongList = qiusongList;
             }
         },function(err){
 
@@ -157,28 +140,4 @@ goceanApp.controller('OrderQiusongCtrl', function ($rootScope,$scope, $state, $t
 
         $state.go("qiusongDetailsSponsor",{id:id});
     }
-
-    // 上拉刷新
-    $("div.weui-pull-to-refresh").pullToRefresh().on("pull-to-refresh", function () {
-        $scope.page = 1;
-        setTimeout(function () {
-            $(".comment-content").each(function(){
-                $(this).remove();
-            });
-            $scope.listQiusong($scope.curentStatus);
-            $("div.weui-pull-to-refresh").pullToRefreshDone(); // 重置下拉刷新
-        }, 1000);   //模拟延迟
-    });
-
-    // 下拉刷新
-    $("div.weui-pull-to-refresh").infinite().on("infinite", function () {
-        if (loading) return;
-        $scope.page++;
-        loading = true;
-        setTimeout(function () {
-            $scope.listQiusong($scope.curentStatus);
-            loading = false;
-        }, 1000);   //模拟延迟
-    });
-    $(".infinite-preloader").on("show", function () { alert("it show!"); });
 });
