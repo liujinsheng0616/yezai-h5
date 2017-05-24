@@ -61,6 +61,21 @@ goceanApp.factory('configService',['$http','$q','$timeout','appSettings', 'mainH
             },function(err){
 
             });
-        } 
+        },
+        // 判断是否为图片
+        isPicture : function (img) {
+            //判断是否是图片 - strFilter必须是小写列举
+            var strFilter=".jpeg|.gif|.jpg|.png|.bmp|.pic|";
+            if(img.indexOf(".")>-1){
+                var p = img.lastIndexOf(".");
+                var strPostfix = img.substring(p, img.length) + '|';
+                strPostfix = strPostfix.toLowerCase();
+                if(strFilter.indexOf(strPostfix)>-1)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     };
 }]);

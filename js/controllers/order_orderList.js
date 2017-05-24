@@ -61,6 +61,7 @@ goceanApp.controller('OrderListCtrl', function ($scope, $rootScope, $state, $tim
                     if(!$scope.$$phase){
                         $scope.$apply();
                     }
+                    $(".weui-infinite-scroll").html('');
                 } else {
                     $(".weui-infinite-scroll").html('<p class="bottomNoMore"><div class="infinite-preloader"></div>没有更多</p>')
                     loading = true;
