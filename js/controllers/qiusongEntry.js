@@ -36,47 +36,63 @@ goceanApp.controller('QiusongEntryCtrl', function ($scope, $rootScope, $state, $
     // 隐藏右上角
     configService.hideWXBtn();
 
-    function upDownOperation(element)
-    {
-        var _input = element.parent().find('input'),
-            _value = _input.val(),
-            _step = _input.attr('data-step') || 1;
-        //检测当前操作的元素是否有disabled，有则去除
-        element.hasClass('disabled') && element.removeClass('disabled');
-        //检测当前操作的元素是否是操作的添加按钮（.input-num-up）‘是’ 则为加操作，‘否’ 则为减操作
-        if ( element.hasClass('weui-number-plus') )
-        {
-            var _new_value = parseInt( parseFloat(_value) + parseFloat(_step) ),
-                _max = _input.attr('data-max') || false,
-                _down = element.parent().find('.weui-number-sub');
+    // function upDownOperation(element)
+    // {
+    //     var _input = element.parent().find('input'),
+    //         _value = _input.val(),
+    //         _step = _input.attr('data-step') || 1;
+    //     //检测当前操作的元素是否有disabled，有则去除
+    //     element.hasClass('disabled') && element.removeClass('disabled');
+    //     //检测当前操作的元素是否是操作的添加按钮（.input-num-up）‘是’ 则为加操作，‘否’ 则为减操作
+    //     if ( element.hasClass('weui-number-plus') )
+    //     {
+    //         var _new_value = parseInt( parseFloat(_value) + parseFloat(_step) ),
+    //             _max = _input.attr('data-max') || false,
+    //             _down = element.parent().find('.weui-number-sub');
+    //
+    //         //若执行‘加’操作且‘减’按钮存在class='disabled'的话，则移除‘减’操作按钮的class 'disabled'
+    //         _down.hasClass('disabled') && _down.removeClass('disabled');
+    //         if (_max && _new_value >= _max) {
+    //             _new_value = _max;
+    //             element.addClass('disabled');
+    //         }
+    //     } else {
+    //         var _new_value = parseInt( parseFloat(_value) - parseFloat(_step) ),
+    //             _min = _input.attr('data-min') || false,
+    //             _up = element.parent().find('.weui-number-plus');
+    //         //若执行‘减’操作且‘加’按钮存在class='disabled'的话，则移除‘加’操作按钮的class 'disabled'
+    //         _up.hasClass('disabled') && _up.removeClass('disabled');
+    //         if (_min && _new_value <= _min) {
+    //             _new_value = _min;
+    //             element.addClass('disabled');
+    //         }
+    //     }
+    //     _input.val( _new_value );
+    // }
+    //
+    //
+    // $('.weui-number-plus').click(function(){
+    //     upDownOperation( $(this) );
+    // });
+    // $('.weui-number-sub').click(function(){
+    //     upDownOperation( $(this) );
+    // });
 
-            //若执行‘加’操作且‘减’按钮存在class='disabled'的话，则移除‘减’操作按钮的class 'disabled'
-            _down.hasClass('disabled') && _down.removeClass('disabled');
-            if (_max && _new_value >= _max) {
-                _new_value = _max;
-                element.addClass('disabled');
-            }
-        } else {
-            var _new_value = parseInt( parseFloat(_value) - parseFloat(_step) ),
-                _min = _input.attr('data-min') || false,
-                _up = element.parent().find('.weui-number-plus');
-            //若执行‘减’操作且‘加’按钮存在class='disabled'的话，则移除‘加’操作按钮的class 'disabled'
-            _up.hasClass('disabled') && _up.removeClass('disabled');
-            if (_min && _new_value <= _min) {
-                _new_value = _min;
-                element.addClass('disabled');
-            }
+    $scope.subMember = function () {
+        var qiusongRo = $scope.qiusongRo;
+        if (qiusongRo.memberCount > 3) {
+            qiusongRo.memberCount -= 1;
+            qiusongRo.unitAmount = (qiusongRo.price + qiusongRo.memberCount/2 - 1 )/ qiusongRo.memberCount;
         }
-        _input.val( _new_value );
     }
 
-
-    $('.weui-number-plus').click(function(){
-        upDownOperation( $(this) );
-    });
-    $('.weui-number-sub').click(function(){
-        upDownOperation( $(this) );
-    });
+    $scope.plusMember = function () {
+        var qiusongRo = $scope.qiusongRo;
+        if (qiusongRo.memberCount < 10) {
+            qiusongRo.memberCount += 1;
+            qiusongRo.unitAmount = (qiusongRo.price + qiusongRo.memberCount/2 - 1 )/ qiusongRo.memberCount;
+        }
+    }
 
     function init () {
 
@@ -88,7 +104,9 @@ goceanApp.controller('QiusongEntryCtrl', function ($scope, $rootScope, $state, $
             if (data.status == "OK") {
                 var itemBrief = data.result;
                 $scope.qiusongRo = itemBrief;
-                $scope.qiusongRo.memberCount = 3;
+                var qiusongRo = $scope.qiusongRo;
+                qiusongRo.memberCount = 3;
+                qiusongRo.unitAmount = (qiusongRo.price + qiusongRo.memberCount/2 - 1 )/ qiusongRo.memberCount;
             }else{
                 $.alert("系统繁忙,请稍候再试");
             }

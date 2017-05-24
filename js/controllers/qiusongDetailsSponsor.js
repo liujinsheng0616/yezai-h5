@@ -51,6 +51,13 @@ goceanApp.controller('QiusongDetailsSponsorCtrl', function ($scope, $rootScope, 
                     $scope.qiusong.statusView = "已完成";
                 } else if ($scope.qiusong.status == "SETTLED") {
                     $scope.qiusong.statusView = "已结算";
+                    if ($scope.qiusong.settleType == "BUY_ONLY"){
+                        $scope.qiusong.settleTypeView = "全额购物";
+                    }else if ($scope.qiusong.settleType == "DRAW_ONLY"){
+                        $scope.qiusong.settleTypeView = "暂时中止";
+                    }else if ($scope.qiusong.settleType == "BUY_DRAW"){
+                        $scope.qiusong.settleTypeView = "超额结余";
+                    }
                 }
                 // else if ($scope.qiusong.status == "UN_PAY") {
                 //     $scope.qiusong.status = "未付款";

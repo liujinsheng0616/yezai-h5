@@ -10,7 +10,7 @@
     </div>
     <div class="weui_panel weui_panel_access">
 
-        <div class="weui_panel_bd" style="border-bottom: 1px solid #d9d9d9;"">
+        <div class="weui_panel_bd" style="border-bottom: 1px solid #d9d9d9;">
             <div class="weui_media_box weui_media_appmsg">
                 <div class="weui_cell_hd">
                     <img style="width:80px;height:80px;margin-right:5px;display:block" ng-src="{{qiusongDetailsView.skuBriefDto.thumbnail}}" alt="">
@@ -36,9 +36,8 @@
     </div>
     <div class="weui_panel weui_panel_access">
         <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;">支付单号：<span style="float: right;color: #0d0d0d;" ng-bind="qiusongDetailsView.pr"></span></div>
-        <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;">商品总额：<span style="float: right;color: #0d0d0d;" ng-bind="'￥' + qiusongDetailsView.targetAmount "></span></div>
-        <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;">参与人数：<span style="float: right;color: #0d0d0d;">￥{{qiusongDetailsView.memberCount}}</span></div>
-        <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;">人均支付：<span style="float: right;color: #09BB07;" ng-bind="'￥' + qiusongDetailsView.unitAmount"></span></div>
+        <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;">商品价格：<span style="float: right;color: #0d0d0d;" ng-bind="'￥' + qiusongDetailsView.targetAmount "></span></div>
+        <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;">支付金额：<span style="float: right;color: #09BB07;" ng-bind="'￥' + qiusongDetailsView.unitAmount + '/次'" ></span></div>
     </div>
 
     <div class="weui_btn_area ">

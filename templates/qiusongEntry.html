@@ -41,34 +41,42 @@
         </div>
     </div>
 
-    <div class="weui_panel">
+    <div class="weui_panel weui_panel_access">
         <div class="weui_panel_bd">
             <div class="weui_media_box weui_media_appmsg">
                 <div class="weui_cell_hd">
                     <img style="width:80px;height:80px;margin-right:5px;display:block" ng-src="{{qiusongRo.thumbnail}}" alt="">
                 </div>
                 <div class="weui_media_bd">
-                    <table border="0" style="width: 100%;margin-left: 8px;color:#888;font-size:0.855rem;">
-                        <tr style="height: 45px;font-size: 0.975rem;color: #000;">
+                    <table border="0" style="width: 100%;margin-left: 8px;color:#888;font-size:0.755rem;">
+                        <tr style="height: 35px;font-size: 0.875rem;color: #000;">
                             <td ng-bind="qiusongRo.title"></td>
                         </tr>
                         <tr style="height: 25px;">
-                            <td >{{qiusongRo.payDescription}}</td>
-                            <td style="font-size: 18px;font-weight: bold;color: #0d0d0d;">￥<span ng-bind="qiusongRo.price"></span></td>
+                            <td><span ng-bind="qiusongRo.payDescription"></span></td>
+                        </tr>
+                        <tr style="height: 25px;">
+                            <td>价格：￥<span ng-bind="qiusongRo.price"></span></td>
                         </tr>
                     </table>
                 </div>
             </div>
         </div>
     </div>
-    <div class="weui_cells" style="margin-top: 0px;">
+    <div class="weui_panel weui_panel_access" >
+        <div class="weui_cell" style="border-bottom: 1px solid #d9d9d9;height:3.33rem;">
+            <div class="weui_cell_hd weui_cell_primary" style="width: 4.833rem;"><label class="weui_label">商品价格: </label></div>
+            <div class="weui_cell_ft" style="color: #000;">
+                <span style="font-size: 20px;"  id="price">￥{{qiusongRo.price}}</span>
+            </div>
+        </div>
 
         <div class="weui_cell">
             <div class="weui_cell_bd weui_cell_primary"> <p>参与人次：</p> </div>
-            <div style="font-size: 0px;" class="weui_cell_ft" ng-style="">
-                <a class="weui-number weui-number-sub needsclick" style="height:30px;">-</a>
-                <input pattern="[0-9]*" class="weui-number-input" ng-model="qiusongRo.memberCount" style="width: 50px;height: 30px;" data-min="3" data-max="10" data-step="1">
-                <a class="weui-number weui-number-plus needsclick" style="height:30px;">+</a>
+            <div style="font-size: 0px;" class="weui_cell_ft" >
+                <a class="weui-number weui-number-sub " style="height:30px;" ng-click="subMember()">-</a>
+                <a class="weui-number-input " ng-bind="qiusongRo.memberCount" style="width: 40px;height: 30px;" ></a>
+                <a class="weui-number weui-number-plus " style="height:30px;" ng-click="plusMember()">+</a>
             </div>
 
             <div class="weui_cell_ft" style="display: none;"> 0 </div>
@@ -77,7 +85,7 @@
         <div class="weui_cell" style="border-top: 1px solid #d9d9d9;height:3.33rem;">
             <div class="weui_cell_hd weui_cell_primary" style="width: 4.833rem;"><label class="weui_label">求送金额: </label></div>
             <div class="weui_cell_ft" style="color: #000;">
-                <span style="font-size: 20px;color: #04BE02;"  id="totalPrice">￥{{((qiusongRo.price + qiusongRo.memberCount - 1 )/ qiusongRo.memberCount)  | number:0}} / 次</span>
+                <span style="font-size: 20px;color: #04BE02;"  id="unitAmount">￥{{qiusongRo.unitAmount  | number:0}} / 次</span>
             </div>
         </div>
         <div class="weui_cell" style="border-top: 1px solid #d9d9d9;height:3.33rem;">
@@ -95,5 +103,4 @@
 
         <a href="javascript:void(0);" class="weui_btn weui_btn_primary" style="border-radius:0px;height:3.33rem;line-height: 3.33rem;" ng-click="create();">发起求送</a>
     </div>
-
 </div>

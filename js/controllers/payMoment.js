@@ -232,14 +232,9 @@ goceanApp.controller('PayMomentCtrl', function ($scope, $rootScope, $state, $tim
         if ($rootScope.orderRo.isPaid){
             qiusongDetailsSponsorService.qiusongSettle(obj).then(function (data) {
                 if (data.status == "OK") {
-                    var dto = data.result;
-                    if (dto == null || dto == "undefined") {
-                        alert("系统繁忙,请稍候再试");
-                        return;
-                    }
-
+                    var id = data.result;
                     $state.go("orderDetail", {
-                        orderId: dto.id
+                        orderId: id
                     });
                 } else {
                     alert("系统繁忙,请稍候再试");

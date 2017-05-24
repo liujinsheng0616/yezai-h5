@@ -56,15 +56,23 @@ goceanApp.controller('OrderQiusongCtrl', function ($rootScope,$scope, $state, $t
     function initView(qiusongList, status){
         for (i in qiusongList){
             var brief = qiusongList[i];
+            var crowdFunding = brief.crowdFunding;
             if (brief.crowdFunding.status == "ING"){
                 brief.statusView = "求送中";
                 if (brief.totalTimes >= brief.crowdFunding.memberCount){
                     brief.statusView = "审核中";
                 }
-            }else if (brief.crowdFunding.status == "SUCCESSED"){
+            }else if (crowdFunding.status == "SUCCESSED"){
                 brief.statusView = "已完成";
-            }else if (brief.crowdFunding.status == "SETTLED"){
+            }else if (crowdFunding.status == "SETTLED"){
                 brief.statusView = "已结算";
+                if (crowdFunding.settleType == "BUY_ONLY"){
+                    crowdFunding.settleTypeView = "全额购物";
+                }else if (crowdFunding.settleType == "DRAW_ONLY"){
+                    crowdFunding.settleTypeView = "暂时中止";
+                }else if (crowdFunding.settleType == "BUY_DRAW"){
+                    crowdFunding.settleTypeView = "超额结余";
+                }
             }
 
             if (status == "UN_PAY"){
