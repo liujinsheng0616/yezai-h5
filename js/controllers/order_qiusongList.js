@@ -31,11 +31,9 @@ goceanApp.controller('OrderQiusongCtrl', function ($rootScope,$scope, $state, $t
     var loading = false;
 
     $scope.curentStatus = 'ING';
-    $scope.status = $scope.curentStatus;
     //请求参数
     // 全部数据
     $scope.listQiusong = function(status, flag){
-        $scope.status = status;
         if ($scope.curentStatus != status){
             $scope.curentStatus = status;
             $scope.qiusongList = [];
