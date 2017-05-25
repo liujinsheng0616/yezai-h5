@@ -34,9 +34,13 @@ goceanApp.controller('OrderListCtrl', function ($scope, $rootScope, $state, $tim
     $scope.curentStatus = 'ALL';
     //请求参数
     // 全部数据
-    $scope.listOrder = function(status){
+    $scope.listOrder = function(status, flag){
         if ($scope.curentStatus != status){
             $scope.curentStatus = status;
+            $scope.orderList = [];
+        }
+        if (flag){
+            $scope.page = 1;
             $scope.orderList = [];
         }
 
@@ -57,6 +61,12 @@ goceanApp.controller('OrderListCtrl', function ($scope, $rootScope, $state, $tim
                         $scope.orderList = $scope.orderList.concat(orderList);
                     } else {
                         $scope.orderList = orderList;
+                        if ($scope.orderList.length < 10){
+                            $(".weui-infinite-scroll").html('');
+                        } else {
+                            $(".weui-infinite-scroll").html('<p class="loading"><div class="infinite-preloader"></div>正在加载...</p>')
+                            loading = false;
+                        }
                     }
                     if(!$scope.$$phase){
                         $scope.$apply();
@@ -71,7 +81,7 @@ goceanApp.controller('OrderListCtrl', function ($scope, $rootScope, $state, $tim
         });
     };
     // 页面刷新加载
-    $scope.listOrder(status);
+    $scope.listOrder($scope.curentStatus, null);
 
     function initView(orderList){
         for (i in orderList){
@@ -149,7 +159,7 @@ goceanApp.controller('OrderListCtrl', function ($scope, $rootScope, $state, $tim
             $(".comment-content").each(function(){
                 $(this).remove();
             });
-            $scope.listOrder($scope.curentStatus);
+            $scope.listOrder($scope.curentStatus, 1);
             $("div.weui-pull-to-refresh").pullToRefreshDone(); // 重置下拉刷新
         }, 1000);   //模拟延迟
     });
@@ -160,7 +170,7 @@ goceanApp.controller('OrderListCtrl', function ($scope, $rootScope, $state, $tim
         $scope.page++;
         loading = true;
         setTimeout(function () {
-            $scope.listOrder($scope.curentStatus);
+            $scope.listOrder($scope.curentStatus, null);
             loading = false;
         }, 1000);   //模拟延迟
     });

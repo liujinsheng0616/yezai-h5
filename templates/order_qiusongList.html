@@ -1,73 +1,87 @@
 <div class="homeView" style="overflow: hidden;height: 100%;">
     <div class="weui_tab " style="height:44px;" id="tab1"><!--tab-fixed添加顶部-->
         <div class="weui_navbar" style="height:44px;">
-            <div class="weui_navbar_item" ng-click="listQiusong('ING')">
+            <div class="weui_navbar_item" ng-click="listQiusong('ING', 1)">
                 求送中
             </div>
-            <div class="weui_navbar_item" ng-click="listQiusong('SUCCESSED')">
+            <div class="weui_navbar_item" ng-click="listQiusong('SUCCESSED', 1)">
                 已完成
             </div>
-            <div class="weui_navbar_item" ng-click="listQiusong('SETTLED')">
+            <div class="weui_navbar_item" ng-click="listQiusong('SETTLED', 1)">
                 已结算
             </div>
-            <div class="weui_navbar_item" ng-click="listQiusong('UN_PAY');">
+            <div class="weui_navbar_item" ng-click="listQiusong('UN_PAY', 1);">
                 未付款
             </div>
-            <div class="weui_navbar_item" ng-click="listQiusong('PAID')">
+            <div class="weui_navbar_item" ng-click="listQiusong('PAID', 1)">
                 已付款
             </div>
         </div>
     </div>
 
     <div style="overflow:auto;height: 100%;padding-bottom: 18%;">
-        <div class="weui_cells" ng-repeat="qiusong in qiusongList">
-            <div class="weui_cell" style="font-size: 14px;color:#000;">
-                <div class="weui_cell_bd weui_cell_primary">
-                    <p >{{qiusong.crowdFunding.createTime | date:"yyyy-MM-dd HH:mm:ss"}}</p>
+        <div class="weui-pull-to-refresh" style="background: #eee;" data-infinite="[object Object]">
+            <div class="scrollArea" style="padding-bottom: 5%;">
+                <div class="weui-pull-to-refresh-layer">
+                    <div class="pull-to-refresh-arrow"></div>
+                    <div class="pull-to-refresh-preloader"></div>
+                    <div class="down">下拉刷新</div>
+                    <div class="up">释放刷新</div>
+                    <div class="refresh">正在刷新...</div>
                 </div>
-                <div class="weui_cell_ft" style="font-size: 12px;color: #000;">
-                    <span ng-bind="qiusong.statusView" ng-class="{redrText : qiusong.status == 'ORDER_CREATED'}"></span>
+                <div class="weui_cells" ng-repeat="qiusong in qiusongList">
+                    <div class="weui_cell" style="font-size: 14px;color:#000;">
+                        <div class="weui_cell_bd weui_cell_primary">
+                            <p >{{qiusong.crowdFunding.createTime | date:"yyyy-MM-dd HH:mm:ss"}}</p>
+                        </div>
+                        <div class="weui_cell_ft" style="font-size: 12px;color: #000;">
+                            <span ng-bind="qiusong.statusView" ng-class="{redrText : qiusong.status == 'ORDER_CREATED'}"></span>
+                        </div>
+                    </div>
+
+                    <div ng-click="goToQiusongDetail(qiusong)">
+                        <div class="weui_cell" style="border-bottom: 1px solid #d9d9d9;border-top: 1px solid #d9d9d9;" >
+                            <div class="weui_cell_hd"><img ng-src="{{qiusong.skuBriefDto.thumbnail}}" alt="" style="width:80px;height: 80px;margin-right:5px;"></div>
+                            <table border="0" style="width: 70%;margin-left: 8px;color:#888;font-size: 13px;">
+                                <tr style="height: 35px;font-size: 15px;color: #000;">
+                                    <td ng-bind="qiusong.skuBriefDto.title"></td>
+                                </tr>
+                                <tr style="height: 25px;" ng-hide="qiusong.skuBriefDto.payDescription == null || qiusong.skuBriefDto.payDescription == ''">
+                                    <td ng-bind="qiusong.skuBriefDto.payDescription"></td></span></td>
+                                </tr>
+                                <tr style="height: 25px;">
+                                    <td>价格：¥{{qiusong.skuBriefDto.price}}  <span style="float:right"> 求送金额：¥{{qiusong.crowdFunding.unitAmount}}/次</span></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div ng-if="qiusong.crowdFunding.sponsorId == passport.passportId" class="weui_cells_title" style="color:#000;height: 40px;line-height: 30px;border-bottom:  1px solid #d9d9d9;margin-bottom: 0;">
+                            <span ng-if="status == 'SETTLED'" style="float:left">
+                                 结算方式: {{qiusong.crowdFunding.settleTypeView}}
+                            </span>
+                        <span ng-if="qiusong.crowdFunding.sponsorId == passport.passportId && status != 'SETTLED'" style="float:right"> 已收：¥{{qiusong.totalTimes * qiusong.crowdFunding.unitAmount}}</span>
+                        <span ng-if="qiusong.crowdFunding.sponsorId == passport.passportId && status == 'SETTLED'" style="float:right"> 已结：¥{{qiusong.totalTimes * qiusong.crowdFunding.unitAmount}}</span>
+                    </div>
+
+                    <div ng-if="status=='PAID'|| status=='UN_PAY'" class="weui_cells_title" style="font-size: 14px;color:#000;height: 40px;line-height: 30px;border-bottom:  1px solid #d9d9d9;margin-bottom: 0;">
+                            <span style="float:left">
+                                 求送人：{{qiusong.sponsorName}}
+                            </span>
+
+                            <span ng-if="status=='PAID'" style="float:right" >已送：¥ {{qiusong.crowdFunding.unitAmount * qiusong.paidTimes}} </span>
+                            <span ng-if="status=='UN_PAY'" style="float:right" >求送：¥ {{qiusong.crowdFunding.unitAmount}} </span>
+                    </div>
+
+                    <!--
+                    <div class="weui_cells_title" style="text-align: right;color:#000;height: 40px;line-height: 30px;" ng-hide="order.status != 'ORDER_CREATED'" >
+                        <a ui-sref-active="active" class="weui_btn weui_btn_primary" style="height: 30px;line-height: 30px;font-size: 14px;width:80px;border-radius:0px;margin-right: 0;">支付</a>
+                    </div>
+                    -->
+                </div>
+                <div class="weui-infinite-scroll">
+                    <p class="loading"><div class="infinite-preloader"></div>正在加载...</p>
                 </div>
             </div>
-
-            <div ng-click="goToQiusongDetail(qiusong)">
-                <div class="weui_cell" style="border-bottom: 1px solid #d9d9d9;border-top: 1px solid #d9d9d9;" >
-                    <div class="weui_cell_hd"><img ng-src="{{qiusong.skuBriefDto.thumbnail}}" alt="" style="width:80px;height: 80px;margin-right:5px;"></div>
-                    <table border="0" style="width: 70%;margin-left: 8px;color:#888;font-size: 13px;">
-                        <tr style="height: 35px;font-size: 15px;color: #000;">
-                            <td ng-bind="qiusong.skuBriefDto.title"></td>
-                        </tr>
-                        <tr style="height: 25px;" ng-hide="qiusong.skuBriefDto.payDescription == null || qiusong.skuBriefDto.payDescription == ''">
-                            <td ng-bind="qiusong.skuBriefDto.payDescription"></td></span></td>
-                        </tr>
-                        <tr style="height: 25px;">
-                            <td>价格：¥{{qiusong.skuBriefDto.price}}  <span style="float:right"> 求送金额：¥{{qiusong.crowdFunding.unitAmount}}/次</span></td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-            <div ng-if="qiusong.crowdFunding.sponsorId == passport.passportId" class="weui_cells_title" style="color:#000;height: 40px;line-height: 30px;border-bottom:  1px solid #d9d9d9;margin-bottom: 0;">
-                    <span ng-if="status == 'SETTLED'" style="float:left">
-                         结算方式: {{qiusong.crowdFunding.settleTypeView}}
-                    </span>
-                <span ng-if="qiusong.crowdFunding.sponsorId == passport.passportId && status != 'SETTLED'" style="float:right"> 已收：¥{{qiusong.totalTimes * qiusong.crowdFunding.unitAmount}}</span>
-                <span ng-if="qiusong.crowdFunding.sponsorId == passport.passportId && status == 'SETTLED'" style="float:right"> 已结：¥{{qiusong.totalTimes * qiusong.crowdFunding.unitAmount}}</span>
-            </div>
-
-            <div ng-if="status=='PAID'|| status=='UN_PAY'" class="weui_cells_title" style="font-size: 14px;color:#000;height: 40px;line-height: 30px;border-bottom:  1px solid #d9d9d9;margin-bottom: 0;">
-                    <span style="float:left">
-                         求送人：{{qiusong.sponsorName}}
-                    </span>
-
-                    <span ng-if="status=='PAID'" style="float:right" >已送：¥ {{qiusong.crowdFunding.unitAmount * qiusong.paidTimes}} </span>
-                    <span ng-if="status=='UN_PAY'" style="float:right" >求送：¥ {{qiusong.crowdFunding.unitAmount}} </span>
-            </div>
-
-            <!--
-            <div class="weui_cells_title" style="text-align: right;color:#000;height: 40px;line-height: 30px;" ng-hide="order.status != 'ORDER_CREATED'" >
-                <a ui-sref-active="active" class="weui_btn weui_btn_primary" style="height: 30px;line-height: 30px;font-size: 14px;width:80px;border-radius:0px;margin-right: 0;">支付</a>
-            </div>
-            -->
         </div>
     </div>
 </div>

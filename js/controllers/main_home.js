@@ -59,6 +59,8 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
                         $scope.topicList = $scope.topicList.concat(result.topicList);
                     } else {
                         $scope.topicList = result.topicList;
+                        $(".weui-infinite-scroll").html('<p class="loading"><div class="infinite-preloader"></div>正在加载...</p>')
+                        loading = false;
                     }
                     if ($scope.userList && $scope.userList.length > 0){
                         $scope.userList = $scope.userList.concat(result.userList);
@@ -85,10 +87,27 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
 
     // 处理数据
     function operateData() {
-
         // 处理数据
         for (i in $scope.topicList) {
             var topic = $scope.topicList[i];
+            // 下载微信图片
+            for (p in topic.photoList){
+                var photo = topic.photoList[p];
+                if (!configService.isPicture(photo)){
+                    wx.ready(function () {
+                        wx.downloadImage({
+                            serverId: photo, // 需要下载的图片的服务器端ID，由uploadImage接口获得
+                            isShowProgressTips: 0, // 默认为1，显示进度提示
+                            success: function (res) {
+                                topic.photoList[p] = res.localId; // 返回图片下载后的本地ID
+                            }
+                        });
+                    });
+                }
+            }
+            setTimeout(function () {
+                console.log(topic.photoList);
+            },2000);
 
             var posterId = topic.posterId;
             for (k in $scope.userList) {

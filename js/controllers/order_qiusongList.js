@@ -26,32 +26,61 @@ goceanApp.controller('OrderQiusongCtrl', function ($rootScope,$scope, $state, $t
 
     $scope.page = 1;
     $scope.rows = 10;
-    var status = 'ING';
+
+    // 下拉刷新
+    var loading = false;
+
+    $scope.curentStatus = 'ING';
     $scope.status = status;
     //请求参数
     // 全部数据
-    $scope.listQiusong = function(status){
-        $scope.status = status;
+    $scope.listQiusong = function(status, flag){
+        if ($scope.curentStatus != status){
+            $scope.curentStatus = status;
+            $scope.qiusongList = [];
+        }
+        if (flag){
+            $scope.page = 1;
+            $scope.qiusongList = [];
+        }
+
         var obj = {
             page:$scope.page,
             rows:$scope.rows,
             passportId:$rootScope.passport.passportId,
             token:$rootScope.passport.token,
-            status:status};
+            status:$scope.curentStatus};
 
         qiusongListService.listQiusong(obj).then(function(data){
-            console.log(data);
             if ("OK" == data.status){
                 var qiusongList = data.result;
-                initView(qiusongList, status);
-                $scope.qiusongList = qiusongList;
+                if (qiusongList && qiusongList.length > 0){
+                    initView(qiusongList, $scope.curentStatus);
+                    if ($scope.qiusongList && $scope.qiusongList.length > 0){
+                        $scope.qiusongList = $scope.qiusongList.concat(qiusongList);
+                    } else {
+                        $scope.qiusongList = qiusongList;
+                        if ($scope.qiusongList.length < 10){
+                            $(".weui-infinite-scroll").html('');
+                        } else {
+                            $(".weui-infinite-scroll").html('<p class="loading"><div class="infinite-preloader"></div>正在加载...</p>')
+                            loading = false;
+                        }
+                    }
+                    if(!$scope.$$phase){
+                        $scope.$apply();
+                    }
+                } else {
+                    $(".weui-infinite-scroll").html('<p class="bottomNoMore"><div class="infinite-preloader"></div>没有更多</p>')
+                    loading = true;
+                }
             }
         },function(err){
 
         });
     };
     // 页面刷新加载
-    $scope.listQiusong(status);
+    $scope.listQiusong($scope.curentStatus, null);
 
     function initView(qiusongList, status){
         for (i in qiusongList){
@@ -140,4 +169,28 @@ goceanApp.controller('OrderQiusongCtrl', function ($rootScope,$scope, $state, $t
 
         $state.go("qiusongDetailsSponsor",{id:id});
     }
+
+    // 上拉刷新
+    $("div.weui-pull-to-refresh").pullToRefresh().on("pull-to-refresh", function () {
+        $scope.page = 1;
+        setTimeout(function () {
+            $(".comment-content").each(function(){
+                $(this).remove();
+            });
+            $scope.listQiusong($scope.curentStatus, 1);
+            $("div.weui-pull-to-refresh").pullToRefreshDone(); // 重置下拉刷新
+        }, 1000);   //模拟延迟
+    });
+
+    // 下拉刷新
+    $("div.weui-pull-to-refresh").infinite().on("infinite", function () {
+        if (loading) return;
+        $scope.page++;
+        loading = true;
+        setTimeout(function () {
+            $scope.listQiusong($scope.curentStatus, null);
+            loading = false;
+        }, 1000);   //模拟延迟
+    });
+    $(".infinite-preloader").on("show", function () { alert("it show!"); });
 });

@@ -55,12 +55,27 @@ goceanApp.factory('configService',['$http','$q','$timeout','appSettings', 'mainH
                         timestamp: data.result.timestamp , // 必填，生成签名的时间戳
                         nonceStr: data.result.noncestr, // 必填，生成签名的随机串
                         signature: data.result.signature,// 必填，签名，见附录1
-                        jsApiList: ['chooseImage', 'uploadImage', 'previewImage', 'hideOptionMenu', 'hideAllNonBaseMenuItem', 'onMenuShareTimeline', 'onMenuShareAppMessage'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+                        jsApiList: ['chooseImage', 'uploadImage', 'downloadImage', 'previewImage', 'hideOptionMenu', 'hideAllNonBaseMenuItem', 'onMenuShareTimeline', 'onMenuShareAppMessage'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
                     });
                 }
             },function(err){
 
             });
-        } 
+        } ,
+        // 判断是否为图片
+        isPicture : function (img) {
+            //判断是否是图片 - strFilter必须是小写列举
+            var strFilter=".jpeg|.gif|.jpg|.png|.bmp|.pic|";
+            if(img.indexOf(".")>-1){
+                var p = img.lastIndexOf(".");
+                var strPostfix = img.substring(p, img.length) + '|';
+                strPostfix = strPostfix.toLowerCase();
+                if(strFilter.indexOf(strPostfix)>-1)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     };
 }]);

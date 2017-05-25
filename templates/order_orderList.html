@@ -1,16 +1,16 @@
 <div class="homeView" style="overflow: hidden;height: 100%;">
     <div class="weui_tab " style="height:44px;" id="tab1"><!--tab-fixed添加顶部-->
         <div class="weui_navbar" style="height:44px;">
-            <div class="weui_navbar_item" ng-click="listOrder('ALL')">
+            <div class="weui_navbar_item" ng-click="listOrder('ALL', 1)">
                 全部订单
             </div>
-            <div class="weui_navbar_item" ng-click="listOrder('ORDER_CREATED');">
+            <div class="weui_navbar_item" ng-click="listOrder('ORDER_CREATED', 1);">
                 未付款
             </div>
-            <div class="weui_navbar_item" ng-click="listOrder('ORDER_PAID')">
+            <div class="weui_navbar_item" ng-click="listOrder('ORDER_PAID', 1)">
                 服务中
             </div>
-            <div class="weui_navbar_item" ng-click="listOrder('ORDER_FINISHED')">
+            <div class="weui_navbar_item" ng-click="listOrder('ORDER_FINISHED', 1)">
                 已完成
             </div>
         </div>
