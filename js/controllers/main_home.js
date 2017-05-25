@@ -72,6 +72,7 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
                         $scope.$apply();
                     }
                     operateData();
+                    operateImage();
                 } else {
                     $(".weui-infinite-scroll").html('<p class="bottomNoMore"><div class="infinite-preloader"></div>没有更多</p>')
                     loading = true;
@@ -85,29 +86,80 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
     // 初始化数据
     $scope.initData($rootScope.topicViewNavId, true);
 
+
+    function  download(tempPhotoList,topic, obj) {
+        if (tempPhotoList.length == 0) {
+            obj.i++;
+            if (obj.i >= $scope.topicList.length)
+                return;
+            topic = $scope.topicList[obj.i];
+            topic.i = 0;
+            var tempPhotoList = [];
+            for (p in topic.photoList) {
+                tempPhotoList.push(topic.photoList[p]);
+            }
+            download(tempPhotoList,topic, obj);
+            return;
+        }
+        var photo = tempPhotoList.pop();
+        if (!configService.isPicture(photo)){
+            wx.ready(function () {
+                wx.downloadImage({
+                    serverId: photo, // 需要下载的图片的服务器端ID，由uploadImage接口获得
+                    isShowProgressTips: 0, // 默认为1，显示进度提示
+                    success: function (res) {
+                        topic.photoList[topic.i] = res.localId; // 返回图片下载后的本地ID
+                        topic.i++;
+                        download(tempPhotoList,topic,obj);
+                    }
+                });
+            });
+        }
+    }
+
+    function operateImage(){
+
+        if ($scope.topicList.length == 0)
+            return;
+        // for (i in $scope.topicList) {
+            var obj = {i:0};
+            var topic = $scope.topicList[obj.i];
+            topic.i = 0;
+            var tempPhotoList = [];
+            for (p in topic.photoList) {
+                tempPhotoList.push(topic.photoList[p]);
+            }
+            download(tempPhotoList,topic, obj);
+        // }
+    }
     // 处理数据
     function operateData() {
         // 处理数据
         for (i in $scope.topicList) {
             var topic = $scope.topicList[i];
+        //     var tempPhotoList = [];
+        //     for (p in topic.photoList){
+        //         tempPhotoList.push(photoList[p]);
+        //     }
+        //     download(tempPhotoList);
             // 下载微信图片
-            for (p in topic.photoList){
-                var photo = topic.photoList[p];
-                if (!configService.isPicture(photo)){
-                    wx.ready(function () {
-                        wx.downloadImage({
-                            serverId: photo, // 需要下载的图片的服务器端ID，由uploadImage接口获得
-                            isShowProgressTips: 0, // 默认为1，显示进度提示
-                            success: function (res) {
-                                topic.photoList[p] = res.localId; // 返回图片下载后的本地ID
-                            }
-                        });
-                    });
-                }
-            }
-            setTimeout(function () {
-                console.log(topic.photoList);
-            },2000);
+            // for (p in topic.photoList){
+            //     var photo = topic.photoList[p];
+            //     if (!configService.isPicture(photo)){
+            //         wx.ready(function () {
+            //             wx.downloadImage({
+            //                 serverId: photo, // 需要下载的图片的服务器端ID，由uploadImage接口获得
+            //                 isShowProgressTips: 0, // 默认为1，显示进度提示
+            //                 success: function (res) {
+            //                     topic.photoList[p] = res.localId; // 返回图片下载后的本地ID
+            //                 }
+            //             });
+            //         });
+            //     }
+            // }
+            // setTimeout(function () {
+            //     console.log(topic.photoList);
+            // },2000);
 
             var posterId = topic.posterId;
             for (k in $scope.userList) {
