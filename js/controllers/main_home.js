@@ -87,21 +87,17 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
     $scope.initData($rootScope.topicViewNavId, true);
 
 
-    function  download(tempPhotoList,topic, obj) {
-        if (tempPhotoList.length == 0) {
+    function  download(topic, obj) {
+        if (topic.photoList == null || topic.i >= topic.photoList.length) {
             obj.i++;
             if (obj.i >= $scope.topicList.length)
                 return;
             topic = $scope.topicList[obj.i];
             topic.i = 0;
-            var tempPhotoList = [];
-            for (p in topic.photoList) {
-                tempPhotoList.push(topic.photoList[p]);
-            }
-            download(tempPhotoList,topic, obj);
+            download(topic, obj);
             return;
         }
-        var photo = tempPhotoList.pop();
+        var photo = topic.photoList[topic.i];
         if (!configService.isPicture(photo)){
             wx.ready(function () {
                 wx.downloadImage({
@@ -110,10 +106,13 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
                     success: function (res) {
                         topic.photoList[topic.i] = res.localId; // 返回图片下载后的本地ID
                         topic.i++;
-                        download(tempPhotoList,topic,obj);
+                        download(topic,obj);
                     }
                 });
             });
+        }else{
+            topic.i++;
+            download(topic,obj);
         }
     }
 
@@ -125,11 +124,11 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
             var obj = {i:0};
             var topic = $scope.topicList[obj.i];
             topic.i = 0;
-            var tempPhotoList = [];
-            for (p in topic.photoList) {
-                tempPhotoList.push(topic.photoList[p]);
-            }
-            download(tempPhotoList,topic, obj);
+            // var tempPhotoList = [];
+            // for (p in topic.photoList) {
+            //     tempPhotoList.push(topic.photoList[p]);
+            // }
+            download(topic, obj);
         // }
     }
     // 处理数据
