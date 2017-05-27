@@ -1,21 +1,22 @@
 <div class="homeView">
-    <div class="weui_panel weui_panel_access" style="height:7.555rem;">
-        <div class="weui_panel_bd">
-            <div class="weui_media_box weui_media_appmsg" style="margin-top: 1.11rem;margin-left: 0.888rem;">
+    <div class="weui_cells weui_cells_access" style="margin-top: 0;">
+        <div class="weui_cell">
+            <a href="javascript:void(0);" ui-sref="mineDetail" ui-sref-active="active" class="weui_media_box weui_media_appmsg" style="width: 100%;">
                 <div class="weui_media_hd">
-                    <img class="weui_media_appmsg_thumb" ng-src="{{passport.icon}}" alt="">
+                    <img class="weui_media_appmsg_thumb"  ng-src="{{passport.icon}}" alt="">
                 </div>
                 <div class="weui_media_bd">
-                    <h4 class="weui_media_title" style="color: #7495b8;" ng-bind="passport.nickName"></h4>
+                    <h4 class="weui_media_title" style="color: #7495b8;" ng-bind="passport.nickName">标题一</h4>
                     <span style="font-size: 0.8rem;">也豆</span><span style="margin-left: 2rem;font-size: 0.8rem;" ng-bind="passport.yeBean"></span>
                 </div>
-            </div>
+                <span class="weui_cell_ft"></span>
+            </a>
         </div>
     </div>
     <div class="weui_panel">
         <div class="weui_panel_bd">
             <div class="weui_media_box weui_media_small_appmsg">
-                <div class="weui_cells weui_cells_access" style="height: 3.44rem;line-height: 2.22rem;">
+                <div class="weui_cells weui_cells_access">
                     <a class="weui_cell" ui-sref="order.orderList" ui-sref-active="active">
                         <div class="weui_cell_hd" style="margin-left: 0.63rem;color: #888;"><i class="fa fa-file-text weui_home"></i></div>
                         <div class="weui_cell_bd weui_cell_primary" style="margin-left: 0.668rem;font-size: 14px;">

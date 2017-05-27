@@ -206,6 +206,16 @@ var goceanApp = angular.module('starter', ['ui.router','angularFileUpload', 'Loc
                 },
                 templateUrl : 'templates/dealDetail.html',
                 controller : 'DealDetailCtrl'
+            })
+            .state('mineDetail', {
+                cache : false,
+                url : 'mineDetail',
+                params : {
+                    'passportId' : null,
+                    'token' : null
+                },
+                templateUrl : 'templates/mineDetail.html',
+                controller : 'MineDetailCtrl'
             });
 
 

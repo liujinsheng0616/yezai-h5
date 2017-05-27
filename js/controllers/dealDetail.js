@@ -4,8 +4,6 @@
 goceanApp.controller('DealDetailCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, dealDetailService, configService) {
     console.log('about DealDetailCtrl');
 
-    document.title='也在-交易明细';
-
     // 获取JSSDK
     configService.getJssdkInfo(window.location.href);
     // 隐藏右上角
