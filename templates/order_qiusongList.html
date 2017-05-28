@@ -63,13 +63,13 @@
                         <span ng-if="qiusong.crowdFunding.sponsorId == passport.passportId && curentStatus == 'SETTLED'" style="float:right"> 已结：¥{{qiusong.totalTimes * qiusong.crowdFunding.unitAmount}}</span>
                     </div>
 
-                    <div ng-if="status=='PAID'|| status=='UN_PAY'" class="weui_cells_title" style="font-size: 14px;color:#000;height: 40px;line-height: 30px;border-bottom:  1px solid #d9d9d9;margin-bottom: 0;">
+                    <div ng-if="curentStatus=='PAID'|| curentStatus=='UN_PAY'" class="weui_cells_title" style="font-size: 14px;color:#000;height: 40px;line-height: 30px;border-bottom:  1px solid #d9d9d9;margin-bottom: 0;">
                             <span style="float:left">
                                  求送人：{{qiusong.sponsorName}}
                             </span>
 
-                            <span ng-if="status=='PAID'" style="float:right" >已送：¥ {{qiusong.crowdFunding.unitAmount * qiusong.paidTimes}} </span>
-                            <span ng-if="status=='UN_PAY'" style="float:right" >求送：¥ {{qiusong.crowdFunding.unitAmount}} </span>
+                            <span ng-if="curentStatus=='PAID'" style="float:right" >已送：¥ {{qiusong.crowdFunding.unitAmount * qiusong.paidTimes}} </span>
+                            <span ng-if="curentStatus=='UN_PAY'" style="float:right" >求送：¥ {{qiusong.crowdFunding.unitAmount}} </span>
                     </div>
 
                     <!--
