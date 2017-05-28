@@ -9,7 +9,7 @@ goceanApp.factory('mineDetailService', ['$http', '$q','$rootScope', 'ajaxUtil','
         mineDetailServiceObj.mineDetailList = function (params) {
             var defer = $q.defer();
             var obj = {
-                url:appSettings.host+appSettings.requestURL.dealDetailList,
+                url:appSettings.host+appSettings.requestURL.userData,
                 type:'POST',
                 params:params
             };
