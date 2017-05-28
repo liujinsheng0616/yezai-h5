@@ -196,6 +196,26 @@ var goceanApp = angular.module('starter', ['ui.router','angularFileUpload', 'Loc
                     sharerId:0},
                 templateUrl : 'templates/qiusongShared.html',
                 controller : 'QiusongSharedCtrl'
+            })
+            .state('dealDetail', {
+                cache : false,
+                url : 'dealDetail',
+                params : {
+                    'passportId' : null,
+                    'token' : null
+                },
+                templateUrl : 'templates/dealDetail.html',
+                controller : 'DealDetailCtrl'
+            })
+            .state('mineDetail', {
+                cache : false,
+                url : 'mineDetail',
+                params : {
+                    'passportId' : null,
+                    'token' : null
+                },
+                templateUrl : 'templates/mineDetail.html',
+                controller : 'MineDetailCtrl'
             });
 
 

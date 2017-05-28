@@ -1,0 +1,26 @@
+<div class="homeView">
+    <div class="weui_panel weui_panel_access">
+        <div class="weui-pull-to-refresh" style="background: #eee;padding-bottom: 0;" data-infinite="[object Object]">
+            <div class="scrollArea">
+                <div class="weui-pull-to-refresh-layer" style="margin-bottom: 20px;">
+                    <div class="pull-to-refresh-arrow"></div>
+                    <div class="pull-to-refresh-preloader"></div>
+                    <div class="down">下拉刷新</div>
+                    <div class="up">释放刷新</div>
+                    <div class="refresh">正在刷新...</div>
+                </div>
+                <div class="weui_panel_bd" ng-repeat="deal in dealList" style="border-top: 1px solid #d9d9d9">
+                    <div class="weui_media_box weui_media_text">
+                        <div class="weui_media_title" ng-bind="deal.notes"></div>
+                        <div style="position: absolute;top: 15px;right: 10px;color: #999;" ng-if="deal.amount > 0">+{{deal.amount | number : 2}}</div>
+                        <div style="position: absolute;top: 15px;right: 10px;color: #999;" ng-if="deal.amount < 0">{{deal.amount | number : 2}}</div>
+                        <div class="weui_media_desc">{{deal.date | date:"yyyy-MM-dd"}}</div><div class="weui_media_desc" style="position: absolute; top:50px;right: 10px;">付款成功</div>
+                    </div>
+                </div>
+                <div class="weui-infinite-scroll">
+                    <p class="loading"><div class="infinite-preloader"></div>正在加载...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -3,16 +3,16 @@
  */
 goceanApp.controller('AddressCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, addressService, configService) {
 
-    var _state = "mall";
+    var _state = "address";
     if ($rootScope.passport == null){
         window.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0cae6e3b9632e632&redirect_uri=http://wxsdk.yezaigou.com/wx/page/base&response_type=code&scope=snsapi_base&state="+_state;
         return;
     }
 
+    // 获取JSSDK
+    configService.getJssdkInfo(window.location.href);
     // 隐藏右上角
-    setTimeout(function(){
-        configService.hideWXBtn();
-    },100);
+    configService.hideWXBtn();
 
     $("#ssx").cityPicker({
         title: "选择省市县"
