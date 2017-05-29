@@ -4,19 +4,22 @@
             <div class="weui_cell_bd weui_cell_primary">
                 <p>也豆</p>
             </div>
-            <div class="weui_cell_ft">10</div>
+            <div class="weui_cell_ft" ng-bind="mineData.yiBean"></div>
         </div>
         <div class="weui_cell" style="border-bottom: 1px solid #d9d9d9">
             <div class="weui_cell_bd weui_cell_primary">
                 <p>保证金</p>
             </div>
-            <div class="weui_cell_ft">100</div>
+            <div class="weui_cell_ft" ng-bind="mineData.deposit"></div>
         </div>
         <div class="weui_cell" style="border-bottom: 1px solid #d9d9d9">
             <div class="weui_cell_bd weui_cell_primary">
                 <p>余额</p>
             </div>
-            <div class="weui_cell_ft"><a href="javascript:void(0);" class="weui_btn weui_btn_primary" style="height: 30px;line-height: 30px;font-size: 14px;">提现</a></div>
+            <div class="weui_cell_ft" ng-bind="mineData.balance"></div>
         </div>
+    </div>
+    <div class="weui_cell" style="text-align:center;font-size: 18px;color:#ffffff; padding:0;margin-top: 10px;">
+        <div class="weui_btn_primary" ng-click="" style="width:100%;border-radius:0px;height:3.33rem;line-height: 3.33rem;">提现</span></div>
     </div>
 </div>

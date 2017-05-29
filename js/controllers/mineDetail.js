@@ -17,7 +17,7 @@ goceanApp.controller('MineDetailCtrl', function ($scope, $rootScope, $state, $ti
         };
         mineDetailService.mineDetailList(obj).then(function(data){
             if ("OK" == data.status) {
-                console.log(data.result);
+                $scope.mineData = data.result;
             }
         },function(err){
 

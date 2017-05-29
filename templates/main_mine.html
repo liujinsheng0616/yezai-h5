@@ -1,7 +1,7 @@
 <div class="homeView">
     <div class="weui_cells weui_cells_access" style="margin-top: 0;">
         <div class="weui_cell">
-            <a href="javascript:void(0);" ui-sref="mineDetail" ui-sref-active="active" class="weui_media_box weui_media_appmsg" style="width: 100%;">
+            <a href="javascript:void(0);" ui-sref="mineDetail({passportId:passport.passportId,token:passport.token})" ui-sref-active="active" class="weui_media_box weui_media_appmsg" style="width: 100%;">
                 <div class="weui_media_hd">
                     <img class="weui_media_appmsg_thumb"  ng-src="{{passport.icon}}" alt="">
                 </div>
