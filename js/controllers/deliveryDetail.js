@@ -139,4 +139,13 @@ goceanApp.controller('DeliverDetailCtrl',['$scope', '$rootScope','$state', '$sta
     $gallery.on("click", function(){
         $gallery.fadeOut(100);
     });
+    
+    // 晒晒
+    $scope.goPublish = function () {
+        $.confirm("发布后可以在晒晒区追加评论!", "确定发布?", function() {
+            // 发布
+        }, function() {
+            //取消操作
+        });
+    }
 }]);
