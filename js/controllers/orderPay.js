@@ -1,17 +1,16 @@
 /**
  * Created by kingson·liu on 2017/3/11.
  */
-goceanApp.controller('OrderPayCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, orderDetailService, configService) {
+goceanApp.controller('OrderPayCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, orderDetailService, configService, localStorageService) {
     console.log("about OrderPayCtrl");
 
-    if ($rootScope.passport == null) {
-        var url = window.location.href;
-        var params = configService.parseQueryString(url);
-        if (params.passportId) {
-            params.nickName = Base64.decode(params.nickName);
-            $rootScope.passport = params;
-        }
+    var params = configService.parseQueryString(window.location.href);
+    if (params.passportId){
+        params.nickName = Base64.decode(params.nickName);
+        localStorageService.set("passport",params);
     }
+
+    $scope.passport = localStorageService.get("passport");
 
     var orderId = 0;
     if($stateParams.orderId){
@@ -27,8 +26,8 @@ goceanApp.controller('OrderPayCtrl', function ($scope, $rootScope, $state, $time
         if (id <= 0)
             return;
         var obj = {
-            passportId:$rootScope.passport.passportId,
-            token:$rootScope.passport.token,
+            passportId:$scope.passport.passportId,
+            token:$scope.passport.token,
             orderId:id};
         orderDetailService.getDetails(obj).then(function(data){
             console.log(data);
@@ -68,9 +67,9 @@ goceanApp.controller('OrderPayCtrl', function ($scope, $rootScope, $state, $time
     // H5调起微信支付
     $scope.toWxPay = function (orderDetailsView) {
         var obj = {
-            passportId : $rootScope.passport.passportId,
-            token : $rootScope.passport.token,
-            openid : $rootScope.passport.token3,
+            passportId : $scope.passport.passportId,
+            token : $scope.passport.token,
+            openid : $scope.passport.token3,
             device : "WEB",
             title : orderDetailsView.itemList[0].title,
             pr : orderDetailsView.pr,

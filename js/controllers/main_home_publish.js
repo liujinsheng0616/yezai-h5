@@ -1,9 +1,10 @@
 /**
  * Created by 53983 on 2017/4/12.
  */
-goceanApp.controller('MainHomePublishCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, mallHomePublishService,topicCreationService, configService) {
+goceanApp.controller('MainHomePublishCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, mallHomePublishService,topicCreationService, configService, localStorageService) {
     console.log('about MainHomePublishCtrl');
 
+    $scope.passport = localStorageService.get("passport");
     $rootScope.tagList = $stateParams.tagList;
 
 
@@ -60,7 +61,7 @@ goceanApp.controller('MainHomePublishCtrl', function ($scope, $rootScope, $state
     };
 
     function createTopic(){
-        if ($rootScope.passport == null || $rootScope.passport == "undefined"){// base , userInfo
+        if ($scope.passport == null || $scope.passport == "undefined"){// base , userInfo
             // 登录 FIXME
         }
         //AJAX请求服务器
@@ -71,8 +72,8 @@ goceanApp.controller('MainHomePublishCtrl', function ($scope, $rootScope, $state
             photoList:$rootScope.serverImgIds,//["xxx.jpg","zzz.jpg"]
             postAddress:"",//地址
             coordinate:"",
-            passportId:$rootScope.passport.passportId,//groupId
-            token:$rootScope.passport.token,//登录后的我们自己的token
+            passportId:$scope.passport.passportId,//groupId
+            token:$scope.passport.token,//登录后的我们自己的token
             device:"WEB"// WX | ANDROID | IOS | PC
         };
 

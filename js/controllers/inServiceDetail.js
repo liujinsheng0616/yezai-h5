@@ -1,7 +1,7 @@
 /**
  * Created by 53983 on 2017/3/17.
  */
-goceanApp.controller('InServiceDetailCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, $filter, inServiceDetailService, configService) {
+goceanApp.controller('InServiceDetailCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, $filter, inServiceDetailService, configService, localStorageService) {
     console.log("about InServiceDetailCtrl");
 
     var orderId = 0;
@@ -12,9 +12,12 @@ goceanApp.controller('InServiceDetailCtrl', function ($scope, $rootScope, $state
     var params = configService.parseQueryString(window.location.href);
     if (params.passportId){
         params.nickName = Base64.decode(params.nickName);
-        $rootScope.passport = params;
+        localStorageService.set("passport",params);
     }
-    if ($rootScope.passport == null ){
+
+    $scope.passport = localStorageService.get("passport");
+    
+    if ($scope.passport == null ){
         var _state = "inServiceDetail/"+orderId;
         window.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0cae6e3b9632e632&redirect_uri=http://wxsdk.yezaigou.com/wx/page/base&response_type=code&scope=snsapi_base&state="+_state;
         return;
@@ -102,8 +105,8 @@ goceanApp.controller('InServiceDetailCtrl', function ($scope, $rootScope, $state
         if (id <= 0)
             return;
         var obj = {
-            passportId:$rootScope.passport.passportId,
-            token:$rootScope.passport.token,
+            passportId:$scope.passport.passportId,
+            token:$scope.passport.token,
             orderId:id};
         inServiceDetailService.getDetails(obj).then(function(data){
             console.log(data);
@@ -153,8 +156,8 @@ goceanApp.controller('InServiceDetailCtrl', function ($scope, $rootScope, $state
             return;
 
         var obj = {
-            passportId: $rootScope.passport.passportId,
-            token: $rootScope.passport.token,
+            passportId: $scope.passport.passportId,
+            token: $scope.passport.token,
             orderId: $rootScope.orderDetailsView.id,
             day: $rootScope.deliveryDayChanged.day,
             time: $rootScope.deliveryDayChanged.time
@@ -177,8 +180,8 @@ goceanApp.controller('InServiceDetailCtrl', function ($scope, $rootScope, $state
             return;
 
         var obj = $rootScope.defaultAddress;
-        obj.passportId = $rootScope.passport.passportId;
-        obj.token = $rootScope.passport.token;
+        obj.passportId = $scope.passport.passportId;
+        obj.token = $scope.passport.token;
         obj.pr = $rootScope.orderDetailsView.pr;
         obj.orderId = $rootScope.orderDetailsView.orderId;
 

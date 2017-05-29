@@ -1,14 +1,16 @@
 /**
  * Created by 53983 on 2017/5/16.
  */
-goceanApp.controller('QiusongSharedCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, qiusongSharedService, configService, appSettings, mainHomeService) {
+goceanApp.controller('QiusongSharedCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, qiusongSharedService, configService, appSettings, mainHomeService, localStorageService) {
     console.log("about QiusongSharedCtrl");
     // 页面传参
     var params = configService.parseQueryString(window.location.href);
     if (params.passportId){
         params.nickName = Base64.decode(params.nickName);
-        $rootScope.passport = params;
+        localStorageService.set("passport",params);
     }
+
+    $scope.passport = localStorageService.get("passport");
 
     var id = 0;
     var sharerId = 0;
@@ -21,7 +23,7 @@ goceanApp.controller('QiusongSharedCtrl', function ($scope, $rootScope, $state, 
     }
 
     var _state = "qiusongShared";//FIXME ，需要参数sponsorId
-    if ($rootScope.passport == null){//如果是基础用户，这里不要求授权用户信息; 若果没登录，就直接通过授权模式登录
+    if ($scope.passport == null){//如果是基础用户，这里不要求授权用户信息; 若果没登录，就直接通过授权模式登录
         window.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0cae6e3b9632e632" +
             "&redirect_uri=http://wxsdk.yezaigou.com/wx/page/qiusong" +
             "/" + id + "/"+sharerId +
@@ -40,8 +42,8 @@ goceanApp.controller('QiusongSharedCtrl', function ($scope, $rootScope, $state, 
     init();
     function init() {
         var obj = {
-            passportId: $rootScope.passport.passportId,
-            token : $rootScope.passport.token,
+            passportId: $scope.passport.passportId,
+            token : $scope.passport.token,
             crowdFundingId : id
         };
         qiusongSharedService.getDetails(obj).then(function(data){
@@ -55,7 +57,7 @@ goceanApp.controller('QiusongSharedCtrl', function ($scope, $rootScope, $state, 
                     }
                 }
 
-                if ($rootScope.passport.passportId == $scope.qiusong.sponsorId){
+                if ($scope.passport.passportId == $scope.qiusong.sponsorId){
                     $scope.userFlag = true;
                 }
 
@@ -77,8 +79,8 @@ goceanApp.controller('QiusongSharedCtrl', function ($scope, $rootScope, $state, 
     // 支付页
     $scope.doParticipate = function () {
         var obj = {
-            passportId: $rootScope.passport.passportId,
-            token : $rootScope.passport.token,
+            passportId: $scope.passport.passportId,
+            token : $scope.passport.token,
             crowdFundingId : $scope.qiusong.id
         };
 

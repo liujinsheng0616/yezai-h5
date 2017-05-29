@@ -1,17 +1,16 @@
 /**
  * Created by kingson·liu on 2017/3/11.
  */
-goceanApp.controller('QiusongPayCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, qiusongPayService, configService) {
+goceanApp.controller('QiusongPayCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, qiusongPayService, configService, localStorageService) {
     console.log("about QiusongPayCtrl");
 
-    if ($rootScope.passport == null) {
-        var url = window.location.href;
-        var params = configService.parseQueryString(url);
-        if (params.passportId) {
-            params.nickName = Base64.decode(params.nickName);
-            $rootScope.passport = params;
-        }
+    var params = configService.parseQueryString(window.location.href);
+    if (params.passportId){
+        params.nickName = Base64.decode(params.nickName);
+        localStorageService.set("passport",params);
     }
+
+    $scope.passport = localStorageService.get("passport");
 
     var qiusongId = 0;
     var memberId = 0;
@@ -28,8 +27,8 @@ goceanApp.controller('QiusongPayCtrl', function ($scope, $rootScope, $state, $ti
         if (id <= 0)
             return;
         var obj = {
-            passportId : $rootScope.passport.passportId,
-            token : $rootScope.passport.token,
+            passportId : $scope.passport.passportId,
+            token : $scope.passport.token,
             crowdFundingId : id
         };
         qiusongPayService.getPayDetails(obj).then(function(data){
@@ -70,9 +69,9 @@ goceanApp.controller('QiusongPayCtrl', function ($scope, $rootScope, $state, $ti
     // H5调起微信支付
     $scope.toWxPay = function (qiusongDetailsView) {
         var obj = {
-            passportId : $rootScope.passport.passportId,
-            token : $rootScope.passport.token,
-            openid : $rootScope.passport.token3,
+            passportId : $scope.passport.passportId,
+            token : $scope.passport.token,
+            openid : $scope.passport.token3,
             device : "WEB",
             title : qiusongDetailsView.skuBriefDto.title + "(参与"+qiusongDetailsView.sponsorName+"的求送活动)",
             pr : qiusongDetailsView.pr,
@@ -94,8 +93,8 @@ goceanApp.controller('QiusongPayCtrl', function ($scope, $rootScope, $state, $ti
                     if(res.err_msg == "get_brand_wcpay_request:ok"){
                         console.log("微信支付成功!");
                         var order = {
-                            passportId : $rootScope.passport.passportId,
-                            token : $rootScope.passport.token,
+                            passportId : $scope.passport.passportId,
+                            token : $scope.passport.token,
                             crowdFundingId : qiusongId
                         };
                         qiusongPayService.qiusongOnPaying(order).then(function(data){

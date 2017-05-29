@@ -1,9 +1,10 @@
 /**
  * Created by 53983 on 2017/3/19.
  */
-goceanApp.controller('DeliverDetailCtrl',['$scope', '$rootScope','$state', '$stateParams', '$filter', '$upload', 'deliverDetailService', 'configService', function ($scope, $rootScope, $state, $stateParams, $filter, $upload, deliverDetailService, configService) {
+goceanApp.controller('DeliverDetailCtrl',['$scope', '$rootScope','$state', '$stateParams', '$filter', '$upload', 'deliverDetailService', 'configService', 'localStorageService','appSettings', function ($scope, $rootScope, $state, $stateParams, $filter, $upload, deliverDetailService, configService, localStorageService,appSettings) {
     console.log('about DeliverDetailCtrl');
 
+    $scope.passport = localStorageService.get("passport");
     if ($stateParams.orderId){
         $scope.orderId = $stateParams.orderId;
     }
@@ -20,8 +21,8 @@ goceanApp.controller('DeliverDetailCtrl',['$scope', '$rootScope','$state', '$sta
         buyerFilesNum = 1;
 
     var obj = {
-        passportId:$rootScope.passport.passportId,
-        token:$rootScope.passport.token,
+        passportId:$scope.passport.passportId,
+        token:$scope.passport.token,
         orderId:$scope.orderId
     };
 
@@ -48,7 +49,7 @@ goceanApp.controller('DeliverDetailCtrl',['$scope', '$rootScope','$state', '$sta
             var files = orderExt.sellerPic;
             if (files != null && files != "undefined") {
                 for (var i = 0, len = files.length; i < len; ++i) {
-                    var file = files[i];
+                    var file = appSettings.img_domain+files[i];
                     $imageFiless.append($(tmpl.replace('#url#', file)));
                 }
             }
@@ -57,11 +58,17 @@ goceanApp.controller('DeliverDetailCtrl',['$scope', '$rootScope','$state', '$sta
             files = orderExt.buyerPic;
             if (files != null && files != "undefined") {
                 for (var i = 0, len = files.length; i < len; ++i) {
-                    var file = files[i];
+                    var file = appSettings.img_domain+files[i];
                     $imageFiless.append($(tmpl.replace('#url#', file)));
                 }
             }
         }
+    }
+
+    $scope.getExpressInfo = function (expressBrief) {
+
+        alert("查询快递单号");
+
     }
 
     $uploaderInput.on("change", function(e){
@@ -100,8 +107,8 @@ goceanApp.controller('DeliverDetailCtrl',['$scope', '$rootScope','$state', '$sta
             }).success(function(data, status, headers, config) {
 
                 var obj = {
-                    passportId:$rootScope.passport.passportId,
-                    token:$rootScope.passport.token,
+                    passportId:$scope.passport.passportId,
+                    token:$scope.passport.token,
                     orderId:$scope.orderId,
                     url:data.url
                 };
@@ -110,7 +117,8 @@ goceanApp.controller('DeliverDetailCtrl',['$scope', '$rootScope','$state', '$sta
                     if ("OK" == data.status){
                         buyerFilesNum++;
                         // 文件上传成功处理函数 http://topic-photo-test.b0.upaiyun.com/
-                        $imageFiless.append($(tmpl.replace('#url#', 'http://topic-photo-test.b0.upaiyun.com/' + data.url)));
+                        //$imageFiless.append($(tmpl.replace('#url#', 'http://topic-photo-test.b0.upaiyun.com/' + data.url)));
+                        $imageFiless.append($(tmpl.replace('#url#', appSettings.img_domain + obj.url)));
                     }
                 },function(err){
 

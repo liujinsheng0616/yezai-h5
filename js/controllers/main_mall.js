@@ -6,8 +6,10 @@ goceanApp.controller('MainMallCtrl', function ($scope, $rootScope, $state, $time
     var params = configService.parseQueryString(window.location.href);
     if (params.passportId){
         params.nickName = Base64.decode(params.nickName);
-        $rootScope.passport = params;
+        localStorageService.set("passport",params);
     }
+
+    $scope.passport = localStorageService.get("passport");
 
     // 获取JSSDK
     configService.getJssdkInfo(window.location.href);

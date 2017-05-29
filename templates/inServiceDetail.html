@@ -14,7 +14,7 @@
             <a href="javascript:" class="weui_timeChange"><i class="fa fa-caret-left" ng-hide="orderDetailsView.index <= 0" ng-click="toLeftPlan()"></i></a>
             <div class="weui_send_bd">
                 <div style="width: 25%;height: 100%;float: left;" ng-repeat="plan in orderDetailsView.currentForwardList track by $index">
-                    <div ng-class="{weui_sended:plan.status == 'ORDER_PAID',weui_notSend:plan.status == 'ORDER_CREATED' || plan.status == 'BLANK'}" ng-click="toServiceDetail(plan)">
+                    <div ng-class="{weui_sended:plan.status == 'ORDER_PAID'||plan.status == 'ORDER_DELIVERED'||plan.status == 'ORDER_FINISHED',weui_notSend:plan.status == 'ORDER_CREATED' || plan.status == 'BLANK'}" ng-click="toServiceDetail(plan)">
                         <span style="color: #FFF;">{{plan.id}}</span>
                     </div>
                     <span >{{plan.deliveryTime | date:"yy-MM-dd"}}</span>

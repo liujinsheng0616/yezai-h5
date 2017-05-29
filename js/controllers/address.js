@@ -1,10 +1,16 @@
 /**
  * Created by kingson·liu on 2017/3/12.
  */
-goceanApp.controller('AddressCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, addressService, configService) {
+goceanApp.controller('AddressCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, addressService, localStorageService,configService) {
 
+    var params = configService.parseQueryString(window.location.href);
+    if (params.passportId){
+        params.nickName = Base64.decode(params.nickName);
+        localStorageService.set("passport",params);
+    }
+    $scope.passport = localStorageService.get("passport");
     var _state = "address";
-    if ($rootScope.passport == null){
+    if ($scope.passport == null){
         window.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0cae6e3b9632e632&redirect_uri=http://wxsdk.yezaigou.com/wx/page/base&response_type=code&scope=snsapi_base&state="+_state;
         return;
     }
@@ -34,8 +40,8 @@ goceanApp.controller('AddressCtrl', function ($scope, $rootScope, $state, $timeo
 
         var addressList = [];
         var obj = {
-            passportId:$rootScope.passport.passportId,
-            token:$rootScope.passport.token
+            passportId:$scope.passport.passportId,
+            token:$scope.passport.token
         };
         addressService.listAddress(obj).then(function(data){
             console.log(data);
@@ -76,8 +82,8 @@ goceanApp.controller('AddressCtrl', function ($scope, $rootScope, $state, $timeo
         $scope.address = address;
         $rootScope.defaultAddress = address;
         var obj = {
-            passportId:$rootScope.passport.passportId,
-            token:$rootScope.passport.token,
+            passportId:$scope.passport.passportId,
+            token:$scope.passport.token,
             id:address.id
         };
         addressService.setDefaultAddress(obj).then(function(data){
@@ -104,8 +110,8 @@ goceanApp.controller('AddressCtrl', function ($scope, $rootScope, $state, $timeo
     $scope.createOrRefresh = function (){
             var arr = $scope.address.temp.split(" ");
             var obj = {
-                passportId:$rootScope.passport.passportId,
-                token:$rootScope.passport.token,
+                passportId:$scope.passport.passportId,
+                token:$scope.passport.token,
                 id:$scope.address.id,
                 country:$scope.address.country,
                 province:arr[0],

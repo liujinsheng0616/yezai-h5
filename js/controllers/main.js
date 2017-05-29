@@ -7,8 +7,4 @@ goceanApp.controller('MainCtrl', function ($scope,$rootScope, $state, $timeout, 
         $(this).addClass('weui_active').siblings().removeClass('weui_active');
     });
 
-    // 首页数据映射
-    $rootScope.discoveryList = store.discovery.topicList;
-    // 我的信息数据映射
-    $rootScope.my = store.my;
 });

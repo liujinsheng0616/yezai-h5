@@ -1,11 +1,19 @@
 /**
  * Created by 53983 on 2017/3/14.
  */
-goceanApp.controller('PayMomentCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, payMomentService, qiusongDetailsSponsorService,configService) {
+goceanApp.controller('PayMomentCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, payMomentService, qiusongDetailsSponsorService,configService, localStorageService) {
     console.log("about PayMomentCtrl");
 
+    var params = configService.parseQueryString(window.location.href);
+    if (params.passportId){
+        params.nickName = Base64.decode(params.nickName);
+        localStorageService.set("passport",params);
+    }
+
+    $scope.passport = localStorageService.get("passport");
+
     var _state = "payment";//FIXME 登录后返回当前页面，需要参数skuId
-    if ($rootScope.passport == null){//如果是基础用户，这里不要求授权用户信息; 若果没登录，就直接通过授权模式登录
+    if ($scope.passport == null){//如果是基础用户，这里不要求授权用户信息; 若果没登录，就直接通过授权模式登录
         window.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0cae6e3b9632e632&redirect_uri=http://wxsdk.yezaigou.com/wx/page/userInfo&response_type=code&scope=snsapi_userinfo&state="+_state;
         return;
     }
@@ -17,8 +25,8 @@ goceanApp.controller('PayMomentCtrl', function ($scope, $rootScope, $state, $tim
 
     function getDefaultAddress() {
         var tokenedRo = {
-            passportId: $rootScope.passport.passportId,
-            token: $rootScope.passport.token
+            passportId: $scope.passport.passportId,
+            token: $scope.passport.token
         };
         payMomentService.getDefaultAddress(tokenedRo).then(function (data) {
             if (data.status == "OK") {
@@ -92,8 +100,8 @@ goceanApp.controller('PayMomentCtrl', function ($scope, $rootScope, $state, $tim
 
 
             $rootScope.orderRo = {
-                passportId:$rootScope.passport.passportId,
-                token:$rootScope.passport.token,
+                passportId:$scope.passport.passportId,
+                token:$scope.passport.token,
                 skuId: $stateParams.skuId,
                 pricePlus: null,
                 qty:1,
@@ -105,9 +113,9 @@ goceanApp.controller('PayMomentCtrl', function ($scope, $rootScope, $state, $tim
                 thumbnail:null,
                 attachmentIdList:[],
                 orderUsers:{
-                    buyerId:$rootScope.passport.passportId,
+                    buyerId:$scope.passport.passportId,
                     sharerId:sharerId,
-                    invitorId:$rootScope.passport.invitorId
+                    invitorId:$scope.passport.invitorId
                 },
                 orderAddress:null,
                 isPaid:false,
