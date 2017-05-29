@@ -6,6 +6,12 @@
             </div>
         </div>
         <div class="weui_cell" style="border-top: 1px solid #d9d9d9;height:3.33rem;font-size: 14px;">
+            <div class="weui_cell_hd" style="width: 4.833rem;color: #888;"><label class="weui_label">服务单号：</label></div>
+            <div class="weui_cell_bd weui_cell_primary" >
+                {{forwardDetailsDto.pr}}
+            </div>
+        </div>
+        <div class="weui_cell" style="border-top: 1px solid #d9d9d9;height:3.33rem;font-size: 14px;">
             <div class="weui_cell_hd" style="width: 4.833rem;color: #888;"><label class="weui_label">服务次数：</label></div>
             <div class="weui_cell_bd weui_cell_primary" >
             第{{forwardDetailsDto.step}}次
@@ -24,28 +30,32 @@
                 <div style="color: #00CCFF;" ng-bind="forwardDetailsDto.address.tel"></div>
             </div>
         </div>
-        <div class="weui_cell" style="border-top: 1px solid #d9d9d9;height:3.33rem;font-size: 14px;" ng-hide="forwardDetailsDto.expressBrief == null">
+        <div class="weui_cell" style="border-top: 1px solid #d9d9d9;height:3.33rem;font-size: 14px;" ng-repeat="expressBrief in forwardDetailsDto.expressList" ng-hide="forwardDetailsDto.expressList == null">
             <div class="weui_cell_hd" style="width: 4.833rem;color: #888;"><label class="weui_label">物流信息：</label></div>
-            <div class="weui_cell_bd weui_cell_primary" ng-bind="forwardDetailsDto.expressBrief.companyName+' '+forwardDetailsDto.expressBrief.expressNumber" ng-click="getExpressInfo()">
+            <div class="weui_cell_bd weui_cell_primary" ng-bind="expressBrief.companyName+' '+expressBrief.expressBill" ng-click="getExpressInfo(expressBrief)">
             </div>
         </div>
-        <div class="weui-cell">
+
+    </div>
+
+    <div class="weui_media_box weui_media_small_appmsg" style="border-top: 1px solid #d9d9d9;">
+        <div class="weui-cell" style="border-top: 1px solid #d9d9d9;">
             <div class="weui-cell__bd">
                 <div class="weui-uploader">
                     <div class="weui-uploader__bd" style="width: 300px">
                         <ul class="weui-uploader__files" id="imageFiles" >
                         </ul>
-                        <div class="weui-uploader__input-box" ng-hide="forwardDetailsDto.deliveryStatus == null ">
+                        <div class="weui-uploader__input-box" ng-hide="forwardDetailsDto.deliveryStatus != 'DELIVERED' ">
                             <input id="uploaderInput" class="weui-uploader__input" type="file" accept="image/*" multiple />
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     <div class="page__bd">
         <div class="weui-gallery" id="gallery">
             <span class="weui-gallery__img" id="galleryImg"></span>
         </div>
+    </div>
     </div>
 </div>

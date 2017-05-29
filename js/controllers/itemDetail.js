@@ -1,13 +1,16 @@
 /**
  * Created by 53983 on 2017/3/22.
  */
-goceanApp.controller('ItemDetailCtrl', function($scope, $rootScope, $state, $timeout, $stateParams, appSettings,mallDetailService, mainHomeService, configService) {
+goceanApp.controller('ItemDetailCtrl', function($scope, $rootScope, $state, $timeout, $stateParams, appSettings,mallDetailService, mainHomeService, configService, localStorageService) {
     var url = window.location.href;
-    var params = configService.parseQueryString(url);
+
+    var params = configService.parseQueryString(window.location.href);
     if (params.passportId){
         params.nickName = Base64.decode(params.nickName);
-        $rootScope.passport = params;
+        localStorageService.set("passport",params);
     }
+
+    $scope.passport = localStorageService.get("passport");
 
     var goodsId = 0;
     var sharerId = 0;
@@ -21,7 +24,7 @@ goceanApp.controller('ItemDetailCtrl', function($scope, $rootScope, $state, $tim
     }
 
     var _state = "itemDetail";
-    if ($rootScope.passport == null){
+    if ($scope.passport == null){
 
         // if (goodsId == 0 || sharerId ==0) {
         //     window.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0cae6e3b9632e632&redirect_uri=http://wxsdk.yezaigou.com/wx/page/base&response_type=code&scope=snsapi_base&state=" + _state;
@@ -35,7 +38,7 @@ goceanApp.controller('ItemDetailCtrl', function($scope, $rootScope, $state, $tim
     }
     var thisUrl = appSettings.domain + "/index.html#/itemShared";
     thisUrl = thisUrl + "/" + goodsId;
-    thisUrl = thisUrl + "/sharerId_" + $rootScope.passport.passportId;
+    thisUrl = thisUrl + "/sharerId_" + $scope.passport.passportId;
 
     // 获取JSSDK
     configService.getJssdkInfo(window.location.href);
@@ -77,7 +80,7 @@ goceanApp.controller('ItemDetailCtrl', function($scope, $rootScope, $state, $tim
                         wx.showOptionMenu();
                         //分享到朋友圈
                         wx.onMenuShareTimeline({
-                            title: $rootScope.passport.nickName + '也在购买: ' + itemDetail.title, // 分享标题
+                            title: $scope.passport.nickName + '也在购买: ' + itemDetail.title, // 分享标题
                             link: thisUrl, // 分享链接
                             imgUrl: 'http://static.yezaigou.com/' + itemDetail.thumbnail, // 分享图标
                             success: function () {
@@ -90,7 +93,7 @@ goceanApp.controller('ItemDetailCtrl', function($scope, $rootScope, $state, $tim
 
                         //分享给朋友
                         wx.onMenuShareAppMessage({
-                            title: $rootScope.passport.nickName + '也在购买: ' + itemDetail.title, // 分享标题
+                            title: $scope.passport.nickName + '也在购买: ' + itemDetail.title, // 分享标题
                             desc: itemDetail.description, // 分享描述
                             link: thisUrl, // 分享链接
                             imgUrl: 'http://static.yezaigou.com/' + itemDetail.thumbnail, // 分享图标

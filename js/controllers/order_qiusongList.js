@@ -1,15 +1,17 @@
 /**
  * Created by kingson·liu on 17/3/8.
  */
-goceanApp.controller('OrderQiusongCtrl', function ($rootScope,$scope, $state, $timeout, $stateParams, qiusongListService, configService) {
+goceanApp.controller('OrderQiusongCtrl', function ($rootScope,$scope, $state, $timeout, $stateParams, qiusongListService, configService, localStorageService) {
 
     var params = configService.parseQueryString(window.location.href);
     if (params.passportId){
         params.nickName = Base64.decode(params.nickName);
-        $rootScope.passport = params;
+        localStorageService.set("passport",params);
     }
 
-    if ($rootScope.passport == null ){
+    $scope.passport = localStorageService.get("passport");
+
+    if ($scope.passport == null ){
         var _state = "order.qiusong";
         window.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0cae6e3b9632e632&redirect_uri=http://wxsdk.yezaigou.com/wx/page/base&response_type=code&scope=snsapi_base&state="+_state;
         return;
@@ -46,8 +48,8 @@ goceanApp.controller('OrderQiusongCtrl', function ($rootScope,$scope, $state, $t
         var obj = {
             page:$scope.page,
             rows:$scope.rows,
-            passportId:$rootScope.passport.passportId,
-            token:$rootScope.passport.token,
+            passportId:$scope.passport.passportId,
+            token:$scope.passport.token,
             status:$scope.curentStatus};
 
         qiusongListService.listQiusong(obj).then(function(data){
@@ -100,7 +102,7 @@ goceanApp.controller('OrderQiusongCtrl', function ($rootScope,$scope, $state, $t
                 }else if (crowdFunding.settleType == "DRAW_ONLY"){
                     crowdFunding.settleTypeView = "暂时中止";
                 }else if (crowdFunding.settleType == "BUY_DRAW"){
-                    crowdFunding.settleTypeView = "超额结余";
+                    crowdFunding.settleTypeView = "超送结余";
                 }
             }
 
@@ -129,19 +131,19 @@ goceanApp.controller('OrderQiusongCtrl', function ($rootScope,$scope, $state, $t
     $scope.goToQiusongDetail = function (qiusong) {
         $rootScope.qiusongDetailsView = null;
 
-        if (qiusong.payStatus == "UN_PAY" && qiusong.sponsorId != $rootScope.passport.passportId){
+        if (qiusong.payStatus == "UN_PAY" && qiusong.sponsorId != $scope.passport.passportId){
             if (!(qiusong.crowdFunding.status == "SUCCESSED" || qiusong.crowdFunding.status == "SETTLED")){
                 $state.go('qiusongPrepay', {
                     qiusongId: qiusong.crowdFunding.id,
-                    memberId: $rootScope.passport.passportId
+                    memberId: $scope.passport.passportId
                 });
             }
         }else {
 
             adaptDetails(qiusong);
             // var obj = {
-            //     passportId: $rootScope.passport.passportId,
-            //     token: $rootScope.passport.token,
+            //     passportId: $scope.passport.passportId,
+            //     token: $scope.passport.token,
             //     crowdFundingId: qiusong.crowdFunding.id
             // };
             // qiusongListService.getDetails(obj).then(function (data) {
@@ -161,7 +163,7 @@ goceanApp.controller('OrderQiusongCtrl', function ($rootScope,$scope, $state, $t
 
     function adaptDetails(qiusong){
         var id = qiusong.crowdFunding.id;
-        // if (qiusong.crowdFunding.sponsorId == $rootScope.passport.passportId){
+        // if (qiusong.crowdFunding.sponsorId == $scope.passport.passportId){
         //     $state.go("qiusongDetailsSponsor",{id:id});
         // } else{
         //

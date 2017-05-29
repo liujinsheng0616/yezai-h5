@@ -1,15 +1,17 @@
 /**
  * Created by Kingson·liu on 17/3/8.
  */
-goceanApp.controller('OrderListCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams,orderListService,configService) {
+goceanApp.controller('OrderListCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams,orderListService,configService, localStorageService) {
 
     var params = configService.parseQueryString(window.location.href);
     if (params.passportId){
         params.nickName = Base64.decode(params.nickName);
-        $rootScope.passport = params;
+        localStorageService.set("passport",params);
     }
 
-    if ($rootScope.passport == null ){
+    $scope.passport = localStorageService.get("passport");
+
+    if ($scope.passport == null ){
         var _state = "order.orderList";
         window.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0cae6e3b9632e632&redirect_uri=http://wxsdk.yezaigou.com/wx/page/base&response_type=code&scope=snsapi_base&state="+_state;
         return;
@@ -47,8 +49,8 @@ goceanApp.controller('OrderListCtrl', function ($scope, $rootScope, $state, $tim
         var obj = {
             page:$scope.page,
             rows:$scope.rows,
-            passportId:$rootScope.passport.passportId,
-            token:$rootScope.passport.token,
+            passportId:$scope.passport.passportId,
+            token:$scope.passport.token,
             status:$scope.curentStatus
         };
 
@@ -119,8 +121,8 @@ goceanApp.controller('OrderListCtrl', function ($scope, $rootScope, $state, $tim
         }else {
 
             var obj = {
-                passportId: $rootScope.passport.passportId,
-                token: $rootScope.passport.token,
+                passportId: $scope.passport.passportId,
+                token: $scope.passport.token,
                 orderId: order.id
             };
             orderListService.getDetails(obj).then(function (data) {

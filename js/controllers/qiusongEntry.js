@@ -1,15 +1,17 @@
 /**
  * Created by 53983 on 2017/3/14.
  */
-goceanApp.controller('QiusongEntryCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, qiusongEntryService, configService) {
+goceanApp.controller('QiusongEntryCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, qiusongEntryService, configService, localStorageService) {
     console.log("about QiusongEntryCtrl");
 
     var url = window.location.href;
-    var params = configService.parseQueryString(url);
+    var params = configService.parseQueryString(window.location.href);
     if (params.passportId){
         params.nickName = Base64.decode(params.nickName);
-        $rootScope.passport = params;
+        localStorageService.set("passport",params);
     }
+
+    $scope.passport = localStorageService.get("passport");
 
     var skuId = 0;//这里和购买不一样，做服务端要特殊处理，先获得goodsId
     var sharerId = 0;
@@ -26,7 +28,7 @@ goceanApp.controller('QiusongEntryCtrl', function ($scope, $rootScope, $state, $
         sharerId = $stateParams.sharerId;
     }
     var _state = "qiusongEntry/" + skuId+"/"+sharerId;//FIXME 登录后返回当前页面，需要参数skuId
-    if ($rootScope.passport == null){//如果是基础用户，这里不要求授权用户信息; 若果没登录，就直接通过授权模式登录
+    if ($scope.passport == null){//如果是基础用户，这里不要求授权用户信息; 若果没登录，就直接通过授权模式登录
         window.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0cae6e3b9632e632&redirect_uri=http://wxsdk.yezaigou.com/wx/page/userInfo&response_type=code&scope=snsapi_userinfo&state="+_state;
         return;
     }
@@ -122,8 +124,8 @@ goceanApp.controller('QiusongEntryCtrl', function ($scope, $rootScope, $state, $
 
 
             var obj = {//为了以后扩展用户自创建，而统一请求数据, itemId ==0
-                passportId:$rootScope.passport.passportId,
-                token:$rootScope.passport.token,
+                passportId:$scope.passport.passportId,
+                token:$scope.passport.token,
                 itemId:$scope.qiusongRo.id,
                 price:$scope.qiusongRo.price,
                 memberCount:$scope.qiusongRo.memberCount,//必要

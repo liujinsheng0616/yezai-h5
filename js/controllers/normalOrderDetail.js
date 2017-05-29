@@ -1,21 +1,24 @@
 /**
  * Created by 53983 on 2017/3/27.
  */
-goceanApp.controller('NormalOrderDetailCtrl', ['$scope','$rootScope','$state', '$stateParams', '$filter','$upload', 'normalDetailService', 'configService',function ($scope, $rootScope, $state, $stateParams, $filter, $upload, normalDetailService, configService) {
+goceanApp.controller('NormalOrderDetailCtrl', ['$scope','$rootScope','$state', '$stateParams', '$filter','$upload', 'normalDetailService', 'configService',function ($scope, $rootScope, $state, $stateParams, $filter, $upload, normalDetailService, configService, localStorageService) {
 
    console.log("about NormalOrderDetailCtrl");
+
+    var params = configService.parseQueryString(window.location.href);
+    if (params.passportId){
+        params.nickName = Base64.decode(params.nickName);
+        localStorageService.set("passport",params);
+    }
+
+    $scope.passport = localStorageService.get("passport");
 
     var orderId = 0;
     if($stateParams.orderId){
         orderId = $stateParams.orderId;
     }
 
-    var params = configService.parseQueryString(window.location.href);
-    if (params.passportId){
-        params.nickName = Base64.decode(params.nickName);
-        $rootScope.passport = params;
-    }
-    if ($rootScope.passport == null ){
+    if ($scope.passport == null ){
         var _state = "normalDetail/"+orderId;
         window.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0cae6e3b9632e632&redirect_uri=http://wxsdk.yezaigou.com/wx/page/base&response_type=code&scope=snsapi_base&state="+_state;
         return;
@@ -30,8 +33,8 @@ goceanApp.controller('NormalOrderDetailCtrl', ['$scope','$rootScope','$state', '
         if (id <= 0)
             return;
         var obj = {
-            passportId:$rootScope.passport.passportId,
-            token:$rootScope.passport.token,
+            passportId:$scope.passport.passportId,
+            token:$scope.passport.token,
             orderId:id};
         normalDetailService.getDetails(obj).then(function(data){
             console.log(data);

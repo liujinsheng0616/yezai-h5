@@ -1,15 +1,17 @@
 /**
  * Created by 53983 on 2017/3/14.
  */
-goceanApp.controller('QiusongDetailsSponsorCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, qiusongDetailsSponsorService, configService, appSettings, mainHomeService) {
+goceanApp.controller('QiusongDetailsSponsorCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, qiusongDetailsSponsorService, configService, appSettings, mainHomeService, localStorageService) {
     console.log("about QiusongDetailsSponsorCtrl");
 
     var url = window.location.href;
-    var params = configService.parseQueryString(url);
+    var params = configService.parseQueryString(window.location.href);
     if (params.passportId){
         params.nickName = Base64.decode(params.nickName);
-        $rootScope.passport = params;
+        localStorageService.set("passport",params);
     }
+
+    $scope.passport = localStorageService.get("passport");
 
     var id = 0;//这里和购买不一样，做服务端要特殊处理，qiusongId
     if ($stateParams.id){
@@ -17,12 +19,12 @@ goceanApp.controller('QiusongDetailsSponsorCtrl', function ($scope, $rootScope, 
     }
 
     var _state = "qiusongDetailsSponsor/" + id;//FIXME
-    if ($rootScope.passport == null){//如果是基础用户，这里不要求授权用户信息; 若果没登录，就直接通过授权模式登录
+    if ($scope.passport == null){//如果是基础用户，这里不要求授权用户信息; 若果没登录，就直接通过授权模式登录
         window.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0cae6e3b9632e632&redirect_uri=http://wxsdk.yezaigou.com/wx/page/userInfo&response_type=code&scope=snsapi_userinfo&state="+_state;
         return;
     }
 
-    var sharedUrl =  appSettings.domain + "/#/qiusongShared/"+id +"/"+$rootScope.passport.passportId;
+    var sharedUrl =  appSettings.domain + "/#/qiusongShared/"+id +"/"+$scope.passport.passportId;
 
     // 获取JSSDK
     configService.getJssdkInfo(window.location.href);
@@ -30,8 +32,8 @@ goceanApp.controller('QiusongDetailsSponsorCtrl', function ($scope, $rootScope, 
     function init () {
 
         var obj = {
-            passportId: $rootScope.passport.passportId,
-            token : $rootScope.passport.token,
+            passportId: $scope.passport.passportId,
+            token : $scope.passport.token,
             crowdFundingId : id
         };
 
@@ -56,7 +58,7 @@ goceanApp.controller('QiusongDetailsSponsorCtrl', function ($scope, $rootScope, 
                     }else if ($scope.qiusong.settleType == "DRAW_ONLY"){
                         $scope.qiusong.settleTypeView = "暂时中止";
                     }else if ($scope.qiusong.settleType == "BUY_DRAW"){
-                        $scope.qiusong.settleTypeView = "超额结余";
+                        $scope.qiusong.settleTypeView = "超送结余";
                     }
                 }
                 // else if ($scope.qiusong.status == "UN_PAY") {
@@ -125,13 +127,13 @@ goceanApp.controller('QiusongDetailsSponsorCtrl', function ($scope, $rootScope, 
     }
 
     $scope.toItem = function(id){
-        $state.go("itemDetail",{goodsId:id,sharerIdStr:"sharerId_"+$rootScope.passport.passportId})
+        $state.go("itemDetail",{goodsId:id,sharerIdStr:"sharerId_"+$scope.passport.passportId})
     };
 
     $scope.abort = function(qiusong){
         var obj = {
-            passportId: $rootScope.passport.passportId,
-            token : $rootScope.passport.token,
+            passportId: $scope.passport.passportId,
+            token : $scope.passport.token,
             crowdFundingId : id
         };
         qiusongDetailsSponsorService.qiusongAbort(obj).then(function(data){

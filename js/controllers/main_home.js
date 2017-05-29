@@ -6,10 +6,12 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
     var params = configService.parseQueryString(window.location.href);
     if (params.passportId){
         params.nickName = Base64.decode(params.nickName);
-        $rootScope.passport = params;
+        localStorageService.set("passport",params);
     }
+    
+    $scope.passport = localStorageService.get("passport");
 
-    if ($rootScope.passport == null || $rootScope.passport.type == "BLANK"){
+    if ($scope.passport == null || $scope.passport.type == "BLANK"){
         var _state = "home";
         window.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0cae6e3b9632e632&redirect_uri=http://wxsdk.yezaigou.com/wx/page/userInfo&response_type=code&scope=snsapi_userinfo&state="+_state;
         return;
@@ -176,7 +178,7 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
             // 点赞数据
             for (j in topic.likesIdList) {
                 var userId = topic.likesIdList[j];
-                if (userId == $rootScope.passport.passportId) {
+                if (userId == $scope.passport.passportId) {
                     passportLiked = true;
                 }
                 for (k in $scope.userList) {
@@ -184,7 +186,7 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
                     var nikeName = $scope.userList[k].nickName;
                     if (userId == tempUserId) {
                         if (passportLiked) {
-                            likedStr = $rootScope.passport.nickName + ',' + likedStr;
+                            likedStr = $scope.passport.nickName + ',' + likedStr;
                         } else {
                             likedStr += nikeName + ",";
                         }
@@ -216,7 +218,7 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
                     }
                 }
                 var followerId = topic.followVoList[a].followerId;
-                if (followerId == $rootScope.passport.passportId) {
+                if (followerId == $scope.passport.passportId) {
                     commentPassport = true;
                 }
                 for (k in $scope.userList) {
@@ -375,7 +377,7 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
                     var topicId = el.getAttribute("topicId");
                     commentBox.className = 'comment-box clearfix';
                     commentBox.setAttribute('user', 'self');
-                    var str = '<div class="comment-content">' + '<p class="comment-text"><span class="user">'+ $rootScope.passport.nickName;
+                    var str = '<div class="comment-content">' + '<p class="comment-text"><span class="user">'+ $scope.passport.nickName;
                     if (toUserName != ''){
                         str+= '</span> : 回复 <span class="user">' + toUserName + '</span> ：'+ textarea.value +'</p>';
                     } else {
@@ -411,14 +413,14 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
                 if (el.className == 'fa fa-thumbs-o-up') {
                     el.className = 'fa fa-thumbs-up';
                     if (text ==''){
-                        text = $rootScope.passport.nickName;
+                        text = $scope.passport.nickName;
                     } else {
-                        text = $rootScope.passport.nickName + ',' + text;
+                        text = $scope.passport.nickName + ',' + text;
                     }
                     praisesTotal.innerHTML = text;
                 } else if (el.className == 'fa fa-thumbs-up') {
                     el.className = 'fa fa-thumbs-o-up';
-                    text = text.substring($rootScope.passport.nickName.length + 1, text.length);
+                    text = text.substring($scope.passport.nickName.length + 1, text.length);
                     praisesTotal.innerHTML = text;
                 }
                 if (text.length > 0){
@@ -499,8 +501,8 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
     // 保存点赞数据
     function operatePraise(topicId) {
         var obj = {
-            passportId : $rootScope.passport.passportId,
-            token : $rootScope.passport.token,
+            passportId : $scope.passport.passportId,
+            token : $scope.passport.token,
             topicId : topicId
         };
         mainHomeService.likes(obj).then(function(data){
@@ -516,8 +518,8 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
             toUserId = 0;
         }
         var obj = {
-            passportId : $rootScope.passport.passportId,
-            token : $rootScope.passport.token,
+            passportId : $scope.passport.passportId,
+            token : $scope.passport.token,
             topicId : topicId,
             toId : toUserId,
             text : text
@@ -532,8 +534,8 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
     // 删除回复内容
     function deleteFollow(followId) {
         var obj = {
-            passportId : $rootScope.passport.passportId,
-            token : $rootScope.passport.token,
+            passportId : $scope.passport.passportId,
+            token : $scope.passport.token,
             followId : followId
         };
         mainHomeService.removeFollow(obj).then(function(data){
