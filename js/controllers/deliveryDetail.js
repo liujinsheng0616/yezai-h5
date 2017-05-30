@@ -26,6 +26,7 @@ goceanApp.controller('DeliverDetailCtrl',function ($scope, $rootScope, $state, $
         orderId:$scope.orderId
     };
 
+    $scope.hasImg = false;
     deliverDetailService.getForwardDetails(obj).then(function(data){
         console.log(data);
         if ("OK" == data.status){
@@ -51,6 +52,7 @@ goceanApp.controller('DeliverDetailCtrl',function ($scope, $rootScope, $state, $
                 for (var i = 0, len = files.length; i < len; ++i) {
                     var file = appSettings.img_domain+files[i];
                     $imageFiless.append($(tmpl.replace('#url#', file)));
+                    $scope.hasImg = true;
                 }
             }
 
@@ -60,6 +62,7 @@ goceanApp.controller('DeliverDetailCtrl',function ($scope, $rootScope, $state, $
                 for (var i = 0, len = files.length; i < len; ++i) {
                     var file = appSettings.img_domain+files[i];
                     $imageFiless.append($(tmpl.replace('#url#', file)));
+                    $scope.hasImg = true;
                 }
             }
         }
@@ -119,6 +122,7 @@ goceanApp.controller('DeliverDetailCtrl',function ($scope, $rootScope, $state, $
                         // 文件上传成功处理函数 http://topic-photo-test.b0.upaiyun.com/
                         //$imageFiless.append($(tmpl.replace('#url#', 'http://topic-photo-test.b0.upaiyun.com/' + data.url)));
                         $imageFiless.append($(tmpl.replace('#url#', appSettings.img_domain + obj.url)));
+                        $scope.hasImg = true;
                     }
                 },function(err){
 

@@ -241,9 +241,12 @@ goceanApp.controller('PayMomentCtrl', function ($scope, $rootScope, $state, $tim
             qiusongDetailsSponsorService.qiusongSettle(obj).then(function (data) {
                 if (data.status == "OK") {
                     var id = data.result;
-                    $state.go("orderDetail", {
-                        orderId: id
-                    });
+                    if (orderRo.type == 'FORWARD_PLAN' || orderRo.type == 'FORWARD'){
+                        $state.go('inServiceDetail', {orderId : orderId});
+                    } else if (orderRo.type == 'NORMAL') {
+                        $state.go('normalDetail', {orderId: orderId});
+                    }
+
                 } else {
                     alert("系统繁忙,请稍候再试");
                 }
