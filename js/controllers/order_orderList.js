@@ -92,13 +92,15 @@ goceanApp.controller('OrderListCtrl', function ($scope, $rootScope, $state, $tim
                 brief.statusView = "未付款";
             }else if (brief.status == "ORDER_FINISHED"){
                 brief.statusView = "已完成";
-            }else if (brief.type == "FORWARD_PLAN" && brief.status == "ORDER_PAID"){
+            }else if (brief.type == "FORWARD_PLAN" && brief.status == "ORDER_PAID" ){
                 brief.statusView = "服务中";
-            }else if (brief.type == "NORMAL"){
+            }else if (brief.type == "NORMAL" && brief.status == "ORDER_PAID" ){
                 if (brief.deliveryStatus == null){
                     brief.statusView = "待发货";
                 }else if(brief.deliveryStatus == "DELIVERING"){
                     brief.statusView = "送货中";
+                }else if(brief.deliveryStatus == "DELIVERED"){
+                    brief.statusView = "已发货";
                 }
             }
             var itemList = brief.itemList;

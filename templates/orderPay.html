@@ -44,7 +44,8 @@
         <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;">订单费用</div>
         <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;">商品总额：<span style="float: right;color: #0d0d0d;" ng-bind="'￥' + orderDetailsView.sales "></span></div>
         <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;">运费：<span style="float: right;color: #0d0d0d;">￥{{orderDetailsView.freight}}</span></div>
-        <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;">付款金额：<span style="float: right;color: #09BB07;" ng-bind="'￥' + (orderDetailsView.sales + orderDetailsView.freight) "></span></div>
+        <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;" ng-if="orderDetailsView.deposit > 0">保证金：<span style="float: right;color: #0d0d0d;">￥-{{orderDetailsView.deposit}}</span></div>
+        <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;">付款金额：<span style="float: right;color: #09BB07;" ng-bind="'￥' + (orderDetailsView.sales + orderDetailsView.freight - orderDetailsView.deposit) "></span></div>
     </div>
 
     <div class="weui_btn_area ">

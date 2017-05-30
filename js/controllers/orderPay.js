@@ -73,7 +73,7 @@ goceanApp.controller('OrderPayCtrl', function ($scope, $rootScope, $state, $time
             device : "WEB",
             title : orderDetailsView.itemList[0].title,
             pr : orderDetailsView.pr,
-            paid : orderDetailsView.sales,
+            paid : orderDetailsView.sales + orderDetailsView.freight - orderDetailsView.deposit,
             skuId : orderDetailsView.itemList[0].id,
             tradeType : "JSAPI"
         };

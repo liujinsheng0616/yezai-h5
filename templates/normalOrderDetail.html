@@ -38,48 +38,54 @@
         <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;">订单号：<span style="float: right;color: #0d0d0d;" ng-bind="orderDetailsView.pr"></span></div>
         <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;">商品总额：<span style="float: right;color: #0d0d0d;" ng-bind="'￥' + orderDetailsView.sales "></span></div>
         <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;">运费：<span style="float: right;color: #0d0d0d;">￥{{orderDetailsView.freight}}</span></div>
-        <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;">付款金额：<span style="float: right;color: #09BB07;" ng-bind="'￥' + (orderDetailsView.sales +  orderDetailsView.freight)"></span></div>
+        <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;" ng-if="orderDetailsView.deposit > 0">保证金：<span style="float: right;color: #0d0d0d;">￥-{{orderDetailsView.deposit}}</span></div>
+        <div class="weui_panel_hd" style="font-size: 14px;border-bottom: 1px solid #d9d9d9;">付款金额：<span style="float: right;color: #09BB07;" ng-bind="'￥' + (orderDetailsView.sales +  orderDetailsView.freight - orderDetailsView.deposit)"></span></div>
     </div>
 
-    <div class="weui_cells weui-cells_form">
-        <div class="weui_cell" style="border-top: 1px solid #d9d9d9;height:3.33rem;font-size: 14px;" ng-hide="orderDetailsView.status == 'ORDER_PAID'">
+    <div class="weui_panel weui_panel_access">
+        <div class="weui_cell" style="border-top: 1px solid #d9d9d9;height:3.33rem;font-size: 14px;" ng-if="orderDetailsView.status == 'ORDER_DELIVERED'">
             <div class="weui_cell_hd" style="width: 4.833rem;color: #888;"><label class="weui_label">发货日期：</label></div>
             <div class="weui_cell_bd weui_cell_primary">
-                {{orderDetailsView.delivery.sendDate}}
+                {{orderDetailsView.deliveryTime | date:"yyyy-MM-dd"}}
             </div>
         </div>
-        <div class="weui_cell" style="border-top: 1px solid #d9d9d9;height:3.33rem;font-size: 14px">
+        <div class="weui_cell" style="border-top: 1px solid #d9d9d9;font-size: 14px">
             <div class="weui_cell_hd" style="width: 4.833rem;color: #888;"><label class="weui_label">收货地址：</label></div>
             <div class="weui_cell_bd weui_cell_primary">
                 <div ng-bind="orderDetailsView.address.province + ' ' +orderDetailsView.address.city + ' '+ orderDetailsView.address.area +' ' +orderDetailsView.address.address +' ' + orderDetailsView.address.receiver"></div>
                 <div style="color: #00CCFF;" ng-bind="orderDetailsView.address.tel"></div>
             </div>
         </div>
-        <div class="weui_cell" style="border-top: 1px solid #d9d9d9;height:3.33rem;font-size: 14px;" ng-hide="orderDetailsView.expressBrief == null">
+        <div class="weui_cell" style="border-top: 1px solid #d9d9d9;height:3.33rem;font-size: 14px;" ng-repeat="expressBrief in orderDetailsView.expressList"  ng-hide="orderDetailsView.expressList == null">
             <div class="weui_cell_hd" style="width: 4.833rem;color: #888;"><label class="weui_label">物流信息：</label></div>
-            <div class="weui_cell_bd weui_cell_primary" ng-bind="orderDetailsView.expressBrief.companyName+' '+orderDetailsView.expressBrief.expressNumber" ng-click="getExpressInfo()">
+            <div class="weui_cell_bd weui_cell_primary" ng-bind="expressBrief.companyName+' '+expressBrief.expressBill" ng-click="getExpressInfo(expressBrief)">
             </div>
         </div>
-        <div class="weui-cell">
+
+    </div>
+
+
+    <div class="weui_media_box weui_media_small_appmsg" style="border-top: 1px solid #d9d9d9;">
+        <div class="weui-cell" style="border-top: 1px solid #d9d9d9;">
             <div class="weui-cell__bd">
                 <div class="weui-uploader">
                     <div class="weui-uploader__bd" style="width: 300px">
-                        <ul class="weui-uploader__files" id="imageFiles">
+                        <ul class="weui-uploader__files" id="imageFiles" >
                         </ul>
-                        <div class="weui-uploader__input-box" ng-hide="orderDetailsView.deliveryStatus == null">
+                        <div class="weui-uploader__input-box" ng-hide="orderDetailsView.deliveryStatus != 'DELIVERED' ">
                             <input id="uploaderInput" class="weui-uploader__input" type="file" accept="image/*" multiple />
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="page__bd">
-        <div class="weui-gallery" id="gallery">
-            <span class="weui-gallery__img" id="galleryImg"></span>
+        <div class="page__bd">
+            <div class="weui-gallery" id="gallery">
+                <span class="weui-gallery__img" id="galleryImg"></span>
+            </div>
         </div>
     </div>
-    <div style="width: 60px;height: 60px;bottom: 50px;right: 15px;position: fixed;">
-        <a href="javascript:void(0);" ng-click="goPublish();" class="weui_btn weui_btn_primary" style="width: 100%;height: 100%;border-radius: 50%;line-height: 60px;font-size: 15px;">晒晒</a>
+    <div style="width: 60px;height: 60px;bottom: 50px;right: 15px;position: fixed;" ng-if="hasImg == true">
+        <div ng-click="goPublish();" class="weui_btn weui_btn_primary" style="width: 100%;height: 100%;border-radius: 50%;line-height: 60px;font-size: 15px;">晒晒</div>
     </div>
 </div>
