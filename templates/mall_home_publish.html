@@ -10,17 +10,20 @@
                 <textarea id="textarea" class="weui_textarea" ng-model="topic.text" placeholder="说点什么..." rows="3"></textarea>
             </div>
         </div>
-        <div class="weui-cell ">
-        <div class="weui-cell__bd">
-            <div class="weui-uploader">
-                <div class="weui-uploader__bd" style="width: 300px">
-                    <ul class="weui-uploader__files" id="imageFiles" ng-click="previewImage();">
-                    </ul>
-                    <div class="weui-uploader__input-box" ng-click="addImage();">
+        <div class="weui_media_box weui_media_small_appmsg" style="border-top: 1px solid #d9d9d9;border-top: 0;">
+            <div class="weui-cell" style="border-top: 1px solid #d9d9d9;border-top: 0;">
+                <div class="weui-cell__bd">
+                    <div class="weui-uploader">
+                        <div class="weui-uploader__bd" style="width: 300px">
+                            <ul class="weui-uploader__files" id="imageFiles" >
+                            </ul>
+                            <div class="weui-uploader__input-box">
+                                <input id="uploaderInput" class="weui-uploader__input" type="file" accept="image/*" multiple />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         </div>
     </div>
 

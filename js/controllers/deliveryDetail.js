@@ -142,7 +142,7 @@ goceanApp.controller('DeliverDetailCtrl',['$scope', '$rootScope','$state', '$sta
     
     // 晒晒
     $scope.goPublish = function () {
-        $.confirm("发布后可以在晒晒区追加评论!", "确定发布?", function() {
+        $.prompt("", "发布到晒晒", function(text) {
             // 发布
         }, function() {
             //取消操作

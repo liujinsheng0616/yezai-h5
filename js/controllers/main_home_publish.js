@@ -1,7 +1,7 @@
 /**
  * Created by 53983 on 2017/4/12.
  */
-goceanApp.controller('MainHomePublishCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, mallHomePublishService,topicCreationService, configService, localStorageService) {
+goceanApp.controller('MainHomePublishCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, $upload, mallHomePublishService,topicCreationService, configService, localStorageService, appSettings) {
     console.log('about MainHomePublishCtrl');
 
     $scope.passport = localStorageService.get("passport");
@@ -13,52 +13,60 @@ goceanApp.controller('MainHomePublishCtrl', function ($scope, $rootScope, $state
     // 隐藏右上角
     configService.hideWXBtn();
 
-    var images = {
-        localId: [],
-        serverId: []
-    };
-    var hasChoosedNum = 0;
-    var tmpl = '<li class="weui-uploader__file" style="background-image:url(#url#)"></li>';
-    // 选择图片
-    $scope.addImage=function(){
-        wx.ready(function() {
-            wx.chooseImage({
-                count: 9 - hasChoosedNum, // 默认9
-                sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
-                sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
-                success: function (res) {
-                    hasChoosedNum += res.localIds.length;
-                    for (i in res.localIds){
-                        images.localId.push(res.localIds[i]);
-                        $('#imageFiles').append($(tmpl.replace('#url#', res.localIds[i])))
+    var tmpl = '<li class="weui-uploader__file" style="background-image:url(#url#);border:1px solid #d9d9d9;"></li>',
+        $uploaderInput = $("#uploaderInput"),
+        $imageFiless = $("#imageFiles")
 
-                        $rootScope.localImgIds.push(res.localIds[i]); //TEST
-                        upload();//TEST
-                    }
-                    if (hasChoosedNum == 9){
-                        $('.weui-uploader__input-box').hide();
-                    }
-                }
+    $scope.hasUploadNum = 0;
+    $scope.photoList = [];
+    $uploaderInput.on("change", function(e){
+        var files = e.target.files;
+        var config = {
+            api: 'http://v0.api.upyun.com/',
+            bucket: 'topic-photo-test',
+            // 空间的表单 API
+            form_api: 'tgQBgP/ltnhbv2bHSPy4blIwcws='
+        };
+
+        if ($scope.hasUploadNum > 9 || files.length > 9) {
+            $.alert("最多上传9张图片!");
+            return;
+        }
+        for (var i = 0, len = files.length; i < len; ++i) {
+            var file = files[i];
+            var options = {
+                bucket: config.bucket,
+                expiration: Math.floor(new Date().getTime() / 1000) + 86400,
+                'save-key': '/{year}/{mon}/{day}/{hour}_{min}_{sec}_{filename}{.suffix}'
+            };
+            var policy = Base64.encode(JSON.stringify(options));
+            var signature = hex_md5(policy +'&'+ config.form_api);
+            $scope.upload = $upload.upload({
+                url: config.api+config.bucket, //上传的url
+                method: 'POST',
+                data: {
+                    signature: signature,
+                    policy: policy
+                },
+                file: file // or list of files ($files) for html5 only
+            }).progress(function(evt) {//上传进度
+                console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
+            }).success(function(data, status, headers, config) {
+                $scope.hasUploadNum++;
+                $imageFiless.append($(tmpl.replace('#url#', appSettings.img_domain + data.url)));
+                $scope.photoList.push(appSettings.img_domain + data.url);
+            }).error(function(data, status, headers, config) {
+                //失败处理函数
+                console.log('上传失败');
             });
-        });
-    };
+        }
+    });
 
     $rootScope.tagChoosed = [];
     $rootScope.isToCreateTopic = false;
-    $rootScope.localImgIds = [];
-    $rootScope.serverImgIds = [];
     $scope.topic = {};
     $scope.topic.text = "";
     $rootScope.topic = $scope.topic;
-
-    function removeAndGetLocalId(){
-        if ($rootScope.localImgIds.length > 0){
-            var localId = $rootScope.localImgIds[0];
-            $rootScope.localImgIds = $rootScope.localImgIds.slice(1);//去掉第一个
-            return localId;
-        }
-        return null;
-    };
 
     function createTopic(){
         if ($scope.passport == null || $scope.passport == "undefined"){// base , userInfo
@@ -69,7 +77,7 @@ goceanApp.controller('MainHomePublishCtrl', function ($scope, $rootScope, $state
             type:$rootScope.topicViewNavId,// SHAI_SHAI | INTEREST
             tagList:$rootScope.tagChoosed,//[1,2]
             text:$scope.topic.text,//发帖内容 FIXME
-            photoList:$rootScope.serverImgIds,//["xxx.jpg","zzz.jpg"]
+            photoList:$scope.photoList,//["xxx.jpg","zzz.jpg"]
             postAddress:"",//地址
             coordinate:"",
             passportId:$scope.passport.passportId,//groupId
@@ -82,50 +90,15 @@ goceanApp.controller('MainHomePublishCtrl', function ($scope, $rootScope, $state
         // $state.go('main.home');
     }
 
-    /*
-     * 选取后就调用此方法，
-     * 发布时,$rootScope.isToCreateTopic = true; 然后调用此方法
-     */
-    $rootScope.isUploading = false;
-    function upload (){
-        if ($rootScope.isUploading)
-            return;
-        var localId = removeAndGetLocalId();
-        if (localId == null) {
-            if ($rootScope.isToCreateTopic){
-                /*
-                 * createTopic
-                 */
-                createTopic();
-            }
-            return;
-        }
-        $rootScope.isUploading = true;
-        wx.ready(function() {
-            wx.uploadImage({
-                localId: localId, // 需要上传的图片的本地ID，由chooseImage接口获得
-                isShowProgressTips: 0, // 默认为1，显示进度提示
-                success: function (res) {
-                    var serverId = res.serverId; // 返回图片的服务器端ID
-                    console.log("serverId = " + serverId);
-                    $rootScope.serverImgIds.push(serverId);
-                    $rootScope.isUploading = false;
-                    upload();//递归
-                }
-            });
-        });
-    }
-
-    // 预览图片
-    $scope.previewImage = function(){
+    $imageFiless.on("click", "li", function(){
         // 测试代码
         wx.ready(function() {
             wx.previewImage({
-                current: images.localId[0], // 当前显示图片的http链接
-                urls: images.localId // 需要预览的图片http链接列表
+                current: $scope.photoList[0], // 当前显示图片的http链接
+                urls: $scope.photoList // 需要预览的图片http链接列表
             });
         });
-    };
+    });
 
     // 取消发布
     $scope.cancelPublish = function () {
@@ -157,13 +130,10 @@ goceanApp.controller('MainHomePublishCtrl', function ($scope, $rootScope, $state
 
     // 发布微贴
     $scope.publish = function () {
-
         if ($rootScope.isToCreateTopic)
             return;
         $rootScope.isToCreateTopic = true;
-
-        upload();
-
+        createTopic();
         $state.go('main.home'); //直接跳到论坛页面，FIXME 把数据带过去显示
     }
 });
