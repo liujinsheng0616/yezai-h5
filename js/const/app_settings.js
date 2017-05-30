@@ -37,6 +37,7 @@ goceanApp.constant('appSettings', {
 		orderDetails:'/order/details',
         changeOrderAddress:'/order/address/change',
         onPicUploaded:'/order/ext/pic/upload',
+		goShaishai:'/order/details/shaishai',
 
 		changeDeliveryDay:'/forward/delivery/day/refresh',
 
@@ -58,7 +59,8 @@ goceanApp.constant('appSettings', {
 		qiusongSettle: '/crowdFunding/settle',
 
 		dealDetailList : '/income/list',
-		userData : '/userData/get'
+		userData : '/userData/get',
+		draw:'/userData/draw'
 	},
     appId:'wx0cae6e3b9632e632'
 });

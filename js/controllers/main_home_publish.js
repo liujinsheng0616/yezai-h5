@@ -74,7 +74,7 @@ goceanApp.controller('MainHomePublishCtrl', function ($scope, $rootScope, $state
         }
         //AJAX请求服务器
         var topic = {
-            type:$rootScope.topicViewNavId,// SHAI_SHAI | INTEREST
+            type:2,// SHAI_SHAI | INTEREST
             tagList:$rootScope.tagChoosed,//[1,2]
             text:$scope.topic.text,//发帖内容 FIXME
             photoList:$scope.photoList,//["xxx.jpg","zzz.jpg"]
@@ -134,6 +134,7 @@ goceanApp.controller('MainHomePublishCtrl', function ($scope, $rootScope, $state
             return;
         $rootScope.isToCreateTopic = true;
         createTopic();
+        $rootScope.topicViewNavId = 2;//兴趣
         $state.go('main.home'); //直接跳到论坛页面，FIXME 把数据带过去显示
     }
 });

@@ -21,5 +21,6 @@ goceanApp.factory('mallDetailService', ['$http', '$q','$rootScope', 'ajaxUtil','
             return defer.promise;
         };
 
+
         return mallDetailServiceObj;
     }]);

@@ -22,5 +22,23 @@ goceanApp.controller('MineDetailCtrl', function ($scope, $rootScope, $state, $ti
         },function(err){
 
         });
-    }();
+    };
+
+    $scope.draw = function () {
+
+        $.alert("系统在48小时内处理");
+        var obj = {
+            passportId : $stateParams.passportId,
+            token : $stateParams.token
+        };
+        mineDetailService.draw(obj).then(function(data){
+            if ("OK" == data.status) {
+                window.location.reload();
+            }
+        },function(err){
+
+        });
+    }
+
+    $scope.init();
 });
