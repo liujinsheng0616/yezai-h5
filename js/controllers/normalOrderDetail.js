@@ -159,4 +159,30 @@ goceanApp.controller('NormalOrderDetailCtrl', ['$scope','$rootScope','$state', '
         initPic($rootScope.orderDetailsView.orderExt);
         return;
     }
+
+    // 晒晒
+    $scope.goPublish = function () {
+        $.confirm("发布后可以在晒晒区追加评论!", "确定发布?", function() {
+
+            var obj = {
+                passportId:$scope.passport.passportId,
+                token:$scope.passport.token,
+                orderId:$scope.orderId
+            }
+
+            normalDetailService.goShaishai(obj).then(function(data){
+                console.log(data);
+                if ("OK" == data.status){
+                    $state.go("main.home");
+                }
+            },function(err){
+
+            });
+
+            // 发布
+        }, function() {
+            //取消操作
+        });
+    }
+
 }]);

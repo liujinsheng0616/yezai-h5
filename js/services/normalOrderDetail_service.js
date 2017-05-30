@@ -21,5 +21,20 @@ goceanApp.factory('normalDetailService', ['$http', '$q','$rootScope', 'ajaxUtil'
             return defer.promise;
         };
 
+        normalDetailServiceObj.goShaishai = function (params) {
+            var defer = $q.defer();
+            var obj = {
+                url:appSettings.host+appSettings.requestURL.goShaishai,
+                type:'POST',
+                params:params
+            }
+            ajaxUtil.ajax(obj).then(function(data){
+                defer.resolve(data);
+            },function(err){
+                defer.reject(err);
+            })
+            return defer.promise;
+        };
+
         return normalDetailServiceObj;
     }]);

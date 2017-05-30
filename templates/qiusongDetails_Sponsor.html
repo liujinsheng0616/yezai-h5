@@ -135,4 +135,11 @@
         <div class="weui_btn_primary" ng-click="settle(qiusong);" style="width:70%;border-radius:0px;height:3.33rem;line-height: 3.33rem;">下单结算</span></div>
     </div>
 
+    <div ng-if="qiusong.sponsorId == passport.passportId && qiusong.status == 'ING'">
+        <div style="height:2.00rem;line-height: 2.00rem;"></div>
+    <div  class="weui_panel_hd" style="text-align:center;font-size: 18px;color:#ffffff; padding:0;border-radius:0px;height:3.33rem;line-height: 3.33rem;background-color:#666666" ui-sref="order.qiusong">
+        返回列表
+    </div>
+    </div>
+
 </div>
