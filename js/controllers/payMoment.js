@@ -241,10 +241,10 @@ goceanApp.controller('PayMomentCtrl', function ($scope, $rootScope, $state, $tim
             qiusongDetailsSponsorService.qiusongSettle(obj).then(function (data) {
                 if (data.status == "OK") {
                     var id = data.result;
-                    if (orderRo.type == 'FORWARD_PLAN' || orderRo.type == 'FORWARD'){
-                        $state.go('inServiceDetail', {orderId : orderId});
-                    } else if (orderRo.type == 'NORMAL') {
-                        $state.go('normalDetail', {orderId: orderId});
+                    if ($rootScope.orderRo.type == 'FORWARD_PLAN' || $rootScope.orderRo.type == 'FORWARD'){
+                        $state.go('inServiceDetail', {orderId : id});
+                    } else if ($rootScope.orderRo.type == 'NORMAL') {
+                        $state.go('normalDetail', {orderId: id});
                     }
 
                 } else {
