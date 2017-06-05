@@ -17,12 +17,14 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
         return;
     }
 
-    var tabIndex = 0;
+    $rootScope.topicViewNavId = localStorageService.get("topicViewNavId");
 
     if ($rootScope.topicViewNavId == null) {
         $rootScope.topicViewNavId = 1;
+        localStorageService.set("topicViewNavId", $rootScope.topicViewNavId)
     }
-    tabIndex = $rootScope.topicViewNavId - 1;
+
+    var tabIndex = $rootScope.topicViewNavId - 1;
     // 底部tab选中
     $("#activeHomePage").addClass('weui_active').siblings().removeClass('weui_active');
     $('#tab1').tab({defaultIndex:tabIndex,activeClass:"tab-green"});
@@ -34,10 +36,9 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
 
     $scope.initData = function (viewTypeId,firstFlag) {
         if ($rootScope.topicViewNavId != viewTypeId){
-            $scope.page = 1;
-            $scope.rows = 10;
-            $rootScope.topicViewNavId = viewTypeId;
-            firstFlag = true;
+            localStorageService.set("topicViewNavId", viewTypeId);
+            location.reload();
+            return;
         }
         var obj = {
             type:viewTypeId,
@@ -61,8 +62,12 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
                         $scope.topicList = $scope.topicList.concat(result.topicList);
                     } else {
                         $scope.topicList = result.topicList;
-                        $(".weui-infinite-scroll").html('<p class="loading"><div class="infinite-preloader"></div>正在加载...</p>')
-                        loading = false;
+                        if ($scope.topicList.length < 10){
+                            $(".weui-infinite-scroll").html('');
+                        } else {
+                            $(".weui-infinite-scroll").html('<p class="loading"><div class="infinite-preloader"></div>正在加载...</p>')
+                            loading = false;
+                        }
                     }
                     if ($scope.userList && $scope.userList.length > 0){
                         $scope.userList = $scope.userList.concat(result.userList);
