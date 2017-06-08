@@ -10,6 +10,8 @@
         </div>
         <div class="weui_cell_ft weui_publish"  ui-sref="publish({tagList:tagList})" ui-sref-active="active">＋</div>
     </div>
+
+    <div id="zzDiv" class="weui_mask weui_mask_visible" style="transform-origin: 0px 0px 0px; opacity: 0.1; transform: scale(1, 1);display: none;" ng-click="hideTextBox();"></div>
     <div class="weui-pull-to-refresh" data-infinite="[object Object]">
         <div class="scrollArea" style="padding-bottom: 5%;">
             <div class="weui-pull-to-refresh-layer">
@@ -48,15 +50,15 @@
                             <div class="toolbar" style="padding-bottom: 6px;">
                                 <p class="timestamp" ng-bind="topic.viewTime"></p>
                                 <span class="toggleAction">
-                                <i class="fa fa-commenting-o" style="width: 20px;" ng-click="showTextBox(topic.id)"></i>
+                                <i class="fa fa-commenting-o" style="width: 20px;" ng-click="showTextBox(topic)"></i>
                                 <i ng-hide="topic.passportLiked == true" passportLiked="{{topic.passportLiked}}" index="{{$index}}" topicId = "{{topic.id}}" class="fa fa-thumbs-o-up" style="margin-left: 20px;width: 20px;"></i>
                                 <i ng-hide="topic.passportLiked == false" passportLiked="{{topic.passportLiked}}" index="{{$index}}" topicId = "{{topic.id}}" class="fa fa-thumbs-up" style="margin-left: 20px;width: 20px;"></i>
                             </span>
                             </div>
                             <!-- 赞／评论区 -->
                             <p class="liketext" id="liketext{{$index}}" ng-hide="topic.likedStr == ''"><i class="fa fa-thumbs-up up"></i><span class="nickname" ng-bind="topic.likedStr"></span></p>
-                            <div class="comment-list">
-                                <div class="comment-box clearFix" ng-repeat="comment in topic.followVoList" ng-click="hideTextBox(topic.id)">
+                            <div class="comment-list" id="commentList{{topic.id}}">
+                                <div class="comment-box clearFix" ng-repeat="comment in topic.followVoList">
                                     <div class="comment-content">
                                         <p class="comment-text" style="width: 87%;">
                                             <span class="user" ng-bind="comment.followerName"></span>
@@ -68,24 +70,30 @@
                                             <a href="javascript:void(0);" followId="{{comment.id}}" class="comment-operate">删除</a>
                                         </p>
                                         <p class="comment-time" ng-hide="comment.commentPassport == true">
-                                            <a href="javascript:void(0);" toUserId="{{comment.followerId}}" class="comment-operate">回复</a>
+                                            <a href="javascript:void(0);" ng-click="showCommentBox(comment, topic.id);" class="comment-operate">回复</a>
                                         </p>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="text-box" id="textBox{{topic.id}}">
-                                <textarea class="comment" autocomplete="off">评论…</textarea>
-                                <div class="btn" topicId="{{topic.id}}">回 复</div>
-                                <span class="word"><span class="length">0</span>/140</span>
                             </div>
                         </div>
                         <!-- 结束 post -->
                     </div>
                 </div>
             </div>
+
             <!-- 结束 朋友圈 -->
             <div class="weui-infinite-scroll">
                 <p class="loading"><div class="infinite-preloader"></div>正在加载...</p>
+            </div>
+        </div>
+    </div>
+    <div id="textBox" class="weui_cells weui_cells_form" style="position: fixed;width: 100%;background-color: #eee;bottom: 0;display: none;z-index: 1000;">
+        <div class="weui_cell" style="width: 100%;">
+            <div class="weui_cell_bd weui_cell_primary" style="border-bottom: 1px solid #04be02;height: 100%">
+                <textarea id="textarea" class="weui_textarea" style="padding: 5px;max-height: 50px;" placeholder="评论" rows="1"></textarea>
+            </div>
+            <div class="weui_cell_ft" style="margin-left: 10px;">
+                <a href="javascript:void(0);" class="weui-vcode-btn" ng-click="operateLeave();" style="border:1px solid #04be02;height: 32px;line-height: 32px;font-size: 14px;border-radius: 10%;background: #04be02;color: #ffffff;">回复</a>
             </div>
         </div>
     </div>

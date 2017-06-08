@@ -31,6 +31,8 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
 
     $scope.page = 1;
     $scope.rows = 10;
+    $scope.toUserName = ''; // 回复对象名字
+    $scope.toUserId = '';// 回复对象ID
     // 下拉刷新
     var loading = false;
 
@@ -221,11 +223,8 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
                 }
             });
 
-            var toUserName = '';
-            var toUserId = '';
             var list = document.getElementById('list');
             var boxs = list.children;
-            var timer;
 
             //删除节点
             function removeNode(node) {
@@ -246,90 +245,12 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
                         case 'fa fa-thumbs-up':
                             praiseBox(el.parentNode.parentNode.parentNode, el);
                             break;
-                        //回复按钮蓝
-                        case 'btn':
-                            reply(el.parentNode.parentNode.parentNode, el);
-                            break;
-                        //回复按钮灰
-                        case 'btn btn-off':
-                            clearTimeout(timer);
-                            break;
                         //操作留言
                         case 'comment-operate':
                             operate(el);
                             break;
                     }
                 };
-                //评论
-                var textArea = boxs[i].getElementsByClassName('comment')[0];
-                //评论获取焦点
-                textArea.onfocus = function () {
-                    this.parentNode.className = 'text-box text-box-on';
-                    if (this.value != ''){
-                        this.value = '';
-                    }
-                    this.onkeyup();
-                };
-                //评论失去焦点
-                textArea.onblur = function () {
-                    var me = this;
-                    var val = me.value;
-                    if (val == '') {
-                        timer = setTimeout(function () {
-                            me.value = '评论…';
-                            me.parentNode.className = 'text-box';
-                        }, 200);
-                    }
-                    setTimeout(function () {
-                        me.parentNode.style.display = 'none';
-                        toUserName = '';
-                        toUserId = '';
-                    }, 4000);
-                };
-                //评论按键事件
-                textArea.onkeyup = function () {
-                    var val = this.value;
-                    var len = val.length;
-                    var els = this.parentNode.children;
-                    var btn = els[1];
-                    var word = els[2];
-                    btn.className = 'btn';
-                    word.innerHTML = len + '/140';
-                }
-            }
-            /**
-             * 发评论
-             * @param box 每个分享的div容器
-             * @param el 点击的元素
-             */
-            function reply(box, el) {
-                var commentList = box.getElementsByClassName('comment-list')[0];
-                var textarea = box.getElementsByClassName('comment')[0];
-                var commentBox = document.createElement('div');
-                var text_box = box.getElementsByClassName('text-box')[0];
-                if (textarea.value != ''){
-                    var topicId = el.getAttribute("topicId");
-                    commentBox.className = 'comment-box clearfix';
-                    commentBox.setAttribute('user', 'self');
-                    var str = '<div class="comment-content">' + '<p class="comment-text"><span class="user">'+ $scope.passport.nickName;
-                    if (toUserName != ''){
-                        str+= '</span> : 回复 <span class="user">' + toUserName + '</span> ：'+ textarea.value +'</p>';
-                    } else {
-                        str+= '</span> ：' + textarea.value + '</p>';
-                    }
-                    str+='<p class="comment-time">' + '<a href="javascript:;" class="comment-operate">删除</a>' + '</p>' + '</div>';
-                    commentBox.innerHTML = str;
-                    commentList.appendChild(commentBox);
-                    // 保存回复内容
-                    operateLeave(topicId,toUserId,textarea.value);
-                    textarea.value = '';
-                    toUserName = '';
-                    toUserId = '';
-                } else {
-                    return;
-                }
-                text_box.style.display = 'none';
-
             }
 
             /**
@@ -371,18 +292,9 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
              */
             function operate(el) {
                 var commentBox = el.parentNode.parentNode.parentNode;
-                var box = commentBox.parentNode.parentNode.parentNode;
                 var txt = el.innerHTML;
                 var user = commentBox.getElementsByClassName('user')[0].innerHTML;
-                var textBox = box.getElementsByClassName('text-box')[0];
-                var textarea = box.getElementsByClassName('comment')[0];
-                if (txt == '回复') {
-                    toUserId = el.getAttribute("toUserId");
-                    textBox.style.display = 'block';
-                    textarea.value = '回复'+ user + '：';
-                    toUserName = user;
-                    textarea.onkeyup();
-                } else {
+                if (txt == '删除') {
                     var followId = el.getAttribute("followId");
                     $.confirm("您确定要删除吗?", "删除留言", function() {
                         removeNode(commentBox);
@@ -397,16 +309,38 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
     }
 
     // 评论框弹出
-    $scope.showTextBox = function (id) {
-        $("#textBox"+id).show();
-        $("#textBox"+id ).find('textarea').val('评论…');
-        $("#textBox"+id ).removeClass().addClass('text-box');
+    $scope.showTextBox = function (topic) {
+        $scope.toUserName = '';
+        $scope.toUserId = '';
+        $scope.topicId = topic.id;
+        $("#textarea").val("");
+        $("#textarea").attr('placeholder', '评论');
+        $("#textBox").fadeIn();
+        $("#zzDiv").attr("style", "transform-origin: 0px 0px 0px; opacity: 0.1; transform: scale(1, 1);")
+        $("#zzDiv").fadeIn();
+        $("#tabOrder").fadeOut();
+        $('#textarea').trigger('focus');
     };
 
     // 隐藏评论框
-    $scope.hideTextBox = function(id){
-        $("#textBox"+id).hide();
-        $("#textBox"+id ).find('textarea').val('评论…');
+    $scope.hideTextBox = function(){
+        $("#textBox").fadeOut();
+        $("#zzDiv").fadeOut();
+        $("#tabOrder").fadeIn();
+    };
+
+    // 回复框弹出
+    $scope.showCommentBox = function (comment, topicId) {
+        $scope.toUserId = comment.followerId;
+        $scope.toUserName = comment.followerName;
+        $scope.topicId = topicId;
+        $("#textarea").val("");
+        $('#textarea').attr('placeholder', '回复 ' + comment.followerName + ':');
+        $("#textBox").fadeIn();
+        $("#zzDiv").attr("style", "transform-origin: 0px 0px 0px; opacity: 0.1; transform: scale(1, 1);")
+        $("#zzDiv").fadeIn();
+        $("#tabOrder").fadeOut();
+        $('#textarea').trigger('focus');
     };
     
     // 显示全文或隐藏
@@ -447,15 +381,29 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
     }
 
     // 保存回复数据
-    function operateLeave(topicId,toUserId,text) {
-        if (toUserId == ''){
-            toUserId = 0;
+    $scope.operateLeave = function() {
+        if ($scope.toUserId == ''){
+            $scope.toUserId = 0;
         }
+        // 动态添加数据
+        var text = $("#textarea").val();
+        var commentBox = document.createElement('div');
+        commentBox.className = 'comment-box clearfix';
+        var str = '<div class="comment-content">' + '<p class="comment-text"><span class="user">'+ $scope.passport.nickName;
+        if ($scope.toUserName != ''){
+            str+= '</span> 回复 <span class="user">' + $scope.toUserName + '</span> ：'+ text +'</p>';
+        } else {
+            str+= '</span> ：' + text + '</p>';
+        }
+        str+='<p class="comment-time">' + '<a href="javascript:void(0);" class="comment-operate">删除</a>' + '</p>' + '</div>';
+        commentBox.innerHTML = str;
+        $("#commentList"+$scope.topicId).append(commentBox);
+
         var obj = {
             passportId : $scope.passport.passportId,
             token : $scope.passport.token,
-            topicId : topicId,
-            toId : toUserId,
+            topicId : $scope.topicId,
+            toId : $scope.toUserId,
             text : text
         };
         mainHomeService.createFollow(obj).then(function(data){
@@ -463,7 +411,9 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
         },function(err){
 
         });
-    }
+        // 隐藏评论框
+        $scope.hideTextBox();
+    };
 
     // 删除回复内容
     function deleteFollow(followId) {
