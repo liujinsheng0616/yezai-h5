@@ -30,7 +30,7 @@ goceanApp.controller('MainHomePublishCtrl', function ($scope, $rootScope, $state
             form_api: 'tgQBgP/ltnhbv2bHSPy4blIwcws='
         };
 
-        if ($scope.photoList.length > 9) {
+        if (photolist.length >= 9) {
             $.alert("最多上传9张图片!");
             return;
         }
@@ -91,12 +91,12 @@ goceanApp.controller('MainHomePublishCtrl', function ($scope, $rootScope, $state
         // $state.go('main.home');
     }
 
-    $imageFiless.on("click", "li", function(){
+    $imageFiless.on("click", "img", function(){
         // 测试代码
         wx.ready(function() {
             wx.previewImage({
-                current: $scope.photoList[0], // 当前显示图片的http链接
-                urls: $scope.photoList // 需要预览的图片http链接列表
+                current: photolist[0], // 当前显示图片的http链接
+                urls: photolist // 需要预览的图片http链接列表
             });
         });
     });
@@ -131,6 +131,11 @@ goceanApp.controller('MainHomePublishCtrl', function ($scope, $rootScope, $state
 
     // 发布微贴
     $scope.publish = function () {
+        if ($scope.topic.text == ""){
+            $.alert("您说点什么吧~！");
+            return;
+        }
+
         if ($rootScope.isToCreateTopic)
             return;
         $rootScope.isToCreateTopic = true;
@@ -143,10 +148,11 @@ goceanApp.controller('MainHomePublishCtrl', function ($scope, $rootScope, $state
 
 // 删除照片
 function deletePhoto(url, index) {
-    $.confirm("您确定要删除吗?", "删除照片", function() {
-        $("#imageFiles").find("li")[index-0].remove();
-        photolist.splice($.inArray('url',photolist),1);
-    }, function() {
-        //取消操作
-    });
+    if (index >= photolist.length){
+        $("#imageFiles").find("li")[photolist.length - 1].remove();
+    } else {
+        $("#imageFiles").find("li")[index - 0].remove();
+    }
+    photolist.splice($.inArray('url',photolist),1);
+
 }
