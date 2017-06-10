@@ -400,6 +400,7 @@
     top:20px;
     right: 20px;
     opacity:0.5;
+    padding-top: 6px;
 
 }
 .yzChildDiv{
@@ -415,4 +416,6 @@
     font-weight: bold;
     z-index: 99;
     border: 1px solid #f93110;width:66px;height: 66px;border-radius: 50%;
+    margin: auto;
+
 }
