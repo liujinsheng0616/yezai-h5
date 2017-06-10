@@ -1,7 +1,8 @@
 /**
  * Created by 53983 on 2017/4/12.
  */
-goceanApp.controller('MainHomePublishCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, $upload, mallHomePublishService,topicCreationService, configService, localStorageService, appSettings) {
+var photolist = [];
+goceanApp.controller('MainHomePublishCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, $upload, mallHomePublishService,topicCreationService, configService, localStorageService, appSettings, $compile) {
     console.log('about MainHomePublishCtrl');
 
     $scope.passport = localStorageService.get("passport");
@@ -13,11 +14,12 @@ goceanApp.controller('MainHomePublishCtrl', function ($scope, $rootScope, $state
     // 隐藏右上角
     configService.hideWXBtn();
 
-    var tmpl = '<li class="weui-uploader__file" style="background-image:url(#url#);border:1px solid #d9d9d9;"></li>',
+    var tmpl = '<li class="weui-uploader__file" style="position: relative;width: 85px;height: 85px;padding: 5px;">' +
+            '<div style="border:1px solid #d9d9d9; width: 79px; height: 79px;"><img src="#url#" style="width: 100%;height: 100%;"/></div>' +
+            '<span class="weui-badge" style="position: absolute;top: 0;right: -8px;background-color: #d9d9d9;" onclick="deletePhoto(imgUrl);">×</span></li>',
         $uploaderInput = $("#uploaderInput"),
-        $imageFiless = $("#imageFiles")
+        $imageFiless = $("#imageFiles");
 
-    $scope.hasUploadNum = 0;
     $scope.photoList = [];
     $uploaderInput.on("change", function(e){
         var files = e.target.files;
@@ -28,7 +30,7 @@ goceanApp.controller('MainHomePublishCtrl', function ($scope, $rootScope, $state
             form_api: 'tgQBgP/ltnhbv2bHSPy4blIwcws='
         };
 
-        if ($scope.hasUploadNum > 9 || files.length > 9) {
+        if ($scope.photoList.length > 9) {
             $.alert("最多上传9张图片!");
             return;
         }
@@ -52,9 +54,8 @@ goceanApp.controller('MainHomePublishCtrl', function ($scope, $rootScope, $state
             }).progress(function(evt) {//上传进度
                 console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
             }).success(function(data, status, headers, config) {
-                $scope.hasUploadNum++;
-                $imageFiless.append($(tmpl.replace('#url#', appSettings.img_domain + data.url)));
-                $scope.photoList.push(appSettings.img_domain + data.url);
+                $imageFiless.append(tmpl.replace('#url#', appSettings.img_domain + data.url).replace("imgUrl",  "'"+appSettings.img_domain + data.url+"'," + photolist.length));
+                photolist.push(appSettings.img_domain + data.url);
             }).error(function(data, status, headers, config) {
                 //失败处理函数
                 console.log('上传失败');
@@ -77,7 +78,7 @@ goceanApp.controller('MainHomePublishCtrl', function ($scope, $rootScope, $state
             type:2,// SHAI_SHAI | INTEREST
             tagList:$rootScope.tagChoosed,//[1,2]
             text:$scope.topic.text,//发帖内容 FIXME
-            photoList:$scope.photoList,//["xxx.jpg","zzz.jpg"]
+            photoList:photolist,//["xxx.jpg","zzz.jpg"]
             postAddress:"",//地址
             coordinate:"",
             passportId:$scope.passport.passportId,//groupId
@@ -136,5 +137,16 @@ goceanApp.controller('MainHomePublishCtrl', function ($scope, $rootScope, $state
         createTopic();
         $rootScope.topicViewNavId = 2;//兴趣
         $state.go('main.home'); //直接跳到论坛页面，FIXME 把数据带过去显示
-    }
+    };
+
 });
+
+// 删除照片
+function deletePhoto(url, index) {
+    $.confirm("您确定要删除吗?", "删除照片", function() {
+        $("#imageFiles").find("li")[index-0].remove();
+        photolist.splice($.inArray('url',photolist),1);
+    }, function() {
+        //取消操作
+    });
+}

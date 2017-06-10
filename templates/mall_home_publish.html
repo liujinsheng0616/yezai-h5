@@ -17,8 +17,11 @@
                         <div class="weui-uploader__bd" style="width: 300px">
                             <ul class="weui-uploader__files" id="imageFiles" >
                             </ul>
-                            <div class="weui-uploader__input-box">
-                                <input id="uploaderInput" class="weui-uploader__input" type="file" accept="image/*" multiple />
+                            <div class="weui-uploader__input-box" style="padding: 5px;height: 85px;width: 85px;border: 0;">
+                                <div style="width: 79px;height: 79px;border: 1px solid #d9d9d9;">
+                                    <input id="uploaderInput" class="weui-uploader__input" type="file" accept="image/*" multiple />
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -31,7 +34,7 @@
         <div class="weui_media_box weui_media_text" style="padding-top: 0;">
             <h1 class="weui_media_title">选择TAG</h1>
             <ul class="weui_media_info" style="text-align: center;font-size: 15px;margin-top: 0;line-height: 0;">
-                <li class="tagSelect" ng-repeat="tag in tagList" ng-bind="tag.value" ng-click="chooseTag($event,tag)"></li>
+                <li class="tagSelect" style="margin-top: 10px;" ng-repeat="tag in tagList" ng-bind="tag.value" ng-click="chooseTag($event,tag)"></li>
             </ul>
         </div>
     </div>
