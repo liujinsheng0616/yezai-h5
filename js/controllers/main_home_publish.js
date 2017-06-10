@@ -9,10 +9,13 @@ goceanApp.controller('MainHomePublishCtrl', function ($scope, $rootScope, $state
     $rootScope.tagList = $stateParams.tagList;
 
 
+
     // 获取JSSDK
     configService.getJssdkInfo(window.location.href);
     // 隐藏右上角
     configService.hideWXBtn();
+
+    $scope.uploadFlag = true;
 
     var tmpl = '<li class="weui-uploader__file" style="position: relative;width: 85px;height: 85px;padding: 5px;">' +
             '<div style="border:1px solid #d9d9d9; width: 79px; height: 79px;"><img src="#url#" style="width: 100%;height: 100%;"/></div>' +
@@ -35,6 +38,9 @@ goceanApp.controller('MainHomePublishCtrl', function ($scope, $rootScope, $state
             return;
         }
         for (var i = 0, len = files.length; i < len; ++i) {
+            if (i == 9){
+                break;
+            }
             var file = files[i];
             var options = {
                 bucket: config.bucket,
@@ -56,6 +62,9 @@ goceanApp.controller('MainHomePublishCtrl', function ($scope, $rootScope, $state
             }).success(function(data, status, headers, config) {
                 $imageFiless.append(tmpl.replace('#url#', appSettings.img_domain + data.url).replace("imgUrl",  "'"+appSettings.img_domain + data.url+"'," + photolist.length));
                 photolist.push(appSettings.img_domain + data.url);
+                if (photolist.length == 9){
+                    $scope.uploadFlag = false;
+                }
             }).error(function(data, status, headers, config) {
                 //失败处理函数
                 console.log('上传失败');
@@ -131,11 +140,6 @@ goceanApp.controller('MainHomePublishCtrl', function ($scope, $rootScope, $state
 
     // 发布微贴
     $scope.publish = function () {
-        if ($scope.topic.text == ""){
-            $.alert("您说点什么吧~！");
-            return;
-        }
-
         if ($rootScope.isToCreateTopic)
             return;
         $rootScope.isToCreateTopic = true;
