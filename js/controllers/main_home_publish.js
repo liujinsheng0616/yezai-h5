@@ -140,11 +140,24 @@ goceanApp.controller('MainHomePublishCtrl', function ($scope, $rootScope, $state
 
     // 发布微贴
     $scope.publish = function () {
+        if ($scope.topic.text == ""){
+            if (photolist.length == 0){
+                $.alert("您说点什么吧~");
+                return;
+            }
+        }
+        if (photolist.length == 0){
+            if ($scope.topic.text == ""){
+                $.alert("您说点什么吧~");
+                return;
+            }
+        }
         if ($rootScope.isToCreateTopic)
             return;
         $rootScope.isToCreateTopic = true;
         createTopic();
         $rootScope.topicViewNavId = 2;//兴趣
+        photolist = []; // 清空
         $state.go('main.home'); //直接跳到论坛页面，FIXME 把数据带过去显示
     };
 

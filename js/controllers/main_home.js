@@ -35,7 +35,6 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
     $scope.toUserId = '';// 回复对象ID
     // 下拉刷新
     var loading = false;
-    var firstFlag = true;
     $scope.initData = function (viewTypeId,firstFlag) {
         if ($rootScope.topicViewNavId != viewTypeId){
             localStorageService.set("topicViewNavId", viewTypeId);
