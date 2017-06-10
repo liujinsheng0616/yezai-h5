@@ -35,7 +35,7 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
     $scope.toUserId = '';// 回复对象ID
     // 下拉刷新
     var loading = false;
-
+    var firstFlag = true;
     $scope.initData = function (viewTypeId,firstFlag) {
         if ($rootScope.topicViewNavId != viewTypeId){
             localStorageService.set("topicViewNavId", viewTypeId);
@@ -99,6 +99,11 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
         for (i in $scope.topicList) {
             var topic = $scope.topicList[i];
             var posterId = topic.posterId;
+            if (posterId == $scope.passport.passportId){
+                topic.ownFlag = true;
+            } else {
+                topic.ownFlag = false;
+            }
             for (k in $scope.userList) {
                 var user = $scope.userList[k];
                 if (posterId == user.id) {
@@ -428,6 +433,26 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
 
         });
     }
+    
+    // 删除自己发的话题
+    $scope.deleteOwnTopic = function (topicId) {
+        $.confirm("您确定要删除吗?", "删除状态", function() {
+            var obj = {
+                passportId : $scope.passport.passportId,
+                token : $scope.passport.token,
+                topicId : topicId
+            };
+            mainHomeService.deleteOwnTopic(obj).then(function(data){
+                if (data.status == "OK") {
+                    $scope.initData($rootScope.topicViewNavId,true);
+                }
+            },function(err){
+
+            });
+        }, function() {
+            //取消操作
+        });
+    };
 
     // 上拉刷新
     $("div.weui-pull-to-refresh").pullToRefresh().on("pull-to-refresh", function () {

@@ -124,5 +124,23 @@ goceanApp.factory('mainHomeService', ['$http', '$q','$rootScope', 'ajaxUtil','ap
             return defer.promise;
         };
 
+        /*
+         * 删除自己的状态
+         * */
+        mainHomeServiceObj.deleteOwnTopic = function (params) {
+            var defer = $q.defer();
+            var obj = {
+                url:appSettings.host+appSettings.requestURL.removeTopic,
+                type:'POST',
+                params:params
+            };
+            ajaxUtil.ajax(obj).then(function(data){
+                defer.resolve(data);
+            },function(err){
+                defer.reject(err);
+            });
+            return defer.promise;
+        };
+
         return mainHomeServiceObj;
     }]);
