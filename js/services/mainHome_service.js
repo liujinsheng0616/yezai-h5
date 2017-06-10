@@ -142,5 +142,23 @@ goceanApp.factory('mainHomeService', ['$http', '$q','$rootScope', 'ajaxUtil','ap
             return defer.promise;
         };
 
+        /*
+         * 加载更多的回复评论
+         * */
+        mainHomeServiceObj.loadMoreListFollow = function (params) {
+            var defer = $q.defer();
+            var obj = {
+                url:appSettings.host+appSettings.requestURL.listFollow,
+                type:'POST',
+                params:params
+            };
+            ajaxUtil.ajax(obj).then(function(data){
+                defer.resolve(data);
+            },function(err){
+                defer.reject(err);
+            });
+            return defer.promise;
+        };
+
         return mainHomeServiceObj;
     }]);

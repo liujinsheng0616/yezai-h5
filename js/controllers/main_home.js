@@ -453,6 +453,62 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
         });
     };
 
+    $scope.followPage = 2;
+    // 加载更多回复内容
+    $scope.loadMoreFollowVoList = function (topicId, followVoList) {
+        var obj = {
+            passportId : $scope.passport.passportId,
+            token : $scope.passport.token,
+            topicId : topicId,
+            page : $scope.followPage,
+            rows : 10
+        };
+        mainHomeService.loadMoreListFollow(obj).then(function(data){
+            if (data.status == "OK") {
+                if (data.result.list.length > 0){
+                    var list = data.result.list;
+                    // 回复数据
+                    for (a in list) {
+                        var commentPassport = false;
+                        var toId = list[a].toId;
+                        for (j in $scope.userList) {
+                            var userId = $scope.userList[j].id;
+                            var nickName = $scope.userList[j].nickName;
+                            if (toId == userId) {
+                                list[a].toName = nickName;
+                                break;
+                            }
+                        }
+                        var followerId = list[a].followerId;
+                        if (followerId == $scope.passport.passportId) {
+                            commentPassport = true;
+                        }
+                        for (k in $scope.userList) {
+                            var userId = $scope.userList[k].id;
+                            var nickName = $scope.userList[k].nickName;
+                            if (followerId == userId) {
+                                list[a].followerName = nickName;
+                                break;
+                            }
+                        }
+                        list[a].commentPassport = commentPassport;
+                    }
+                    for (var i in $scope.topicList){
+                        var id = $scope.topicList[i].id;
+                        if (topicId == id){
+                            $scope.topicList[i].followVoList = $scope.topicList[i].followVoList.concat(data.result.list);
+                        }
+                    }
+                    if(!$scope.$$phase){
+                        $scope.$apply();
+                    }
+                    $scope.followPage++;
+                }
+            }
+        },function(err){
+
+        });
+    };
     // 上拉刷新
     $("div.weui-pull-to-refresh").pullToRefresh().on("pull-to-refresh", function () {
         $scope.page = 1;

@@ -75,6 +75,14 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="comment-list">
+                                <div class="comment-box clearFix" ng-hide="topic.followVoList.length == topic.totalCountFollow">
+                                    <div class="comment-content" ng-click="loadMoreFollowVoList(topic.id, topic.followVoList)">
+                                        <p class="comment-text"><a href="javascript:void(0);">......</a></p>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                         <!-- 结束 post -->
                     </div>
