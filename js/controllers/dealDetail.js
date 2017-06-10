@@ -1,13 +1,27 @@
 /**
  * Created by 53983 on 2017/5/27.
  */
-goceanApp.controller('DealDetailCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, dealDetailService, configService) {
+goceanApp.controller('DealDetailCtrl', function ($scope, $rootScope, $state, $timeout, $stateParams, dealDetailService, configService,localStorageService) {
     console.log('about DealDetailCtrl');
 
+    var params = configService.parseQueryString(window.location.href);
+    if (params.passportId){
+        params.nickName = Base64.decode(params.nickName);
+        localStorageService.set("passport",params);
+    }
+
+    $scope.passport = localStorageService.get("passport");
+
+    var _state = "dealDetail";
+    if ($scope.passport == null ){
+        window.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0cae6e3b9632e632&redirect_uri=http://wxsdk.yezaigou.com/wx/page/base&response_type=code&scope=snsapi_base&state="+_state;
+        return;
+    }
+
     // 获取JSSDK
-    configService.getJssdkInfo(window.location.href);
+    // configService.getJssdkInfo(window.location.href);
     // 隐藏右上角
-    configService.hideWXBtn();
+    // configService.hideWXBtn();
 
     $scope.page = 1;
     $scope.rows = 10;
@@ -22,11 +36,14 @@ goceanApp.controller('DealDetailCtrl', function ($scope, $rootScope, $state, $ti
         var obj = {
             page:$scope.page,
             rows:$scope.rows,
-            passportId : $stateParams.passportId,
-            token : $stateParams.token
+            passportId : $scope.passport.passportId,
+            token : $scope.passport.token
         };
+
         dealDetailService.dealDetailList(obj).then(function(data){
+
             if ("OK" == data.status) {
+
                 if (data.result && data.result.length > 0){
                     var dealList = data.result;
                     for (i in dealList){
