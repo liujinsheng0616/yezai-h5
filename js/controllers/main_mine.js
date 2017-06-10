@@ -37,10 +37,7 @@ goceanApp.controller('MainMineCtrl', function ($scope,$rootScope, $state, $timeo
     }
 
     $scope.dealDetail = function () {
-        $state.go("dealDetail",{
-            passportId:$scope.passport.passportId,
-            token:$scope.passport.token
-        });
+        $state.go("dealDetail");
     }
 
     // 初始化
