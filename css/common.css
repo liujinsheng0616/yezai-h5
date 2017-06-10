@@ -400,22 +400,22 @@
     top:20px;
     right: 20px;
     opacity:0.5;
-    padding-top: 6px;
+    padding-top: 3px;
 
 }
 .yzChildDiv{
     text-align: center;
-    line-height: 66px;
+    line-height: 72px;
     transform:rotate(-18deg);
     -ms-transform:rotate(-18deg);
     -moz-transform:rotate(-18deg);
     -webkit-transform:rotate(-18deg);
     -o-transform:rotate(-18deg);
     color: #f93110;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
     z-index: 99;
-    border: 1px solid #f93110;width:66px;height: 66px;border-radius: 50%;
+    border: 1px solid #f93110;width:72px;height: 72px;border-radius: 50%;
     margin: auto;
 
 }
