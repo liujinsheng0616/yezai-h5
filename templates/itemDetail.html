@@ -1,8 +1,8 @@
 <div class="homeView">
-    <div class="slide" id="slide2" style="height:300px;">
+    <div class="slide" id="slide2" style="height:300px">
         <ul>
             <li ng-repeat="img in itemDetail.slidePic track by $index">
-                <img ng-src="{{img}}" id="img{{$index}}" ng-click="preview($index)">
+                <img ng-src="{{img}}!s" id="img{{$index}}" ng-click="previewImage($index)">
             </li>
         </ul>
         <div class="dot">
@@ -40,9 +40,5 @@
         <div class="weui_btn_primary" style="width:30%;border-radius:0px;height:3.33rem;line-height: 3.33rem;background-color:#666666" ng-click="toQiusong()">求送</div>
         <div class="weui_btn_primary" style="width:70%;border-radius:0px;height:3.33rem;line-height: 3.33rem;" ng-click="toPayment()">立即购买</div>
     </div>
-    <div class="page__bd">
-        <div class="weui-gallery" id="gallery">
-            <span class="weui-gallery__img" id="galleryImg"></span>
-        </div>
-    </div>
+
 </div>

@@ -363,11 +363,11 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
     };
 
     // 预览图片
-    $scope.previewImage = function(photoList){
+    $scope.previewImage = function(photoList, index){
         // 测试代码
         wx.ready(function() {
             wx.previewImage({
-                current: photoList[0], // 当前显示图片的http链接
+                current: photoList[index], // 当前显示图片的http链接
                 urls: photoList // 需要预览的图片http链接列表
             });
         });

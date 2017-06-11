@@ -62,7 +62,14 @@ goceanApp.controller('ItemDetailCtrl', function($scope, $rootScope, $state, $tim
 	}
 
 	function init() {
+
         itemDetail = $rootScope.itemDetail;
+
+		var pics = itemDetail.slidePic;
+		for (i in pics){
+			pics[i] = appSettings.domain + "/" + pics[i];
+		}
+
         itemDetail.viewPrice = "￥" + itemDetail.minPrice + "~"
             + itemDetail.maxPrice;
 
@@ -146,15 +153,26 @@ goceanApp.controller('ItemDetailCtrl', function($scope, $rootScope, $state, $tim
                 });
         }, 10);
     }
-	var gallery = $("#gallery"), galleryImg = $("#galleryImg");
-	$scope.preview = function(index) {
-		galleryImg.attr("style", "background-image:url("
-				+ $("#img" + index).attr("src") + ")");
-		gallery.fadeIn(100);
-	};
-	gallery.on("click", function() {
-		gallery.fadeOut(100);
-	});
+	// var gallery = $("#gallery"), galleryImg = $("#galleryImg");
+	// $scope.preview = function(index) {
+	// 	galleryImg.attr("style", "background-image:url("
+	// 			+ $("#img" + index).attr("src") + ")");
+	// 	gallery.fadeIn(100);
+	// };
+	// gallery.on("click", function() {
+	// 	gallery.fadeOut(100);
+	// });
+
+    // 预览图片
+    $scope.previewImage = function(index){
+        // 测试代码
+        wx.ready(function() {
+            wx.previewImage({
+                current: itemDetail.slidePic[index], // 当前显示图片的http链接
+                urls: itemDetail.slidePic // 需要预览的图片http链接列表
+            });
+        });
+    };
 
 	var _payDescription = "";
 	var _payAttachment = [];
