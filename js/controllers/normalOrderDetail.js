@@ -29,13 +29,26 @@ goceanApp.controller('NormalOrderDetailCtrl',function ($scope, $rootScope, $stat
     // 隐藏右上角
     configService.hideWXBtn();
     $scope.hasImg = false;
-    function refresh(id) {
-        if (id <= 0)
+
+    var tmpl = '<li class="weui-uploader__file" style="position: relative;width: 85px;height: 85px;padding: 5px;">' +
+            '<div style="border:1px solid #d9d9d9; width: 79px; height: 79px;"><img src="#url#" style="width: 100%;height: 100%;"/></div></li>',
+        buyTmpl = '<li class="weui-uploader__file" style="position: relative;width: 85px;height: 85px;padding: 5px;">' +
+            '<div style="border:1px solid #d9d9d9; width: 79px; height: 79px;"><img src="#url#" style="width: 100%;height: 100%;"/></div>' +
+            '<span class="weui-badge" style="position: absolute;top: 0;right: -8px;background-color: #d9d9d9;" url="imgUrl">×</span></li>',
+        $gallery = $("#gallery"), $galleryImg = $("#galleryImg"),
+        $uploaderInput = $("#uploaderInput"),
+        $imageFiless = $("#imageFiles"),
+        buyerFilesNum = 1;
+
+    var obj = {
+        passportId:$scope.passport.passportId,
+        token:$scope.passport.token,
+        orderId:orderId
+    };
+
+    function refresh(orderId) {
+        if (orderId <= 0)
             return;
-        var obj = {
-            passportId:$scope.passport.passportId,
-            token:$scope.passport.token,
-            orderId:id};
         normalDetailService.getDetails(obj).then(function(data){
             console.log(data);
             if ("OK" == data.status){
@@ -43,6 +56,7 @@ goceanApp.controller('NormalOrderDetailCtrl',function ($scope, $rootScope, $stat
                 $rootScope.orderDetailsView = orderDetailsDto;
                 $rootScope.orderDetailsView.isInited = true;
                 initStatusView(orderDetailsDto);
+                $imageFiless.empty();
                 initPic(orderDetailsDto.orderExt);
             }
         },function(err){
@@ -83,24 +97,20 @@ goceanApp.controller('NormalOrderDetailCtrl',function ($scope, $rootScope, $stat
             if (files != null && files != "undefined") {
                 for (var i = 0, len = files.length; i < len; ++i) {
                     var file = appSettings.img_domain+files[i];
-                    $imageFiless.append($(tmpl.replace('#url#', file)));
+                    $imageFiless.append($(buyTmpl.replace('#url#', file).replace("imgUrl", files[i])));
                     $scope.hasImg = true;
                 }
             }
         }
     }
 
-    var tmpl = '<li class="weui-uploader__file" style="background-image:url(#url#)"></li>',
-        $gallery = $("#gallery"), $galleryImg = $("#galleryImg"),
-        $uploaderInput = $("#uploaderInput"),
-        $imageFiless = $("#imageFiles"),
-        buyerFilesNum = 1;
+
 
     $scope.getExpressInfo = function (expressBrief) {
 
         alert("查询快递单号");
 
-    }
+    };
 
 
     // 晒晒
@@ -112,7 +122,7 @@ goceanApp.controller('NormalOrderDetailCtrl',function ($scope, $rootScope, $stat
                 token:$scope.passport.token,
                 orderId:orderId,
                 text:text
-            }
+            };
 
             normalDetailService.goShaishai(obj).then(function(data){
                 console.log(data);
@@ -126,7 +136,7 @@ goceanApp.controller('NormalOrderDetailCtrl',function ($scope, $rootScope, $stat
         }, function() {
             //取消操作
         });
-    }
+    };
 
     $uploaderInput.on("change", function(e){
         var src, url = window.URL || window.webkitURL || window.mozURL, files = e.target.files;
@@ -136,7 +146,6 @@ goceanApp.controller('NormalOrderDetailCtrl',function ($scope, $rootScope, $stat
             // 空间的表单 API
             form_api: 'tgQBgP/ltnhbv2bHSPy4blIwcws='
         };
-        console.log(buyerFilesNum)
         if (buyerFilesNum > 6){
             $.alert("最多上传6张图片");
             $(".weui-uploader__input-box").hide();
@@ -169,12 +178,11 @@ goceanApp.controller('NormalOrderDetailCtrl',function ($scope, $rootScope, $stat
                     url:data.url
                 };
                 deliverDetailService.onPicUploaded(obj).then(function(data){
-                    console.log(data);
                     if ("OK" == data.status){
                         buyerFilesNum++;
                         // 文件上传成功处理函数 http://topic-photo-test.b0.upaiyun.com/
                         //$imageFiless.append($(tmpl.replace('#url#', 'http://topic-photo-test.b0.upaiyun.com/' + data.url)));
-                        $imageFiless.append($(tmpl.replace('#url#', appSettings.img_domain + obj.url)));
+                        $imageFiless.append($(buyTmpl.replace('#url#', appSettings.img_domain + obj.url).replace("imgUrl", obj.url)));
                         $scope.hasImg = true;
                     }
                 },function(err){
@@ -189,12 +197,23 @@ goceanApp.controller('NormalOrderDetailCtrl',function ($scope, $rootScope, $stat
     });
 
 
-    $imageFiless.on("click", "li", function(){
-        $galleryImg.attr("style", this.getAttribute("style"));
+    $imageFiless.on("click", "img", function(){
+        $galleryImg.attr("style", "background-image:url(" + $(this).attr("src") + ")");
         $gallery.fadeIn(100);
     });
     $gallery.on("click", function(){
         $gallery.fadeOut(100);
+    });
+
+    $imageFiless.on('click', "span", function () {
+        obj.url = this.getAttribute("url");
+        deliverDetailService.deleteDetailPhoto(obj).then(function(data){
+            if ("OK" == data.status){
+                refresh(orderId);
+            }
+        },function(err){
+
+        });
     });
 
     if ($rootScope.orderDetailsView == null) {

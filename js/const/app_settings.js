@@ -19,6 +19,7 @@ goceanApp.constant('appSettings', {
 		removeTopic : '/sns/topic/removeTopic',
 		createFollow : '/sns/topic/createFollow',
 		removeFollow : '/sns/topic/removeFollow',
+		detailPhotoRemove : '/order/ext/pic/remove',
         listFollow : '/sns/topic/listFollow',
 		likes : '/sns/topic/likes',
 		urlJssdk : '/wx/common/sign/js',

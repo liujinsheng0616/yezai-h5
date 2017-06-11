@@ -36,5 +36,20 @@ goceanApp.factory('deliverDetailService', ['$http', '$q','$rootScope', 'ajaxUtil
             return defer.promise;
         };
 
+        deliverDetailServiceObj.deleteDetailPhoto = function (params) {
+            var defer = $q.defer();
+            var obj = {
+                url:appSettings.host+appSettings.requestURL.detailPhotoRemove,
+                type:'POST',
+                params:params
+            };
+            ajaxUtil.ajax(obj).then(function(data){
+                defer.resolve(data);
+            },function(err){
+                defer.reject(err);
+            });
+            return defer.promise;
+        };
+
         return deliverDetailServiceObj;
     }]);

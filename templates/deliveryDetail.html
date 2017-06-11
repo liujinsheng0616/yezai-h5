@@ -45,8 +45,10 @@
                     <div class="weui-uploader__bd" style="width: 300px">
                         <ul class="weui-uploader__files" id="imageFiles" >
                         </ul>
-                        <div class="weui-uploader__input-box" ng-hide="forwardDetailsDto.deliveryStatus != 'DELIVERED' ">
-                            <input id="uploaderInput" class="weui-uploader__input" type="file" accept="image/*" multiple />
+                        <div class="weui-uploader__input-box" style="padding: 5px;height: 85px;width: 85px;border: 0;" ng-hide="forwardDetailsDto.deliveryStatus != 'DELIVERED' ">
+                            <div style="width: 79px;height: 79px;border: 1px solid #d9d9d9;">
+                                <input id="uploaderInput" class="weui-uploader__input" type="file" accept="image/*" multiple />
+                            </div>
                         </div>
                     </div>
                 </div>
