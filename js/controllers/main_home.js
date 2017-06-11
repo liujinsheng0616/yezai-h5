@@ -114,10 +114,11 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
 
             var likedStr = '';
             var tagStr = '';
-            var passportLiked = false;
+            // var passportLiked = false;
             // 点赞数据
             for (j in topic.likesIdList) {
                 var userId = topic.likesIdList[j];
+                var passportLiked = false;
                 if (userId == $scope.passport.passportId) {
                     passportLiked = true;
                 }
