@@ -76,10 +76,10 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
                         $scope.userList = result.userList;
                     }
                     $scope.tagList = result.tagList;
+                    operateData();
                     if(!$scope.$$phase){
                         $scope.$apply();
                     }
-                    operateData();
                 } else {
                     $(".weui-infinite-scroll").html('<p class="bottomNoMore"><div class="infinite-preloader"></div>没有更多</p>')
                     loading = true;
