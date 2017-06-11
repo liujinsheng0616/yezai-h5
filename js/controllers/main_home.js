@@ -115,12 +115,14 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
             var likedStr = '';
             var tagStr = '';
             // var passportLiked = false;
+            topic.passportLiked = false;
             // 点赞数据
             for (j in topic.likesIdList) {
                 var userId = topic.likesIdList[j];
                 var passportLiked = false;
                 if (userId == $scope.passport.passportId) {
                     passportLiked = true;
+                    topic.passportLiked = true;
                 }
                 for (k in $scope.userList) {
                     var tempUserId = $scope.userList[k].id;
@@ -174,7 +176,7 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
             }
             topic.likedStr = likedStr.substring(0, likedStr.lastIndexOf(","));
             topic.tagStr = tagStr;
-            topic.passportLiked = passportLiked;
+            // topic.passportLiked = passportLiked;
 
             // 计算发布时间点
             var createTime = new Date().getTime() - topic.time;
