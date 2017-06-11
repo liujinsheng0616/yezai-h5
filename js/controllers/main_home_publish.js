@@ -17,6 +17,8 @@ goceanApp.controller('MainHomePublishCtrl', function ($scope, $rootScope, $state
 
     $scope.uploadFlag = true;
 
+    const SMALL = "!small";
+
     var tmpl = '<li class="weui-uploader__file" style="position: relative;width: 85px;height: 85px;padding: 5px;">' +
             '<div style="border:1px solid #d9d9d9; width: 79px; height: 79px;"><img src="#url#" style="width: 100%;height: 100%;"/></div>' +
             '<span class="weui-badge" style="position: absolute;top: 0;right: -8px;background-color: #d9d9d9;" onclick="deletePhoto(imgUrl);">×</span></li>',
@@ -60,7 +62,7 @@ goceanApp.controller('MainHomePublishCtrl', function ($scope, $rootScope, $state
             }).progress(function(evt) {//上传进度
                 console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
             }).success(function(data, status, headers, config) {
-                $imageFiless.append(tmpl.replace('#url#', appSettings.img_domain + data.url).replace("imgUrl",  "'"+appSettings.img_domain + data.url+"'," + photolist.length));
+                $imageFiless.append(tmpl.replace('#url#', appSettings.img_domain + data.url + SMALL).replace("imgUrl",  "'"+appSettings.img_domain + data.url +SMALL+"'," + photolist.length));
                 photolist.push(appSettings.img_domain + data.url);
                 if (photolist.length == 9){
                     $scope.uploadFlag = false;
