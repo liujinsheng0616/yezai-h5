@@ -185,7 +185,7 @@ var goceanApp = angular.module('starter', ['ui.router','angularFileUpload', 'Loc
                 cache:false,
                 params : {'id':0},
                 url: '/qiusongDetailsSponsor/:id',
-                templateUrl: 'templates/qiusongDetails_Sponsor.html',
+                templateUrl: 'templates/qiusongDetails.html',
                 controller: 'QiusongDetailsSponsorCtrl'
             })
             .state ('qiusongShared', {
