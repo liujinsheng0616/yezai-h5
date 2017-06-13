@@ -333,6 +333,18 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
         $('#textarea').trigger('focus');
     };
 
+    var timer = null;
+    $("#textBox").on('focus', function () {
+        clearInterval(timer);
+        var index = 0;
+        timer = setInterval(function () {
+           if (index > 4){
+               $('body').scrollTop(1000000);
+               clearInterval(timer);
+           }
+        });
+    });
+
     // 隐藏评论框
     $scope.hideTextBox = function(){
         $("#textBox").fadeOut();
