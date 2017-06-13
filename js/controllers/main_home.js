@@ -338,7 +338,7 @@ goceanApp.controller('MainHomeCtrl', function ($scope, $rootScope, $state, $time
         clearInterval(timer);
         var index = 0;
         timer = setInterval(function () {
-           if (index > 4){
+           if (index > 7){
                $('body').scrollTop(1000000);
                clearInterval(timer);
            }
