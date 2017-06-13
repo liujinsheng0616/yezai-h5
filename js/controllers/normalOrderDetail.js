@@ -7,7 +7,11 @@ goceanApp.controller('NormalOrderDetailCtrl',function ($scope, $rootScope, $stat
 
     var params = configService.parseQueryString(window.location.href);
     if (params.passportId){
-        params.nickName = Base64.decode(params.nickName);
+        params.nickName = decodeURI(params.nickName);
+        try {
+            params.nickName = Base64.decode(params.nickName);
+        }catch (e){
+        }
         localStorageService.set("passport",params);
     }
 
