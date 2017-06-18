@@ -158,7 +158,7 @@ goceanApp.controller('MainHomePublishCtrl', function ($scope, $rootScope, $state
             return;
         $rootScope.isToCreateTopic = true;
         createTopic();
-        $rootScope.topicViewNavId = 2;//兴趣
+        localStorageService.set("topicViewNavId",2);
         photolist = []; // 清空
         $state.go('main.home'); //直接跳到论坛页面，FIXME 把数据带过去显示
     };

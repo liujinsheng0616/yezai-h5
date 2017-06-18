@@ -31,7 +31,7 @@ goceanApp.controller('QiusongSharedCtrl', function ($scope, $rootScope, $state, 
         window.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0cae6e3b9632e632" +
             "&redirect_uri=http://wxsdk.yezaigou.com/wx/page/qiusong" +
             "/" + id + "/"+sharerId +
-            "&response_type=code&scope=snsapi_userinfo&state="+_state;
+            "&response_type=code&scope=snsapi_base&state="+_state;
         return;
     }
 

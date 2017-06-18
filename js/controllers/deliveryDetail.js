@@ -15,9 +15,9 @@ goceanApp.controller('DeliverDetailCtrl',function ($scope, $rootScope, $state, $
     configService.hideWXBtn();
 
     var tmpl = '<li class="weui-uploader__file" style="position: relative;width: 85px;height: 85px;padding: 5px;">' +
-            '<div style="border:1px solid #d9d9d9; width: 79px; height: 79px;"><img src="#url#" style="width: 100%;height: 100%;"/></div></li>',
+            '<div style=" width: 79px; height: 79px;"><img src="#url#" style="width: 100%;height: 100%;"/></div></li>',
         buyTmpl = '<li class="weui-uploader__file" style="position: relative;width: 85px;height: 85px;padding: 5px;">' +
-            '<div style="border:1px solid #d9d9d9; width: 79px; height: 79px;"><img src="#url#" style="width: 100%;height: 100%;"/></div>' +
+            '<div  style=" width: 79px; height: 79px;"><img src="#url#" style="width: 100%;height: 100%;"/></div>' +
             '<span class="weui-badge" style="position: absolute;top: 0;right: -8px;background-color: #d9d9d9;" url="imgUrl">×</span></li>',
         $gallery = $("#gallery"), $galleryImg = $("#galleryImg"),
         $uploaderInput = $("#uploaderInput"),
@@ -48,13 +48,14 @@ goceanApp.controller('DeliverDetailCtrl',function ($scope, $rootScope, $state, $
 
     $scope.onReady();
 
+    var small = "!small";
     function initPic(orderExt) {
         // 卖家图片
         if (orderExt) {
             var files = orderExt.sellerPic;
             if (files != null && files != "undefined") {
                 for (var i = 0, len = files.length; i < len; ++i) {
-                    var file = appSettings.img_domain+files[i];
+                    var file = appSettings.shaishai_domain+files[i] + small;
                     $imageFiless.append($(tmpl.replace('#url#', file)));
                     $scope.hasImg = true;
                 }
@@ -64,7 +65,7 @@ goceanApp.controller('DeliverDetailCtrl',function ($scope, $rootScope, $state, $
             files = orderExt.buyerPic;
             if (files != null && files != "undefined") {
                 for (var i = 0, len = files.length; i < len; ++i) {
-                    var file = appSettings.img_domain+files[i];
+                    var file = appSettings.shaishai_domain+files[i] + small;
                     $imageFiless.append($(buyTmpl.replace('#url#', file).replace("imgUrl", files[i])));
                     $scope.hasImg = true;
                 }
@@ -82,9 +83,9 @@ goceanApp.controller('DeliverDetailCtrl',function ($scope, $rootScope, $state, $
         var src, url = window.URL || window.webkitURL || window.mozURL, files = e.target.files;
         var config = {
             api: 'http://v0.api.upyun.com/',
-            bucket: 'topic-photo-test',
+            bucket: 'shaishai',
             // 空间的表单 API
-            form_api: 'tgQBgP/ltnhbv2bHSPy4blIwcws='
+            form_api: 'hooVES61L17OyxkoxBlg3twa0m8='
         };
         if (buyerFilesNum > 6){
             $.alert("最多上传6张图片");
@@ -123,7 +124,8 @@ goceanApp.controller('DeliverDetailCtrl',function ($scope, $rootScope, $state, $
                         buyerFilesNum++;
                         // 文件上传成功处理函数 http://topic-photo-test.b0.upaiyun.com/
                         //$imageFiless.append($(tmpl.replace('#url#', 'http://topic-photo-test.b0.upaiyun.com/' + data.url)));
-                        $imageFiless.append($(buyTmpl.replace('#url#', appSettings.img_domain + obj.url).replace("imgUrl", obj.url)));
+                        $imageFiless.append($(buyTmpl.replace('#url#', appSettings.shaishai_domain + obj.url + small).replace("imgUrl", obj.url)));
+                        $rootScope.orderDetailsView.orderExt.buyerPic.push(obj.url);
                         $scope.hasImg = true;
                     }
                 },function(err){
@@ -138,9 +140,29 @@ goceanApp.controller('DeliverDetailCtrl',function ($scope, $rootScope, $state, $
     });
 
 
+    // 预览图片
+    function previewImage(index){
+
+        var pics = [];
+        var sellerPic = $scope.forwardDetailsDto.orderExt.sellerPic;
+        var buyerPic = $scope.forwardDetailsDto.orderExt.buyerPic;
+        for(i in sellerPic){
+            pics.push(appSettings.shaishai_domain+sellerPic[i]);
+        }
+        for (i in buyerPic){
+            pics.push(appSettings.shaishai_domain+buyerPic[i]);
+        }
+        // 测试代码
+        wx.ready(function() {
+            wx.previewImage({
+                current: pics[index], // 当前显示图片的http链接
+                urls: pics // 需要预览的图片http链接列表
+            });
+        });
+    };
+
     $imageFiless.on("click", "img", function(){
-        $galleryImg.attr("style", "background-image:url(" + $(this).attr("src") + ")");
-        $gallery.fadeIn(100);
+        previewImage(0);
     });
 
     $imageFiless.on("click", "span", function () {
@@ -154,9 +176,6 @@ goceanApp.controller('DeliverDetailCtrl',function ($scope, $rootScope, $state, $
         });
     });
 
-    $gallery.on("click", function(){
-        $gallery.fadeOut(100);
-    });
     
     // 晒晒
     $scope.goPublish = function () {
@@ -172,6 +191,7 @@ goceanApp.controller('DeliverDetailCtrl',function ($scope, $rootScope, $state, $
             normalDetailService.goShaishai(obj).then(function(data){
                 console.log(data);
                 if ("OK" == data.status){
+                    localStorageService.set("topicViewNavId",1);
                     $state.go("main.home");
                 }
             },function(err){

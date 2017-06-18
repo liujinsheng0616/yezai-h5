@@ -8,6 +8,7 @@ goceanApp.constant('appSettings', {
 	host : 'http://m.yezaigou.com',
 	host2:'http://wxsdk.yezaigou.com',
 	img_domain:'http://img.yezaigou.com',
+	shaishai_domain:'http://shaishai.yezaigou.com',
 	requestURL : {
 		wxBase: '/wx/page/base',
 		wxUserInfo:'wx/page/userInfo',

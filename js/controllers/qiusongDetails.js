@@ -23,7 +23,7 @@ goceanApp.controller('QiusongDetailsSponsorCtrl', function ($scope, $rootScope, 
     }
 
     var _state = "qiusongDetailsSponsor/" + id;//FIXME
-    if ($scope.passport == null){//如果是基础用户，这里不要求授权用户信息; 若果没登录，就直接通过授权模式登录
+    if ($scope.passport == null || $scope.passport.type == "BLANK"){//如果是基础用户，这里不要求授权用户信息; 若果没登录，就直接通过授权模式登录
         window.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0cae6e3b9632e632&redirect_uri=http://wxsdk.yezaigou.com/wx/page/userInfo&response_type=code&scope=snsapi_userinfo&state="+_state;
         return;
     }
