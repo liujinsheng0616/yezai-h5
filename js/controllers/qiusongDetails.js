@@ -76,6 +76,18 @@ goceanApp.controller('QiusongDetailsSponsorCtrl', function ($scope, $rootScope, 
                         $scope.qiusong.memberList[i].nickName = Base64.decode($scope.qiusong.memberList[i].nickName);
                     }
                 }
+                if ($scope.qiusong.skuBriefDto.type == "MATCH") {
+                    $scope.shareInfo = {
+                        title: $scope.qiusong.sponsorName + '也在参与鲜花求送大比赛，希望得到你的支持！',
+                        desc: $scope.qiusong.skuBriefDto.description
+                    }
+                }else{
+                    $scope.shareInfo = {
+                        title: $scope.qiusong.sponsorName + '也在发起求送，邀请你参与！',
+                        desc: $scope.qiusong.skuBriefDto.title + "(" + $scope.qiusong.skuBriefDto.payDescription + ")"
+                    }
+                }
+
                 // 分享组装
                 shared();
             }else{
@@ -98,8 +110,10 @@ goceanApp.controller('QiusongDetailsSponsorCtrl', function ($scope, $rootScope, 
                     wx.showOptionMenu();
                     //分享到朋友圈
                     wx.onMenuShareTimeline({
-                        title:  $scope.qiusong.sponsorName + '也在发起求送，邀请你参与！',// 分享标题
-                        desc:  $scope.qiusong.skuBriefDto.title +"(" +$scope.qiusong.skuBriefDto.payDescription +")", // 分享描述
+                        // title:  $scope.qiusong.sponsorName + '也在发起求送，邀请你参与！',// 分享标题
+                        // desc:  $scope.qiusong.skuBriefDto.title +"(" +$scope.qiusong.skuBriefDto.payDescription +")", // 分享描述
+                        title: $scope.shareInfo.title,
+                        desc: $scope.shareInfo.desc,
                         link:  sharedUrl, // 分享链接
                         imgUrl: 'http://static.yezaigou.com/' + $scope.qiusong.skuBriefDto.thumbnail, // 分享图标
                         success: function () {
@@ -112,8 +126,8 @@ goceanApp.controller('QiusongDetailsSponsorCtrl', function ($scope, $rootScope, 
 
                     //分享给朋友
                     wx.onMenuShareAppMessage({
-                        title: $scope.qiusong.sponsorName + '也在发起求送，邀请你参与！',// 分享标题
-                        desc:  $scope.qiusong.skuBriefDto.title +"(" +$scope.qiusong.skuBriefDto.payDescription +")", // 分享描述
+                        title: $scope.shareInfo.title,
+                        desc: $scope.shareInfo.desc,
                         link: sharedUrl, // 分享链接
                         imgUrl: 'http://static.yezaigou.com/' + $scope.qiusong.skuBriefDto.thumbnail, // 分享图标
                         type: '', // 分享类型,music、video或link，不填默认为link

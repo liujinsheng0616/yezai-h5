@@ -15,9 +15,9 @@ goceanApp.controller('OrderQiusongCtrl', function ($rootScope,$scope, $state, $t
 
     $scope.passport = localStorageService.get("passport");
 
-    if ($scope.passport == null ){
+    if ($scope.passport == null  || $scope.passport.type == "BLANK"){
         var _state = "order.qiusong";
-        window.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0cae6e3b9632e632&redirect_uri=http://wxsdk.yezaigou.com/wx/page/base&response_type=code&scope=snsapi_base&state="+_state;
+        window.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0cae6e3b9632e632&redirect_uri=http://wxsdk.yezaigou.com/wx/page/userInfo&response_type=code&scope=snsapi_userinfo&state="+_state;
         return;
     }
 

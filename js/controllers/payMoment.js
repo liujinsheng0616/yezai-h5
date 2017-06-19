@@ -247,7 +247,7 @@ goceanApp.controller('PayMomentCtrl', function ($scope, $rootScope, $state, $tim
                     var id = data.result;
                     if ($rootScope.orderRo.type == 'FORWARD_PLAN' || $rootScope.orderRo.type == 'FORWARD'){
                         $state.go('inServiceDetail', {orderId : id});
-                    } else if ($rootScope.orderRo.type == 'NORMAL') {
+                    } else  {
                         $state.go('normalDetail', {orderId: id});
                     }
 
